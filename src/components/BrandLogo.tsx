@@ -6,9 +6,9 @@ interface BrandLogoProps {
 
 const variantStyles = {
   header: {
-    image: 'h-10 w-10 sm:h-11 sm:w-11',
-    name: 'text-[17px] sm:text-lg',
-    travels: 'text-[10px] sm:text-[11px] tracking-[0.18em]',
+    image: 'h-11 w-11 sm:h-12 sm:w-12',
+    name: 'text-xl sm:text-[22px]',
+    travels: 'text-[11px] sm:text-xs tracking-[0.18em]',
     primary: 'text-[#142B49]',
     secondary: 'text-[#A9761D]',
   },

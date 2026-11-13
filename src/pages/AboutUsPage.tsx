@@ -1,7 +1,7 @@
 import React from 'react';
-import { Car, MapPin, MessageCircle, Phone } from 'lucide-react';
+import { MapPin, MessageCircle, Phone } from 'lucide-react';
 import { Language } from '../types/travel';
-import { BUSINESS_INFO, VEHICLES_DATA } from '../data/travelData';
+import { BUSINESS_INFO } from '../data/travelData';
 
 interface AboutUsPageProps {
   language: Language;
@@ -22,8 +22,8 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ language, onOpenBookin
         </h1>
         <p className="mt-4 text-base leading-7 text-slate-600">
           {isTamil
-            ? 'குடும்பம், சிறு குழு அல்லது பெரிய குழுப் பயணத்திற்கான வாகன விருப்பங்களை ஆராய்ந்து, உங்கள் வழித்தடம் மற்றும் தேதியுடன் விசாரிக்கவும்.'
-            : "BROTHER'S TRAVELS is based in Coimbatore, Tamil Nadu. Explore the listed passenger vehicles and share your route, travel dates and group size to discuss a trip quotation."}
+            ? 'கோயம்புத்தூர், தமிழ்நாட்டை மையமாகக் கொண்டு குடும்பச் சுற்றுலா, குழுப் பயணம் மற்றும் வெளியூர் பயணங்களுக்கு உதவுகிறோம். உங்கள் வழித்தடம் மற்றும் பயணத் தேதியுடன் விசாரிக்கவும்.'
+            : "BROTHER'S TRAVELS is based in Coimbatore, Tamil Nadu. We help plan family trips, group journeys and outstation travel. Share your route and travel dates to discuss your trip."}
         </p>
       </header>
 
@@ -39,29 +39,9 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({ language, onOpenBookin
         </div>
         <p className="mt-5 max-w-3xl text-sm leading-6 text-slate-600">
           {isTamil
-            ? 'கிடைக்கும் நிலை, பயண அனுமதிகள், பிக்கப் விவரங்கள் மற்றும் இறுதி கட்டணம் ஆகியவை ஒவ்வொரு பயணத்திற்கும் நேரடியாக உறுதி செய்யப்படும்.'
-            : 'Vehicle availability, pickup arrangements, applicable permits and the final quotation are confirmed directly for each requested itinerary.'}
+            ? 'பயணத் திட்டம், பிக்கப் விவரங்கள் மற்றும் இறுதி கட்டணம் ஆகியவை ஒவ்வொரு விசாரணைக்கும் நேரடியாக உறுதி செய்யப்படும்.'
+            : 'Trip arrangements, pickup details and the final quotation are confirmed directly for each enquiry.'}
         </p>
-      </section>
-
-      <section className="mt-10">
-        <div className="flex items-center gap-2">
-          <Car className="h-5 w-5 text-teal-700" aria-hidden="true" />
-          <h2 className="text-2xl font-bold text-[#142B49]">
-            {isTamil ? 'பட்டியலிடப்பட்ட வாகனங்கள்' : 'Listed vehicle options'}
-          </h2>
-        </div>
-        <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {VEHICLES_DATA.map((vehicle) => (
-            <li key={vehicle.id} className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-              <img src={vehicle.image} alt={vehicle.name} className="aspect-[16/9] w-full object-cover" loading="lazy" />
-              <div className="p-4">
-                <h3 className="font-bold text-slate-950">{vehicle.name}</h3>
-                <p className="mt-1 text-sm text-slate-600">{vehicle.shortDescription[language]}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
       </section>
 
       <div className="mt-10 flex flex-wrap gap-3">

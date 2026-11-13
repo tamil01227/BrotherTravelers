@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { Language } from '../types/travel';
 import { BUSINESS_INFO, TRANSLATIONS } from '../data/travelData';
+import { BrandLogo } from './BrandLogo';
 
 interface NavbarProps {
   currentTab: string;
@@ -32,9 +33,15 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenBooking,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [desktopDestinationsOpen, setDesktopDestinationsOpen] = useState(false);
   const t = TRANSLATIONS[language];
   const mobileMenuPanelRef = useRef<HTMLDivElement>(null);
   const mobileMenuTriggerRef = useRef<HTMLButtonElement>(null);
+  const desktopDestinationsRef = useRef<HTMLDetailsElement>(null);
+  const closeDesktopDestinations = () => {
+    setDesktopDestinationsOpen(false);
+    desktopDestinationsRef.current?.removeAttribute('open');
+  };
 
   const navLinks = [
     { id: 'home', label: t.nav.home, icon: Home },
@@ -89,7 +96,29 @@ export const Navbar: React.FC<NavbarProps> = ({
     };
   }, [mobileMenuOpen]);
 
+  useEffect(() => {
+    const closeDesktopMenu = (event: MouseEvent) => {
+      if (!desktopDestinationsRef.current?.contains(event.target as Node)) {
+        closeDesktopDestinations();
+      }
+    };
+    const closeDesktopMenuOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && desktopDestinationsRef.current?.open) {
+        closeDesktopDestinations();
+        desktopDestinationsRef.current.querySelector('summary')?.focus();
+      }
+    };
+
+    document.addEventListener('click', closeDesktopMenu);
+    document.addEventListener('keydown', closeDesktopMenuOnEscape);
+    return () => {
+      document.removeEventListener('click', closeDesktopMenu);
+      document.removeEventListener('keydown', closeDesktopMenuOnEscape);
+    };
+  }, []);
+
   const handleNavClick = (id: string) => {
+    closeDesktopDestinations();
     setCurrentTab(id);
     setMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -100,22 +129,13 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Main Sticky Header */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-2xs">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-          {/* Zone 1: Brand Wordmark (Clean, single-line on mobile) */}
+          {/* Brand and wordmark */}
           <button
             onClick={() => handleNavClick('home')}
+            aria-label="BROTHER'S TRAVELS home"
             className="text-left group cursor-pointer focus:outline-hidden min-w-0 shrink-0"
           >
-            <div className="flex items-baseline gap-1.5 whitespace-nowrap">
-              <span className="text-[17px] sm:text-xl lg:text-2xl font-extrabold tracking-tight text-sky-950 group-hover:text-sky-800 transition-colors">
-                BROTHER'S
-              </span>
-              <span className="text-[17px] sm:text-xl lg:text-2xl font-black tracking-tight text-sky-950">
-                TRAVELS
-              </span>
-            </div>
-            <div className="hidden lg:block text-[11px] font-medium text-slate-500 tracking-wider uppercase -mt-0.5">
-              Coimbatore · All India
-            </div>
+            <BrandLogo />
           </button>
 
           {/* Zone 2: Navigation Links (Single-Line Desktop) */}
@@ -139,7 +159,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </button>
               );
             })}
-            <details className="relative">
+            <details
+              ref={desktopDestinationsRef}
+              open={desktopDestinationsOpen}
+              onToggle={(event) => setDesktopDestinationsOpen(event.currentTarget.open)}
+              className="relative"
+            >
               <summary className={`flex min-h-10 cursor-pointer list-none items-center gap-1 whitespace-nowrap ${
                 currentTab === 'tours' || currentTab === 'destinations'
                   ? 'font-bold text-sky-900'
@@ -269,16 +294,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             {/* Sheet Header */}
             <div className="px-5 pt-3 pb-4 border-b border-slate-100 flex items-center justify-between gap-3 shrink-0">
-              <div className="min-w-0">
-                <div className="flex items-baseline gap-1.5">
-                  <span className="text-lg font-extrabold tracking-tight text-sky-950">
-                    BROTHER'S
-                  </span>
-                  <span className="text-lg font-black tracking-tight text-sky-950">
-                    TRAVELS
-                  </span>
-                </div>
-              </div>
+              <BrandLogo variant="drawer" />
 
               <button
                 onClick={() => setMobileMenuOpen(false)}
@@ -381,7 +397,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               </div>
 
               <div className="flex items-center justify-between text-xs text-slate-500 px-1">
-                <span>{BUSINESS_INFO.owner}</span>
                 <span className="tabular-nums font-medium text-slate-700">{BUSINESS_INFO.primaryPhone}</span>
               </div>
             </div>

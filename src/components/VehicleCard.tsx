@@ -22,7 +22,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
   const handleQuickWhatsApp = (e: React.MouseEvent) => {
     e.stopPropagation();
     const url = generateQuickWhatsAppUrl(vehicle.name, 'vehicle');
-    openWhatsApp(url);
+    openWhatsApp(url, 'vehicle_quote');
   };
 
   return (

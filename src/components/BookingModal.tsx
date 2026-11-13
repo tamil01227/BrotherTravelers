@@ -33,7 +33,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   const [formData, setFormData] = useState<BookingEnquiry>({
     customerName: '',
     mobileNumber: '',
-    pickupLocation: initialPickupLocation || 'Coimbatore (Free Doorstep Pickup)',
+    pickupLocation: initialPickupLocation || 'Coimbatore',
     destination: initialDestination || '',
     travelDate: initialTravelDate || '',
     returnDate: '',
@@ -52,7 +52,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     setFormData({
       customerName: '',
       mobileNumber: '',
-      pickupLocation: initialPickupLocation || 'Coimbatore (Free Doorstep Pickup)',
+      pickupLocation: initialPickupLocation || 'Coimbatore',
       destination: initialDestination || '',
       travelDate: initialTravelDate || '',
       returnDate: '',
@@ -106,7 +106,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
     // Give visual confirmation feedback, then launch WhatsApp
     setTimeout(() => {
-      openWhatsApp(whatsappUrl);
+      openWhatsApp(whatsappUrl, 'booking_form');
       setIsSubmitted(false);
       onClose();
     }, 400);
@@ -138,11 +138,11 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             <div className="flex items-center gap-2 mb-1">
               <span className="inline-flex items-center gap-1 text-[11px] font-bold text-green-400">
                 <MessageCircle className="w-3 h-3 fill-current" />
-                WhatsApp Direct Booking
+                WhatsApp trip enquiry
               </span>
               <span className="text-slate-600" aria-hidden="true">·</span>
               <span className="text-xs text-sky-200">
-                {language === 'ta' ? 'கோவை பிக்கப் இலவசம்' : 'Free Coimbatore Pickup'}
+                {language === 'ta' ? 'பயண விசாரணை' : 'Trip enquiry'}
               </span>
             </div>
             <h2 id="modal-title" className="text-lg sm:text-xl font-bold tracking-tight text-white">

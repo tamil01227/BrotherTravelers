@@ -1,4 +1,5 @@
 import { BookingEnquiry } from '../types/travel';
+import { trackAnalyticsEvent } from './analytics';
 
 export const PRIMARY_WHATSAPP_NUMBER = '916381186895';
 export const DISPLAY_PHONE_NUMBERS = [
@@ -89,7 +90,17 @@ Thank you.`;
 /**
  * Safely redirects the browser to the WhatsApp URL.
  */
-export function openWhatsApp(url: string): void {
+export function openWhatsApp(
+  url: string,
+  source: 'trip_form' | 'booking_form' | 'contact_form' | 'vehicle_quote' | 'journey_planner' | 'tour_quote' | 'other' = 'other'
+): void {
+  trackAnalyticsEvent('whatsapp_click', { source });
+  if (source === 'trip_form' || source === 'booking_form' || source === 'contact_form') {
+    trackAnalyticsEvent('booking_form_submit', { source });
+  }
+  if (source === 'vehicle_quote') {
+    trackAnalyticsEvent('vehicle_quote_request', { source });
+  }
   // Opening in new tab or direct window depending on viewport
   window.open(url, '_blank', 'noopener,noreferrer');
 }

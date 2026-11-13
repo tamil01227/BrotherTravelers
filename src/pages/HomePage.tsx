@@ -5,7 +5,6 @@ import {
   Users, 
   Car, 
   ShieldCheck, 
-  Award, 
   ChevronRight,
   Route,
   Headset,
@@ -69,7 +68,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       travelType: tripPurpose || 'Not specified',
       additionalRequirements,
     };
-    openWhatsApp(generateWhatsAppUrl(enquiry));
+    openWhatsApp(generateWhatsAppUrl(enquiry), 'trip_form');
     setFormMessage(language === 'ta'
       ? 'உங்கள் பயண விவரங்கள் வாட்ஸ்அப்பில் தயாராக உள்ளன. சரிபார்த்து அனுப்புங்கள்.'
       : 'Your trip details are ready in WhatsApp. Review the enquiry and send it there.');
@@ -110,8 +109,8 @@ export const HomePage: React.FC<HomePageProps> = ({
               </button>
             </div>
             <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3 text-xs sm:text-sm text-slate-700">
-              <span className="inline-flex items-center gap-2"><MapPin className="h-4 w-4 shrink-0 text-sky-700" aria-hidden="true" />{language === 'ta' ? 'கோவையில் இலவச பிக்கப்' : 'Free Coimbatore pickup'}</span>
-              <span className="inline-flex items-center gap-2"><ShieldCheck className="h-4 w-4 shrink-0 text-sky-700" aria-hidden="true" />{language === 'ta' ? 'அகில இந்திய சுற்றுலா அனுமதிகள்' : 'All India Tourist Permits'}</span>
+              <span className="inline-flex items-center gap-2"><MapPin className="h-4 w-4 shrink-0 text-sky-700" aria-hidden="true" />{language === 'ta' ? 'கோயம்புத்தூரை மையமாகக் கொண்ட பயணங்கள்' : 'Trips starting in Coimbatore'}</span>
+              <span className="inline-flex items-center gap-2"><ShieldCheck className="h-4 w-4 shrink-0 text-sky-700" aria-hidden="true" />{language === 'ta' ? 'பயண விவரங்களுடன் வாகன விருப்பங்கள்' : 'Vehicle options matched to trip details'}</span>
               <span className="inline-flex items-center gap-2"><Users className="h-4 w-4 shrink-0 text-sky-700" aria-hidden="true" />{language === 'ta' ? 'பல குழு அளவுகளுக்கான வாகனங்கள்' : 'Vehicles for different group sizes'}</span>
               <span className="inline-flex items-center gap-2"><Headset className="h-4 w-4 shrink-0 text-sky-700" aria-hidden="true" />{language === 'ta' ? 'நேரடி முன்பதிவு உதவி' : 'Direct booking assistance'}</span>
               <span className="inline-flex items-center gap-2 sm:col-span-2"><Route className="h-4 w-4 shrink-0 text-sky-700" aria-hidden="true" />{language === 'ta' ? 'வெளியூர் மற்றும் மாநிலங்களுக்கு இடையிலான பயணங்கள்' : 'Outstation and interstate travel'}</span>
@@ -341,7 +340,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="text-xs font-bold uppercase tracking-wider text-sky-800">
-              Coimbatore's Reliable Partner
+              {language === 'ta' ? 'கோயம்புத்தூரிலிருந்து பயணங்கள்' : 'Travel from Coimbatore'}
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mt-1">
               {t.features.heading}
@@ -394,7 +393,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             {/* Value 4 */}
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs hover:border-slate-300 transition-all">
               <div className="w-11 h-11 rounded-xl bg-indigo-50 text-indigo-800 flex items-center justify-center mb-4">
-                <Award className="w-6 h-6 text-indigo-700" />
+                <Route className="w-6 h-6 text-indigo-700" />
               </div>
               <h3 className="font-bold text-slate-900 text-base mb-2">
                 {t.features.item4Title}
@@ -445,6 +444,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                     className="w-full h-full object-cover"
                     loading="lazy"
                     decoding="async"
+                    referrerPolicy="no-referrer"
                   />
                 ) : (
                   <div className="flex h-full flex-col items-center justify-center gap-2 bg-slate-100 text-slate-500">
@@ -452,19 +452,19 @@ export const HomePage: React.FC<HomePageProps> = ({
                     <span className="text-xs">{language === 'ta' ? 'படம் இல்லை' : 'Photo unavailable'}</span>
                   </div>
                 )}
-                <div className="absolute top-3 left-3 bg-slate-900/80 text-white text-xs font-semibold px-2.5 py-1 rounded-md">
-                  {dest.distanceFromCoimbatore} from CBE
-                </div>
+                {dest.imageCredit && (
+                  <div className="absolute bottom-2 right-2 rounded-md bg-slate-950/75 px-2 py-1 text-[10px] text-white">
+                    Photo: <a href={dest.imageCredit.sourceUrl} target="_blank" rel="noreferrer" className="underline">{dest.imageCredit.author}</a>
+                    {' · '}
+                    <a href={dest.imageCredit.licenseUrl} target="_blank" rel="noreferrer" className="underline">{dest.imageCredit.license}</a>
+                  </div>
+                )}
               </div>
 
               <div className="p-5 flex flex-col flex-1">
                 <h3 className="text-lg font-bold text-slate-900 group-hover:text-sky-900 transition-colors">
                   {dest.name[language]}
                 </h3>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  Approx {dest.approxTravelTime} · Best: {dest.bestTimeToVisit}
-                </p>
-
                 <p className="text-xs text-slate-600 mt-2.5 line-clamp-2 leading-relaxed">
                   {dest.description[language]}
                 </p>
@@ -473,6 +473,13 @@ export const HomePage: React.FC<HomePageProps> = ({
                   <span className="text-[11px] text-slate-500">
                     Recommended: <strong className="text-slate-700">{dest.recommendedVehicleTypes[0]}</strong>
                   </span>
+                  <button
+                    type="button"
+                    onClick={() => onNavigate('route-detail', dest.id)}
+                    className="mb-2 inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-800 hover:border-teal-700 hover:bg-teal-50"
+                  >
+                    {language === 'ta' ? 'இட விவரங்கள்' : 'Explore destination'}
+                  </button>
                   <button
                     onClick={() => onOpenBookingModal({ destination: dest.name[language] })}
                     className="mt-3 inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-amber-500 px-4 py-2.5 text-sm font-bold text-[#203B4A] transition-colors hover:bg-amber-600 cursor-pointer"

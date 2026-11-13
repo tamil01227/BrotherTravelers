@@ -85,10 +85,13 @@ export interface TouristDestination {
     ta: string;
   };
   state: string;
-  distanceFromCoimbatore: string;
-  approxTravelTime: string;
-  bestTimeToVisit: string;
   image?: string;
+  imageCredit?: {
+    author: string;
+    sourceUrl: string;
+    license: string;
+    licenseUrl: string;
+  };
   description: {
     en: string;
     ta: string;

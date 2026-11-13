@@ -29,7 +29,7 @@ export const JourneyPlannerDrawer: React.FC<JourneyPlannerDrawerProps> = ({
   onClose,
 }) => {
   const [selectedStops, setSelectedStops] = useState<string[]>([]);
-  const [pickupLocation, setPickupLocation] = useState('Coimbatore (Free Doorstep Pickup)');
+  const [pickupLocation, setPickupLocation] = useState('Coimbatore');
   const [travelDate, setTravelDate] = useState('');
   const [returnDate, setReturnDate] = useState('');
   const [isMultiDay, setIsMultiDay] = useState(false);
@@ -45,7 +45,7 @@ export const JourneyPlannerDrawer: React.FC<JourneyPlannerDrawerProps> = ({
     if (!destination) return;
 
     setSelectedStops(destination.topAttractions);
-    setPickupLocation('Coimbatore (Free Doorstep Pickup)');
+    setPickupLocation('Coimbatore');
     setTravelDate('');
     setReturnDate('');
     setIsMultiDay(false);
@@ -152,7 +152,7 @@ export const JourneyPlannerDrawer: React.FC<JourneyPlannerDrawerProps> = ({
 
     const url = generateWhatsAppUrl(enquiry);
     setTimeout(() => {
-      openWhatsApp(url);
+      openWhatsApp(url, 'journey_planner');
       setIsSubmitting(false);
       onClose();
     }, 350);
@@ -192,11 +192,7 @@ export const JourneyPlannerDrawer: React.FC<JourneyPlannerDrawerProps> = ({
             >
               {destination.name[language]}
             </h2>
-            <p className="text-xs text-slate-500 mt-1 tabular-nums">
-              {destination.state} <span aria-hidden="true">·</span> {destination.distanceFromCoimbatore} from CBE{' '}
-              <span aria-hidden="true">·</span> {destination.approxTravelTime}{' '}
-              <span aria-hidden="true">·</span> Best: {destination.bestTimeToVisit}
-            </p>
+            <p className="text-xs text-slate-500 mt-1">{destination.state}</p>
           </div>
 
           <button

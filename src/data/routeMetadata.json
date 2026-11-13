@@ -1,0 +1,167 @@
+[
+  {
+    "path": "/",
+    "type": "core",
+    "tab": "home",
+    "title": "Tours and Travels in Coimbatore | BROTHER'S TRAVELS",
+    "description": "Explore cars, tourist vans and group coaches for trips from Coimbatore. Share your route and travel details to request a customised quotation.",
+    "heading": "Tours and Travels in Coimbatore"
+  },
+  {
+    "path": "/about",
+    "type": "core",
+    "tab": "about",
+    "title": "About BROTHER'S TRAVELS | Coimbatore",
+    "description": "Learn about BROTHER'S TRAVELS and explore vehicle options for local travel, group trips and journeys from Coimbatore.",
+    "heading": "About BROTHER'S TRAVELS"
+  },
+  {
+    "path": "/vehicles",
+    "type": "core",
+    "tab": "vehicles",
+    "title": "Car and Tourist Vehicle Rental in Coimbatore | BROTHER'S TRAVELS",
+    "description": "Compare car, Tempo Traveller, Urbania and coach options by seats, luggage and listed features. Request a customised quotation for your trip.",
+    "heading": "Vehicles for trips from Coimbatore"
+  },
+  {
+    "path": "/tours",
+    "type": "core",
+    "tab": "tours",
+    "title": "Tour Packages and Custom Itineraries from Coimbatore | BROTHER'S TRAVELS",
+    "description": "Explore sample routes and request a customised itinerary from Coimbatore. Trip duration, pricing and availability are confirmed for each enquiry.",
+    "heading": "Tour routes and custom itineraries"
+  },
+  {
+    "path": "/destinations",
+    "type": "core",
+    "tab": "destinations",
+    "title": "Tourist Destinations from Coimbatore | BROTHER'S TRAVELS",
+    "description": "Explore destination information for Ooty, Munnar, Kodaikanal, Valparai, Rameswaram and Mysore-Coorg, then plan a trip from Coimbatore.",
+    "heading": "Destinations from Coimbatore"
+  },
+  {
+    "path": "/events",
+    "type": "core",
+    "tab": "events",
+    "title": "Event and Group Travel Vehicles in Coimbatore | BROTHER'S TRAVELS",
+    "description": "Explore vehicle options for event and group travel in Coimbatore. Share passenger count, schedule and route to request a quotation.",
+    "heading": "Event and group transportation"
+  },
+  {
+    "path": "/contact",
+    "type": "core",
+    "tab": "contact",
+    "title": "Contact BROTHER'S TRAVELS | Coimbatore",
+    "description": "Contact BROTHER'S TRAVELS by phone or WhatsApp to discuss vehicle options and request a customised trip quotation.",
+    "heading": "Contact BROTHER'S TRAVELS"
+  },
+  {
+    "path": "/privacy-policy",
+    "type": "legal",
+    "tab": "privacy",
+    "title": "Privacy Policy | BROTHER'S TRAVELS",
+    "description": "Read how trip enquiry details and optional analytics preferences are handled on the BROTHER'S TRAVELS website.",
+    "heading": "Privacy policy"
+  },
+  {
+    "path": "/terms-of-service",
+    "type": "legal",
+    "tab": "terms",
+    "title": "Terms of Use | BROTHER'S TRAVELS",
+    "description": "Read the terms for using the BROTHER'S TRAVELS website and sending a travel enquiry.",
+    "heading": "Terms of use"
+  },
+  {
+    "path": "/destinations/ooty",
+    "type": "destination",
+    "slug": "ooty",
+    "title": "Coimbatore to Ooty Travel | BROTHER'S TRAVELS",
+    "description": "Plan a Coimbatore to Ooty trip and explore Ooty attractions. Compare available vehicle options and request a customised travel quotation.",
+    "heading": "Coimbatore to Ooty travel"
+  },
+  {
+    "path": "/destinations/munnar",
+    "type": "destination",
+    "slug": "munnar",
+    "title": "Coimbatore to Munnar Travel | BROTHER'S TRAVELS",
+    "description": "Explore Munnar attractions and plan a trip from Coimbatore. Share your group size, dates and route to request a customised quotation.",
+    "heading": "Coimbatore to Munnar travel"
+  },
+  {
+    "path": "/destinations/kodaikanal",
+    "type": "destination",
+    "slug": "kodaikanal",
+    "title": "Coimbatore to Kodaikanal Travel | BROTHER'S TRAVELS",
+    "description": "Explore Kodaikanal attractions and request a customised trip from Coimbatore. Vehicle availability and trip details are confirmed by the business.",
+    "heading": "Coimbatore to Kodaikanal travel"
+  },
+  {
+    "path": "/destinations/valparai",
+    "type": "destination",
+    "slug": "valparai",
+    "title": "Coimbatore to Valparai Travel | BROTHER'S TRAVELS",
+    "description": "Explore Valparai attractions and plan a trip from Coimbatore. Share your route and passenger count to request a vehicle quotation.",
+    "heading": "Coimbatore to Valparai travel"
+  },
+  {
+    "path": "/destinations/rameswaram",
+    "type": "destination",
+    "slug": "rameswaram",
+    "title": "Coimbatore to Rameswaram Travel | BROTHER'S TRAVELS",
+    "description": "Explore Rameswaram attractions and request a customised trip from Coimbatore, with vehicle options for different group sizes.",
+    "heading": "Coimbatore to Rameswaram travel"
+  },
+  {
+    "path": "/destinations/mysore-coorg",
+    "type": "destination",
+    "slug": "mysore-coorg",
+    "title": "Coimbatore to Mysore and Coorg Travel | BROTHER'S TRAVELS",
+    "description": "Explore attractions in Mysore and Coorg and plan an itinerary from Coimbatore. Request a quotation based on your travel details.",
+    "heading": "Coimbatore to Mysore and Coorg travel"
+  },
+  {
+    "path": "/services/force-traveller-rental-coimbatore",
+    "type": "service",
+    "slug": "force-traveller-rental-coimbatore",
+    "vehicleIds": ["force-traveller-14"],
+    "title": "Tempo Traveller Rental in Coimbatore | BROTHER'S TRAVELS",
+    "description": "Explore the listed Force Traveller option for group travel from Coimbatore. Review seats, luggage and features, then request a customised quotation.",
+    "heading": "Tempo Traveller rental in Coimbatore"
+  },
+  {
+    "path": "/services/sml-21-seater-bus-rental-coimbatore",
+    "type": "service",
+    "slug": "sml-21-seater-bus-rental-coimbatore",
+    "vehicleIds": ["sml-coach-21"],
+    "title": "21-Seater Coach Rental in Coimbatore | BROTHER'S TRAVELS",
+    "description": "Review the listed SML coach seating, luggage and features for group trips from Coimbatore, then request an itinerary-specific quotation.",
+    "heading": "21-seater coach rental in Coimbatore"
+  },
+  {
+    "path": "/services/coimbatore-to-ooty-travels",
+    "type": "service",
+    "slug": "coimbatore-to-ooty-travels",
+    "destinationId": "ooty",
+    "title": "Coimbatore to Ooty Travels and Vehicle Booking | BROTHER'S TRAVELS",
+    "description": "Plan a Coimbatore to Ooty journey. Compare vehicle options and share your travel dates and passenger count to request a customised quotation.",
+    "heading": "Coimbatore to Ooty travels"
+  },
+  {
+    "path": "/services/force-urbania-rental-coimbatore",
+    "type": "service",
+    "slug": "force-urbania-rental-coimbatore",
+    "vehicleIds": ["force-urbania-16"],
+    "title": "Force Urbania Rental in Coimbatore | BROTHER'S TRAVELS",
+    "description": "Explore the listed Force Urbania seats, luggage and features for group journeys from Coimbatore. Request a customised quotation.",
+    "heading": "Force Urbania rental in Coimbatore"
+  },
+  {
+    "path": "/services/car-rental-coimbatore",
+    "type": "service",
+    "slug": "car-rental-coimbatore",
+    "vehicleIds": ["toyota-innova-7", "maruti-ertiga-7"],
+    "title": "Car Rental in Coimbatore | BROTHER'S TRAVELS",
+    "description": "Compare the listed Toyota Innova and Maruti Ertiga options by seats, luggage and features. Request a quotation for your Coimbatore trip.",
+    "heading": "Car rental in Coimbatore"
+  }
+]

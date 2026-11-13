@@ -1,10 +1,7 @@
 import { TourPackage, TouristDestination, SEOLandingData } from '../types/travel';
 import ootyDestinationImage from '../assets/images/destination_ooty_hills_1794284647653-optimized.jpg';
-
-const munnarDestinationImage =
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/0/09/Munnar_-_Tea_Plantations.jpg/960px-Munnar_-_Tea_Plantations.jpg';
-const kodaikanalDestinationImage =
-  'https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Kodaikanal_Lake_2.jpg/960px-Kodaikanal_Lake_2.jpg';
+import munnarDestinationImage from '../assets/images/destination_munnar_tea_960.jpg';
+import kodaikanalDestinationImage from '../assets/images/destination_kodaikanal_lake_960.jpg';
 const wikimediaAttribution = (author: string, fileName: string) => ({
   author,
   sourceUrl: `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(fileName).replaceAll('%20', '_')}`,

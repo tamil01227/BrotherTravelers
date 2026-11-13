@@ -124,21 +124,22 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-xs overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-950/70 backdrop-blur-xs overflow-y-auto">
       <div 
-        className="relative w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden my-6 transition-all"
+        className="relative w-full max-w-xl bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl border border-slate-200 overflow-hidden sm:my-6 max-h-[92dvh] overflow-y-auto transition-all"
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
       >
         {/* Header Bar */}
-        <div className="bg-slate-950 text-white px-5 sm:px-6 py-4 flex items-start justify-between gap-4">
+        <div className="sticky top-0 z-10 bg-slate-950 text-white px-5 sm:px-6 py-4 flex items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-green-500/20 text-green-400 border border-green-500/30">
+              <span className="inline-flex items-center gap-1 text-[11px] font-bold text-green-400">
                 <MessageCircle className="w-3 h-3 fill-current" />
                 WhatsApp Direct Booking
               </span>
+              <span className="text-slate-600" aria-hidden="true">·</span>
               <span className="text-xs text-sky-200">
                 {language === 'ta' ? 'கோவை பிக்கப் இலவசம்' : 'Free Coimbatore Pickup'}
               </span>
@@ -152,7 +153,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors cursor-pointer shrink-0"
+            className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 rounded-xl transition-colors cursor-pointer shrink-0 -mr-2 -mt-1"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
@@ -175,7 +176,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 value={formData.customerName}
                 onChange={(e) => setFormData({ ...formData, customerName: e.target.value })}
                 placeholder="e.g. Ramesh Kumar"
-                className={`w-full px-3 py-2 text-sm rounded-lg border bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 transition-all ${
+                className={`w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 transition-all ${
                   errors.customerName ? 'border-rose-400 bg-rose-50/30' : 'border-slate-300'
                 }`}
               />
@@ -197,7 +198,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 value={formData.mobileNumber}
                 onChange={(e) => setFormData({ ...formData, mobileNumber: e.target.value })}
                 placeholder="e.g. 9876543210"
-                className={`w-full px-3 py-2 text-sm rounded-lg border bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 transition-all ${
+                className={`w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 transition-all ${
                   errors.mobileNumber ? 'border-rose-400 bg-rose-50/30' : 'border-slate-300'
                 }`}
               />
@@ -214,14 +215,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 {t.bookingModal.pickupLabel}
               </label>
               <div className="relative">
-                <MapPin className="w-4 h-4 text-slate-400 absolute left-3 top-2.5 pointer-events-none" />
+                <MapPin className="w-4 h-4 text-slate-400 absolute left-3 top-3 pointer-events-none" />
                 <input
                   id="booking-pickup"
                   type="text"
                   value={formData.pickupLocation}
                   onChange={(e) => setFormData({ ...formData, pickupLocation: e.target.value })}
                   placeholder="e.g. Gandhipuram / RS Puram / Airport"
-                  className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
+                  className="w-full min-h-[44px] pl-9 pr-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
                 />
               </div>
             </div>
@@ -239,7 +240,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 value={formData.destination}
                 onChange={(e) => setFormData({ ...formData, destination: e.target.value })}
                 placeholder="e.g. Ooty, Munnar, Palani, Rameswaram"
-                className={`w-full px-3 py-2 text-sm rounded-lg border bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 transition-all ${
+                className={`w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 transition-all ${
                   errors.destination ? 'border-rose-400 bg-rose-50/30' : 'border-slate-300'
                 }`}
               />
@@ -263,7 +264,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   aria-describedby={errors.travelDate ? 'booking-travel-date-error' : undefined}
                   value={formData.travelDate}
                   onChange={(e) => setFormData({ ...formData, travelDate: e.target.value })}
-                  className={`w-full px-3 py-2 text-sm rounded-lg border bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 ${
+                  className={`w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 ${
                     errors.travelDate ? 'border-rose-400 bg-rose-50/30' : 'border-slate-300'
                   }`}
                 />
@@ -283,7 +284,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 type="date"
                 value={formData.returnDate}
                 onChange={(e) => setFormData({ ...formData, returnDate: e.target.value })}
-                className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
+                className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
               />
             </div>
           </div>
@@ -298,7 +299,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 id="booking-vehicle"
                 value={formData.selectedVehicle}
                 onChange={(e) => setFormData({ ...formData, selectedVehicle: e.target.value })}
-                className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 cursor-pointer"
+                className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 cursor-pointer"
               >
                 {VEHICLES_DATA.map((v) => (
                   <option key={v.id} value={v.name}>
@@ -320,7 +321,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 max="50"
                 value={formData.passengers}
                 onChange={(e) => setFormData({ ...formData, passengers: e.target.value })}
-                className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
+                className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
               />
             </div>
           </div>
@@ -334,7 +335,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               id="booking-trip-type"
               value={formData.travelType}
               onChange={(e) => setFormData({ ...formData, travelType: e.target.value })}
-              className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 cursor-pointer"
+              className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 cursor-pointer"
             >
               {travelTypeOptions.map((opt) => (
                 <option key={opt.value} value={opt.value}>

@@ -19,7 +19,7 @@ export const Footer: React.FC<FooterProps> = ({
   const t = TRANSLATIONS[language];
 
   return (
-    <footer className="bg-slate-950 text-slate-300 pt-16 pb-12 border-t border-slate-800">
+    <footer className="bg-slate-950 text-slate-300 pt-12 sm:pt-16 pb-24 sm:pb-12 border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Top Free Coimbatore Pickup Banner */}
         <div className="bg-gradient-to-r from-sky-900 to-slate-900 rounded-2xl p-6 sm:p-8 mb-12 border border-sky-800/50 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -36,20 +36,20 @@ export const Footer: React.FC<FooterProps> = ({
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 shrink-0">
+          <div className="grid grid-cols-1 sm:flex sm:flex-wrap items-center gap-3 w-full md:w-auto shrink-0">
             <button
               onClick={onOpenBooking}
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl font-bold text-sm bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-950 shadow-lg transition-colors cursor-pointer"
+              className="min-h-[48px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-sm bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-950 shadow-lg transition-colors cursor-pointer"
             >
               <MessageCircle className="w-4 h-4" />
               <span>{t.nav.bookNow}</span>
             </button>
             <a
               href={`tel:${BUSINESS_INFO.primaryPhone}`}
-              className="inline-flex items-center gap-2 px-4 py-3 rounded-xl font-bold text-sm bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all"
+              className="min-h-[48px] inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-bold text-sm bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all"
             >
               <Phone className="w-4 h-4" />
-              <span>{BUSINESS_INFO.primaryPhone}</span>
+              <span className="tabular-nums">{BUSINESS_INFO.primaryPhone}</span>
             </a>
           </div>
         </div>

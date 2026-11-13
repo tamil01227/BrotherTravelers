@@ -53,13 +53,13 @@ export const TourPackagesPage: React.FC<TourPackagesPageProps> = ({
         </p>
       </div>
 
-      {/* Category Filter Pills */}
-      <div className="flex flex-wrap items-center justify-center gap-2">
+      {/* Category Filter Tabs (Horizontal swipe on mobile) */}
+      <div className="flex overflow-x-auto sm:flex-wrap sm:justify-center gap-2 -mx-4 px-4 sm:mx-0 sm:px-0 pb-1 no-scrollbar">
         {categories.map((cat) => (
           <button
             key={cat.id}
             onClick={() => setSelectedCategory(cat.id)}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+            className={`min-h-[44px] px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
               selectedCategory === cat.id
                 ? 'bg-sky-900 text-white shadow-sm'
                 : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
@@ -149,19 +149,19 @@ export const TourPackagesPage: React.FC<TourPackagesPageProps> = ({
                 <span>Fuel, toll & permit options included transparently</span>
               </div>
 
-              <div className="flex items-center gap-2 w-full sm:w-auto">
+              <div className="grid grid-cols-2 sm:flex items-center gap-2 w-full sm:w-auto">
                 <button
                   onClick={() => onOpenBookingModal({ tour: pkg.title[language] })}
-                  className="flex-1 sm:flex-initial px-4 py-2.5 rounded-lg text-xs font-bold text-sky-950 bg-white hover:bg-slate-100 border border-slate-300 transition-colors cursor-pointer"
+                  className="min-h-[44px] px-4 py-2.5 rounded-lg text-xs font-bold text-sky-950 bg-white hover:bg-slate-100 border border-slate-300 transition-colors cursor-pointer"
                 >
                   Custom Plan
                 </button>
                 <button
                   onClick={() => handleQuickWhatsApp(pkg.title[language])}
-                  className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg text-xs font-bold text-white bg-green-600 hover:bg-green-700 active:bg-green-800 transition-colors shadow-xs cursor-pointer"
+                  className="min-h-[44px] inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 transition-colors shadow-xs cursor-pointer"
                 >
-                  <MessageCircle className="w-4 h-4 fill-current" />
-                  <span>WhatsApp Quote</span>
+                  <MessageCircle className="w-4 h-4 fill-current shrink-0" />
+                  <span className="truncate">WhatsApp Quote</span>
                 </button>
               </div>
             </div>

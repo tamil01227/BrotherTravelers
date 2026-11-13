@@ -66,36 +66,36 @@ export const HomePage: React.FC<HomePageProps> = ({
   };
 
   return (
-    <div className="space-y-16 sm:space-y-24">
+    <div className="space-y-12 sm:space-y-24">
       {/* 1. HERO SECTION */}
       <section className="bg-slate-50 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16 lg:py-20 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-16 lg:py-20 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           <div className="lg:col-span-6">
-            <div className="inline-flex items-center gap-2 bg-sky-50 border border-sky-100 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold text-sky-900 mb-5">
-              <MapPin className="w-4 h-4 text-sky-700" />
+            <p className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-sky-900 mb-3 sm:mb-4">
+              <MapPin className="w-4 h-4 text-sky-700 shrink-0" />
               <span>{t.hero.tag}</span>
-            </div>
-            <h1 className="text-3xl sm:text-5xl lg:text-[3.5rem] font-extrabold text-slate-950 tracking-tight text-balance leading-[1.08]">
+            </p>
+            <h1 className="text-[1.75rem] sm:text-5xl lg:text-[3.5rem] font-extrabold text-slate-950 tracking-tight text-balance leading-[1.12]">
               {t.hero.h1}
             </h1>
-            <p className="mt-5 text-base sm:text-lg text-slate-600 max-w-xl leading-relaxed text-balance">
+            <p className="mt-4 sm:mt-5 text-[15px] sm:text-lg text-slate-600 max-w-xl leading-relaxed text-balance">
               {t.hero.p}
             </p>
-            <p className="mt-4 flex items-center gap-2 text-sm font-semibold text-sky-900">
+            <p className="mt-3 sm:mt-4 flex items-center gap-2 text-sm font-semibold text-sky-900">
               <MapPin className="w-4 h-4 text-sky-700 shrink-0" />
               {language === 'ta' ? 'கோவையில் இலவச பிக்கப் வசதி' : 'Free pickup throughout Coimbatore'}
             </p>
-            <div className="mt-7 flex flex-wrap gap-3">
+            <div className="mt-6 sm:mt-7 grid grid-cols-1 sm:flex sm:flex-wrap gap-3">
               <button
                 onClick={() => onOpenBookingModal()}
-                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base text-slate-950 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 shadow-sm transition-colors cursor-pointer"
+                className="min-h-[48px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-sm sm:text-base text-slate-950 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 shadow-sm transition-colors cursor-pointer"
               >
                 <MessageCircle className="w-5 h-5" />
                 <span>{t.nav.bookNow}</span>
               </button>
               <button
                 onClick={() => onNavigate('vehicles')}
-                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base text-slate-900 bg-white hover:bg-slate-100 border border-slate-300 transition-colors cursor-pointer"
+                className="min-h-[48px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-sm sm:text-base text-slate-900 bg-white hover:bg-slate-100 border border-slate-300 transition-colors cursor-pointer"
               >
                 <Car className="w-5 h-5 text-sky-700" />
                 <span>{t.hero.exploreVehicles}</span>
@@ -125,18 +125,18 @@ export const HomePage: React.FC<HomePageProps> = ({
               loading="eager"
               fetchPriority="high"
             />
-            <div className="absolute bottom-3 left-3 right-3 sm:bottom-5 sm:left-5 sm:right-5 bg-white/95 backdrop-blur-sm rounded-xl p-3 sm:p-4 flex items-center justify-between gap-3 shadow-sm">
+            <div className="mt-3 sm:mt-0 sm:absolute sm:bottom-5 sm:left-5 sm:right-5 bg-white/95 backdrop-blur-sm rounded-xl p-3.5 sm:p-4 flex items-center justify-between gap-3 border border-slate-200 sm:border-0 shadow-xs sm:shadow-sm">
               <div>
                 <p className="text-xs sm:text-sm font-bold text-slate-900">
                   {language === 'ta' ? 'உங்கள் பயணத்திற்கான வாகனம்' : 'The right vehicle for your trip'}
                 </p>
-                <p className="text-[11px] sm:text-xs text-slate-600 mt-0.5">
+                <p className="text-xs text-slate-600 mt-0.5">
                   {language === 'ta' ? 'குடும்பம், குழு மற்றும் சுற்றுலா பயணங்கள்' : 'Family, group and sightseeing journeys'}
                 </p>
               </div>
               <button
                 onClick={() => onNavigate('tours')}
-                className="shrink-0 text-xs sm:text-sm font-bold text-sky-900 hover:text-sky-700 transition-colors"
+                className="shrink-0 min-h-[40px] px-2 inline-flex items-center text-xs sm:text-sm font-bold text-sky-900 hover:text-sky-700 transition-colors cursor-pointer"
               >
                 {language === 'ta' ? 'சுற்றுலாக்கள்' : 'Explore trips'}
                 <span className="sr-only"> and tour packages</span>
@@ -147,18 +147,18 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* 2. SEARCH & ENQUIRY DISCOVERY BAR (Below Hero) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 -mt-8 sm:-mt-16 relative z-20">
-        <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-5 sm:p-7">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 mt-4 sm:-mt-14 lg:-mt-16 relative z-20">
+        <div className="bg-white rounded-2xl shadow-lg sm:shadow-xl border border-slate-200 p-4 sm:p-7">
           <div className="mb-4">
             <h2 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
               {t.searchWidget.title}
             </h2>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-500 mt-0.5">
               {t.searchWidget.subtitle}
             </p>
           </div>
 
-          <form onSubmit={handleSearchSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 sm:gap-4">
+          <form onSubmit={handleSearchSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3.5 sm:gap-4">
             {/* Pickup */}
             <div className="lg:col-span-1">
               <label htmlFor="search-pickup" className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
@@ -170,7 +170,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 value={searchPickup}
                 onChange={(e) => setSearchPickup(e.target.value)}
                 placeholder="Coimbatore"
-                className="w-full px-3 py-2 text-xs sm:text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
+                className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
               />
             </div>
 
@@ -185,7 +185,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 value={searchDestination}
                 onChange={(e) => setSearchDestination(e.target.value)}
                 placeholder="e.g. Ooty / Munnar"
-                className="w-full px-3 py-2 text-xs sm:text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
+                className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
               />
             </div>
 
@@ -199,7 +199,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 type="date"
                 value={searchDate}
                 onChange={(e) => setSearchDate(e.target.value)}
-                className="w-full px-3 py-2 text-xs sm:text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
+                className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
               />
             </div>
 
@@ -212,7 +212,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 id="search-passengers"
                 value={searchPassengers}
                 onChange={(e) => setSearchPassengers(e.target.value)}
-                className="w-full px-3 py-2 text-xs sm:text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 cursor-pointer"
+                className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 cursor-pointer"
               >
                 <option value="4">1 - 4 Passengers</option>
                 <option value="7">5 - 7 Passengers (Innova/Ertiga)</option>
@@ -231,7 +231,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 id="search-vehicle"
                 value={searchVehicle}
                 onChange={(e) => setSearchVehicle(e.target.value)}
-                className="w-full px-3 py-2 text-xs sm:text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 cursor-pointer"
+                className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 cursor-pointer"
               >
                 <option value="All">{t.searchWidget.allVehicles}</option>
                 {VEHICLES_DATA.map((v) => (
@@ -241,10 +241,10 @@ export const HomePage: React.FC<HomePageProps> = ({
             </div>
 
             {/* Submit Action */}
-            <div className="lg:col-span-1 flex items-end">
+            <div className="lg:col-span-1 flex items-end pt-1 sm:pt-0">
               <button
                 type="submit"
-                className="w-full py-2.5 px-4 rounded-lg bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs sm:text-sm transition-colors cursor-pointer flex items-center justify-center gap-1.5 shadow-sm"
+                className="w-full min-h-[48px] sm:min-h-[44px] py-2.5 px-4 rounded-xl sm:rounded-lg bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm transition-colors cursor-pointer flex items-center justify-center gap-1.5 shadow-sm"
               >
                 <MessageCircle className="w-4 h-4" />
                 <span>Get Quote</span>

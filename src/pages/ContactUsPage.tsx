@@ -25,14 +25,20 @@ export const ContactUsPage: React.FC<ContactUsPageProps> = ({ language }) => {
   });
 
   const [formSent, setFormSent] = useState(false);
+  const [formError, setFormError] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!contactForm.customerName || !contactForm.mobileNumber) {
-      alert(language === 'ta' ? 'தயவுசெய்து உங்கள் பெயர் மற்றும் எண்ணை உள்ளிடவும்' : 'Please provide your name and mobile number.');
+    if (!contactForm.customerName.trim() || !contactForm.mobileNumber.trim()) {
+      setFormError(
+        language === 'ta'
+          ? 'தயவுசெய்து உங்கள் பெயர் மற்றும் எண்ணை உள்ளிடவும்'
+          : 'Please provide your name and mobile number.'
+      );
       return;
     }
 
+    setFormError('');
     setFormSent(true);
     const url = generateWhatsAppUrl(contactForm);
     setTimeout(() => {
@@ -96,14 +102,14 @@ export const ContactUsPage: React.FC<ContactUsPageProps> = ({ language }) => {
               <div className="pt-1 flex items-center gap-2">
                 <button
                   onClick={handleDirectWhatsApp}
-                  className="flex-1 py-2 px-3 rounded-lg text-xs font-bold text-white bg-green-600 hover:bg-green-700 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="flex-1 min-h-[44px] py-2 px-3 rounded-lg text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <MessageCircle className="w-4 h-4 fill-current" />
                   <span>WhatsApp Now</span>
                 </button>
                 <a
                   href={`tel:${BUSINESS_INFO.primaryPhone}`}
-                  className="flex-1 py-2 px-3 rounded-lg text-xs font-bold text-slate-800 bg-white border border-slate-300 hover:bg-slate-50 transition-colors flex items-center justify-center gap-1.5"
+                  className="flex-1 min-h-[44px] py-2 px-3 rounded-lg text-xs font-bold text-slate-800 bg-white border border-slate-300 hover:bg-slate-50 transition-colors flex items-center justify-center gap-1.5"
                 >
                   <Phone className="w-4 h-4" />
                   <span>Call Now</span>
@@ -190,9 +196,12 @@ export const ContactUsPage: React.FC<ContactUsPageProps> = ({ language }) => {
                     type="text"
                     required
                     value={contactForm.customerName}
-                    onChange={(e) => setContactForm({ ...contactForm, customerName: e.target.value })}
+                    onChange={(e) => {
+                      setContactForm({ ...contactForm, customerName: e.target.value });
+                      if (formError) setFormError('');
+                    }}
                     placeholder="Your Full Name"
-                    className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
+                    className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
 
@@ -204,9 +213,12 @@ export const ContactUsPage: React.FC<ContactUsPageProps> = ({ language }) => {
                     type="tel"
                     required
                     value={contactForm.mobileNumber}
-                    onChange={(e) => setContactForm({ ...contactForm, mobileNumber: e.target.value })}
+                    onChange={(e) => {
+                      setContactForm({ ...contactForm, mobileNumber: e.target.value });
+                      if (formError) setFormError('');
+                    }}
                     placeholder="Your 10-digit Mobile Number"
-                    className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
+                    className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
               </div>
@@ -221,7 +233,7 @@ export const ContactUsPage: React.FC<ContactUsPageProps> = ({ language }) => {
                     value={contactForm.pickupLocation}
                     onChange={(e) => setContactForm({ ...contactForm, pickupLocation: e.target.value })}
                     placeholder="e.g. Coimbatore Airport / Gandhipuram"
-                    className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
+                    className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
 
@@ -235,7 +247,7 @@ export const ContactUsPage: React.FC<ContactUsPageProps> = ({ language }) => {
                     value={contactForm.destination}
                     onChange={(e) => setContactForm({ ...contactForm, destination: e.target.value })}
                     placeholder="e.g. Ooty, Munnar, Bangalore, Rameswaram"
-                    className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
+                    className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
               </div>
@@ -249,7 +261,7 @@ export const ContactUsPage: React.FC<ContactUsPageProps> = ({ language }) => {
                     type="date"
                     value={contactForm.travelDate}
                     onChange={(e) => setContactForm({ ...contactForm, travelDate: e.target.value })}
-                    className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
+                    className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
 
@@ -263,7 +275,7 @@ export const ContactUsPage: React.FC<ContactUsPageProps> = ({ language }) => {
                     max="50"
                     value={contactForm.passengers}
                     onChange={(e) => setContactForm({ ...contactForm, passengers: e.target.value })}
-                    className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
+                    className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
                   />
                 </div>
 
@@ -274,7 +286,7 @@ export const ContactUsPage: React.FC<ContactUsPageProps> = ({ language }) => {
                   <select
                     value={contactForm.selectedVehicle}
                     onChange={(e) => setContactForm({ ...contactForm, selectedVehicle: e.target.value })}
-                    className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
+                    className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
                   >
                     {VEHICLES_DATA.map((v) => (
                       <option key={v.id} value={v.name}>{v.name}</option>
@@ -292,14 +304,20 @@ export const ContactUsPage: React.FC<ContactUsPageProps> = ({ language }) => {
                   value={contactForm.additionalRequirements}
                   onChange={(e) => setContactForm({ ...contactForm, additionalRequirements: e.target.value })}
                   placeholder="e.g. Return trip required, multiple stops, AC preferences"
-                  className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 resize-none"
+                  className="w-full px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 resize-none"
                 />
               </div>
+
+              {formError && (
+                <p role="alert" className="text-xs font-medium text-rose-600 bg-rose-50 border border-rose-200 rounded-lg px-3 py-2">
+                  {formError}
+                </p>
+              )}
 
               <button
                 type="submit"
                 disabled={formSent}
-                className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-bold text-white bg-green-600 hover:bg-green-700 active:bg-green-800 transition-all text-sm sm:text-base shadow-sm cursor-pointer"
+                className="w-full min-h-[48px] flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-bold text-white bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 transition-all text-sm sm:text-base shadow-sm cursor-pointer"
               >
                 <MessageCircle className="w-5 h-5 fill-current" />
                 <span>{formSent ? 'Opening WhatsApp...' : 'Submit Booking Enquiry via WhatsApp'}</span>

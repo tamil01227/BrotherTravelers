@@ -174,7 +174,32 @@ export const VehiclesPage: React.FC<VehiclesPageProps> = ({
           </p>
         </div>
 
-        <div className="overflow-x-auto">
+        {/* Mobile Spec Cards */}
+        <div className="md:hidden divide-y divide-slate-100">
+          {VEHICLES_DATA.map((v) => (
+            <div key={v.id} className="p-4 flex items-center justify-between gap-3">
+              <div className="min-w-0">
+                <h3 className="font-bold text-sm text-slate-900 truncate">{v.name}</h3>
+                <p className="text-xs text-slate-600 mt-0.5 tabular-nums">
+                  {v.seatingCapacity} <span aria-hidden="true">·</span> {v.luggageCapacity}
+                </p>
+                <p className="text-[11px] text-slate-500 mt-0.5 truncate">
+                  {v.suitableFor[language][0]}
+                </p>
+              </div>
+              <button
+                onClick={() => onOpenBookingModal({ vehicle: v.name })}
+                className="shrink-0 min-h-[44px] inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 transition-colors cursor-pointer"
+              >
+                <MessageCircle className="w-3.5 h-3.5 fill-current" />
+                <span>Quote</span>
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop Comparison Table */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-xs sm:text-sm text-left border-collapse">
             <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 font-bold">
               <tr>
@@ -191,7 +216,7 @@ export const VehiclesPage: React.FC<VehiclesPageProps> = ({
                   <td className="p-4 font-bold text-slate-900">
                     {v.name}
                   </td>
-                  <td className="p-4 text-slate-600">
+                  <td className="p-4 text-slate-600 tabular-nums">
                     {v.seatingCapacity}
                   </td>
                   <td className="p-4 text-slate-600">
@@ -203,7 +228,7 @@ export const VehiclesPage: React.FC<VehiclesPageProps> = ({
                   <td className="p-4 text-right">
                     <button
                       onClick={() => onOpenBookingModal({ vehicle: v.name })}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-green-600 hover:bg-green-700 transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 transition-colors cursor-pointer"
                     >
                       <MessageCircle className="w-3.5 h-3.5 fill-current" />
                       <span>Quote</span>

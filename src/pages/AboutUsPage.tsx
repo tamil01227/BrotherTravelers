@@ -2,6 +2,7 @@ import React from 'react';
 import { ShieldCheck, MapPin, Phone, MessageCircle, Award, Users, CheckCircle, Car } from 'lucide-react';
 import { Language } from '../types/travel';
 import { BUSINESS_INFO, TRANSLATIONS } from '../data/travelData';
+import urbaniaImage from '../assets/images/fleet_force_urbania_1794284646206.jpg';
 
 interface AboutUsPageProps {
   language: Language;
@@ -38,7 +39,7 @@ export const AboutUsPage: React.FC<AboutUsPageProps> = ({
         {/* Left Visual Banner */}
         <div className="lg:col-span-5 relative rounded-2xl overflow-hidden border border-slate-200 shadow-lg aspect-4/3 lg:aspect-auto lg:h-full min-h-[320px]">
           <img
-            src="/src/assets/images/fleet_force_urbania_1794284646206.jpg"
+            src={urbaniaImage}
             alt="BROTHER'S TRAVELS Luxury Commercial Fleet"
             className="w-full h-full object-cover"
             loading="lazy"

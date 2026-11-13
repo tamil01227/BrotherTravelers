@@ -1,4 +1,11 @@
 import { Vehicle, TourPackage, TouristDestination, Testimonial, SEOLandingData } from '../types/travel';
+import fleetTravellerImage from '../assets/images/fleet_force_traveller_1794284646646.jpg';
+import fleetUrbaniaImage from '../assets/images/fleet_force_urbania_1794284646206.jpg';
+import fleetSmlCoachImage from '../assets/images/fleet_sml_coach_1794284664007.jpg';
+import fleetInnovaImage from '../assets/images/fleet_toyota_innova_1794284663766.jpg';
+import fleetErtigaImage from '../assets/images/fleet_maruti_ertiga_1794284663239.jpg';
+import ootyDestinationImage from '../assets/images/destination_ooty_hills_1794284647653.jpg';
+import coimbatoreHeroImage from '../assets/images/hero_travel_coimbatore_1794284646361.jpg';
 
 export const BUSINESS_INFO = {
   name: "BROTHER'S TRAVELS",
@@ -26,7 +33,7 @@ export const VEHICLES_DATA: Vehicle[] = [
     name: "Force Traveller – 14 Seater",
     seatingCapacity: "14 Passengers + 1 Driver",
     seatsCount: 14,
-    image: "/src/assets/images/fleet_force_traveller_1794284646646.jpg",
+    image: fleetTravellerImage,
     shortDescription: {
       en: "Spacious 14-seater luxury Force Traveller featuring high-back pushback seats, dual AC chilling, wide panoramic windows, and ample luggage rack for comfortable group & family journeys.",
       ta: "14 பேர் அமரக்கூடிய சொகுசு போர்ஸ் டிராவலர். புஷ்பேக் இருக்கைகள், சக்திவாய்ந்த ஏசி, அகன்ற ஜன்னல்கள் மற்றும் போதுமான லக்கேஜ் இடவசதியுடன் கூடிய பயணம்.",
@@ -47,7 +54,7 @@ export const VEHICLES_DATA: Vehicle[] = [
     name: "Force Urbania – 16 Seater",
     seatingCapacity: "16 Passengers + 1 Driver",
     seatsCount: 16,
-    image: "/src/assets/images/fleet_force_urbania_1794284646206.jpg",
+    image: fleetUrbaniaImage,
     shortDescription: {
       en: "Next-generation European-styled ultra-luxury van. World-class ride comfort, individual reclining seats with armrests, whisper-quiet cabin, and premium ambient LED lighting.",
       ta: "அதிநவீன ஐரோப்பிய வடிவமைப்பு கொண்ட பிரீமியம் 16 சீட்டர் போர்ஸ் அர்பானியா. சொகுசு இருக்கைகள், அமைதியான உள்பகுதி மற்றும் சிறப்பான பயண அனுபவம்.",
@@ -68,7 +75,7 @@ export const VEHICLES_DATA: Vehicle[] = [
     name: "SML Coach – 21 Seater",
     seatingCapacity: "21 Passengers + 1 Driver + 1 Guide",
     seatsCount: 21,
-    image: "/src/assets/images/fleet_sml_coach_1794284664007.jpg",
+    image: fleetSmlCoachImage,
     shortDescription: {
       en: "Heavy-duty 21-seater tourist mini-coach bus engineered for large family reunions, corporate outings, pilgrimage groups, and school/college industrial tours across all Indian states.",
       ta: "21 பேர் பயணிக்கக்கூடிய எஸ்எம்எல் சொகுசு மினி பஸ். பெரிய குடும்பங்கள், திருமண குழுக்கள், பள்ளி/கல்லூரி சுற்றுலா மற்றும் கோயில் யாத்திரைகளுக்கு மிகச் சிறந்தது.",
@@ -89,7 +96,7 @@ export const VEHICLES_DATA: Vehicle[] = [
     name: "Toyota Innova – 7 Seater",
     seatingCapacity: "6-7 Passengers + 1 Driver",
     seatsCount: 7,
-    image: "/src/assets/images/fleet_toyota_innova_1794284663766.jpg",
+    image: fleetInnovaImage,
     shortDescription: {
       en: "The undisputed king of Indian highway travel. Legendary reliability, plush middle-row captain seats, superior hill climbing performance on ghat roads, and silent cabin comfort.",
       ta: "இந்திய நெடுஞ்சாலைகளின் நம்பகமான டொயோட்டா இன்னோவா 7 சீட்டர். மலைப் பாதைகளில் சுலபமான இயக்கம் மற்றும் குடும்பங்களுக்கு மிகச் சிறந்த சௌகரியம்.",
@@ -110,7 +117,7 @@ export const VEHICLES_DATA: Vehicle[] = [
     name: "Maruti Ertiga – 7 Seater",
     seatingCapacity: "6 Passengers + 1 Driver",
     seatsCount: 7,
-    image: "/src/assets/images/fleet_maruti_ertiga_1794284663239.jpg",
+    image: fleetErtigaImage,
     shortDescription: {
       en: "Smart, fuel-efficient, and budget-friendly 7-seater MPV ideal for city errands, small family weekend getaways, outstation cab booking, and quick airport transfers from Coimbatore.",
       ta: "சிக்கனமான மற்றும் வசதியான மாருதி எர்டிகா 7 சீட்டர். சிறு குடும்பங்களின் வார இறுதி சுற்றுலா மற்றும் வெளிவட்டார பயணங்களுக்கு உகந்தது.",
@@ -304,7 +311,7 @@ export const POPULAR_DESTINATIONS: TouristDestination[] = [
     distanceFromCoimbatore: "86 km",
     approxTravelTime: "2.5 - 3 Hours",
     bestTimeToVisit: "October to June",
-    image: "/src/assets/images/destination_ooty_hills_1794284647653.jpg",
+    image: ootyDestinationImage,
     description: {
       en: "Nestled in the blue Nilgiri mountains, Ooty is famous for vast tea estates, heritage toy train routes, cool misty weather, and the scenic Doddabetta peak.",
       ta: "நீலகிரி மலையின் பேரழகான ஊட்டி, பரந்த தேயிலைத் தோட்டங்கள், பாரம்பரிய டாய் ரயில் மற்றும் குளிர்ந்த காலநிலைக்கு பெயர் பெற்றது.",
@@ -322,7 +329,7 @@ export const POPULAR_DESTINATIONS: TouristDestination[] = [
     distanceFromCoimbatore: "155 km",
     approxTravelTime: "4.5 Hours",
     bestTimeToVisit: "September to May",
-    image: "/src/assets/images/hero_travel_coimbatore_1794284646361.jpg",
+    image: coimbatoreHeroImage,
     description: {
       en: "Famous for rolling carpet-like tea gardens, Anamudi peak, waterfalls, and fresh mountain breezes in God's Own Country, easily accessible from Coimbatore via Pollachi.",
       ta: "பசுமையான தேயிலை தோட்டங்கள், அருவிகள் மற்றும் இயற்கை எழில் கொஞ்சும் கேரளாவின் மூணார், கோவையிலிருந்து பொள்ளாச்சி வழியாக எளிதில் சென்றடையலாம்.",
@@ -340,7 +347,7 @@ export const POPULAR_DESTINATIONS: TouristDestination[] = [
     distanceFromCoimbatore: "170 km",
     approxTravelTime: "4.5 Hours",
     bestTimeToVisit: "Throughout the Year",
-    image: "/src/assets/images/destination_ooty_hills_1794284647653.jpg",
+    image: ootyDestinationImage,
     description: {
       en: "Situated in the Palani hills at 2,133m elevation, Kodaikanal charms visitors with star-shaped lakes, cool waterfalls, deep green valleys, and quiet pine forests.",
       ta: "பழனி மலையில் அமைந்துள்ள கொடைக்கானல், நட்சத்திர வடிவ ஏரி, குளிர்ந்த நீர்வீழ்ச்சிகள் மற்றும் பைன் காடுகளுடன் மனதை மயக்கும் சுற்றுலா தலம்.",
@@ -358,7 +365,7 @@ export const POPULAR_DESTINATIONS: TouristDestination[] = [
     distanceFromCoimbatore: "105 km",
     approxTravelTime: "3.5 Hours",
     bestTimeToVisit: "October to March",
-    image: "/src/assets/images/hero_travel_coimbatore_1794284646361.jpg",
+    image: coimbatoreHeroImage,
     description: {
       en: "Known for 40 thrilling hairpin bends, endless tea plantations, wild elephants, and lion-tailed macaques near the Anamalai Tiger Reserve.",
       ta: "40 கொண்டை ஊசி வளைவுகள், ஆனைமலை புலிகள் காப்பகம் மற்றும் வன விலங்குகளுடன் கூடிய சிலிர்ப்பான மலைப்பயணம்.",
@@ -376,7 +383,7 @@ export const POPULAR_DESTINATIONS: TouristDestination[] = [
     distanceFromCoimbatore: "380 km",
     approxTravelTime: "7.5 Hours",
     bestTimeToVisit: "October to April",
-    image: "/src/assets/images/destination_ooty_hills_1794284647653.jpg",
+    image: ootyDestinationImage,
     description: {
       en: "The divine coastal town connected by the iconic Pamban Bridge, home to 22 sacred teerthams and the historic ghost town of Dhanushkodi.",
       ta: "பாம்பன் பாலம், 22 புனித தீர்த்தங்கள் மற்றும் தனுஷ்கோடி கொண்ட புகழ்பெற்ற புண்ணிய பூமி.",
@@ -394,7 +401,7 @@ export const POPULAR_DESTINATIONS: TouristDestination[] = [
     distanceFromCoimbatore: "195 km",
     approxTravelTime: "5 Hours",
     bestTimeToVisit: "September to April",
-    image: "/src/assets/images/fleet_force_urbania_1794284646206.jpg",
+    image: fleetUrbaniaImage,
     description: {
       en: "The historic city of grand palaces and Chamundi hills, paired with the coffee-scented evergreen slopes and waterfalls of Coorg.",
       ta: "அழகிய மைசூர் அரண்மனை மற்றும் காபி தோட்டங்கள் நிறைந்த கூர்க் மலைவாசஸ்தலம்.",

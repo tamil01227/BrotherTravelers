@@ -26,6 +26,7 @@ import {
 } from '../data/travelData';
 import { VehicleCard } from '../components/VehicleCard';
 import { generateQuickWhatsAppUrl, openWhatsApp } from '../utils/whatsapp';
+import heroImage from '../assets/images/hero_travel_coimbatore_1794284646361.jpg';
 
 interface HomePageProps {
   language: Language;
@@ -69,7 +70,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         {/* Background Image with Scrim */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/src/assets/images/hero_travel_coimbatore_1794284646361.jpg"
+            src={heroImage}
             alt="Explore India with BROTHER'S TRAVELS Coimbatore"
             className="w-full h-full object-cover opacity-35 transform scale-105"
             loading="eager"

@@ -21,6 +21,7 @@ import { VEHICLES_DATA } from '../data/vehicles';
 import { VehicleCard } from '../components/VehicleCard';
 import heroImage from '../assets/images/hero_travel_coimbatore_1794284646361-optimized.jpg';
 import { generateWhatsAppUrl, openWhatsApp } from '../utils/whatsapp';
+import { getPassengerRecommendation } from '../utils/vehicleRecommendations';
 
 interface HomePageProps {
   language: Language;
@@ -74,13 +75,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       : 'Your trip details are ready in WhatsApp. Review the enquiry and send it there.');
   };
 
-  const passengerCount = Number(searchPassengers);
-  const recommendedVehicles = Number.isInteger(passengerCount) && passengerCount > 0
-    ? VEHICLES_DATA
-        .filter((vehicle) => vehicle.passengerRange.min <= passengerCount && passengerCount <= vehicle.passengerRange.max)
-        .sort((a, b) => a.passengerRange.max - b.passengerRange.max)
-        .filter((vehicle, _, matches) => vehicle.passengerRange.max === matches[0]?.passengerRange.max)
-    : [];
+  const passengerRecommendation = getPassengerRecommendation(searchPassengers);
   const today = new Date();
   today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
   const minTravelDate = today.toISOString().slice(0, 10);
@@ -144,7 +139,9 @@ export const HomePage: React.FC<HomePageProps> = ({
               {language === 'ta' ? 'உங்கள் பயணத்திற்கான விலை கேளுங்கள்' : 'Plan your trip and get a quote'}
             </h2>
             <p className="mt-1 text-xs text-slate-600 sm:text-sm">
-              {language === 'ta' ? 'பயண விவரங்களை நிரப்புங்கள்; உங்கள் செய்தியை வாட்ஸ்அப்பில் சரிபார்த்து அனுப்பலாம்.' : 'Enter your trip details. Review your enquiry in WhatsApp before sending it.'}
+              {language === 'ta'
+                ? 'பயண விவரங்களைப் பகிர்ந்து தனிப்பயன் விலை கேளுங்கள். ஆன்லைனில் விலை அல்லது வாகனக் கிடைக்கும் நிலை ஊகிக்கப்படாது.'
+                : 'Share your trip details to request a customised quotation. Prices and vehicle availability are not estimated online.'}
             </p>
           </div>
 
@@ -215,11 +212,28 @@ export const HomePage: React.FC<HomePageProps> = ({
                 className="min-h-12 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-base focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600 sm:text-sm"
               />
               <p id="passenger-suggestion" className="mt-2 min-h-5 text-xs text-slate-600" aria-live="polite">
-                {searchPassengers && recommendedVehicles.length > 0
-                  ? `${language === 'ta' ? 'பொருந்தக்கூடிய வாகனம்:' : 'Suggested vehicle:'} ${recommendedVehicles.map((vehicle) => vehicle.name).join(', ')}`
-                  : searchPassengers && passengerCount > 0
-                    ? (language === 'ta' ? 'இந்த குழு அளவிற்கு ஏற்ற ஒற்றை வாகனம் பட்டியலில் இல்லை.' : 'No single listed vehicle fits this group size.')
-                    : ''}
+                {passengerRecommendation.status === 'single' && (
+                  <>
+                    {language === 'ta' ? 'பரிந்துரை: ' : 'Suggested option: '}
+                    {passengerRecommendation.items[0].vehicle.name}
+                  </>
+                )}
+                {passengerRecommendation.status === 'combination' && (
+                  <>
+                    {language === 'ta' ? 'குழு கொள்ளளவு பரிந்துரை: ' : 'Capacity-based suggestion: '}
+                    {passengerRecommendation.items.map(({ vehicle, quantity }) =>
+                      `${quantity > 1 ? `${quantity} × ` : ''}${vehicle.name}`
+                    ).join(' + ')}
+                    {language === 'ta'
+                      ? ' · இது கொள்ளளவு அடிப்படையிலான பரிந்துரை; வாகனக் கிடைக்கும் நிலை மற்றும் பிரிப்பை உறுதிப்படுத்த எங்களைத் தொடர்புகொள்ளுங்கள்.'
+                      : ' · Capacity suggestion only; contact us to confirm availability and the vehicle split.'}
+                  </>
+                )}
+                {passengerRecommendation.status === 'invalid' && (
+                  language === 'ta'
+                    ? 'பரிந்துரையைப் பெற 0-ஐ விட அதிகமான முழு எண்ணை உள்ளிடுங்கள்.'
+                    : 'Enter a whole number greater than 0 to see a vehicle suggestion.'
+                )}
               </p>
             </div>
             <div className="lg:col-span-2">
@@ -315,7 +329,8 @@ export const HomePage: React.FC<HomePageProps> = ({
               key={vehicle.id}
               vehicle={vehicle}
               language={language}
-              isRecommended={recommendedVehicles.some((suggestion) => suggestion.id === vehicle.id)}
+              isRecommended={passengerRecommendation.items.some((suggestion) => suggestion.vehicle.id === vehicle.id)}
+              recommendationMode={passengerRecommendation.status === 'combination' ? 'combination' : 'single'}
             />
           ))}
         </div>

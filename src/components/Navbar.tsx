@@ -99,7 +99,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     <>
       {/* Main Sticky Header */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-2xs">
-        <div className="max-w-7xl 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
           {/* Zone 1: Brand Wordmark (Clean, single-line on mobile) */}
           <button
             onClick={() => handleNavClick('home')}

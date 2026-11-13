@@ -7,12 +7,14 @@ interface VehicleCardProps {
   vehicle: Vehicle;
   language: Language;
   isRecommended?: boolean;
+  recommendationMode?: 'single' | 'combination';
 }
 
 export const VehicleCard: React.FC<VehicleCardProps> = ({
   vehicle,
   language,
   isRecommended = false,
+  recommendationMode = 'single',
 }) => {
   const [imageError, setImageError] = useState(false);
   const displayName = vehicle.name.split(' – ')[0];
@@ -86,7 +88,9 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
           {isRecommended && (
             <p className="col-span-2 inline-flex items-center gap-1.5 text-xs font-semibold text-sky-900" role="status">
               <BadgeCheck className="h-4 w-4" aria-hidden="true" />
-              {language === 'ta' ? 'உங்கள் குழுவிற்கு ஏற்ற இருக்கைகள்' : 'Fits your group size'}
+              {recommendationMode === 'combination'
+                ? (language === 'ta' ? 'குழு கொள்ளளவு பரிந்துரையில் உள்ளது' : 'Part of the capacity suggestion')
+                : (language === 'ta' ? 'உங்கள் குழு அளவிற்கான பரிந்துரை' : 'Suggested for your group size')}
             </p>
           )}
           <button

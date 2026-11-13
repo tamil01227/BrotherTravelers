@@ -120,6 +120,22 @@ html {
   scroll-behavior: smooth;
 }
 
+@keyframes whatsapp-chat-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.15), 0 4px 6px -4px rgb(0 0 0 / 0.15);
+  }
+
+  50% {
+    transform: scale(1.03);
+    box-shadow: 0 0 0 4px rgb(22 134 92 / 0.13), 0 10px 15px -3px rgb(0 0 0 / 0.15);
+  }
+}
+
+.whatsapp-chat-pulse {
+  animation: whatsapp-chat-pulse 2s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

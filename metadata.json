@@ -1,0 +1,6 @@
+{
+  "name": "BROTHER'S TRAVELS – Travel & Vehicle Booking Coimbatore",
+  "description": "Book Force Traveller, Urbania, SML Coach, Innova & Ertiga with BROTHER'S TRAVELS. Free Coimbatore pickup, All India tours, and instant WhatsApp booking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

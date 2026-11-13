@@ -1,13 +1,16 @@
 import React from 'react';
-import { Phone, MessageCircle, MapPin, Shield, CheckCircle, FileText, ArrowRight } from 'lucide-react';
+import { FileText, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { Language } from '../types/travel';
-import { BUSINESS_INFO, TRANSLATIONS, SEO_LANDING_PAGES } from '../data/travelData';
+import { BUSINESS_INFO } from '../data/travelData';
+import { BrandLogo } from './BrandLogo';
 
 interface FooterProps {
   language: Language;
   onNavigate: (tab: string, slug?: string) => void;
   onOpenBooking: () => void;
   onOpenSitemap: () => void;
+  onManageAnalytics: () => void;
+  analyticsConfigured: boolean;
 }
 
 export const Footer: React.FC<FooterProps> = ({
@@ -15,216 +18,101 @@ export const Footer: React.FC<FooterProps> = ({
   onNavigate,
   onOpenBooking,
   onOpenSitemap,
+  onManageAnalytics,
+  analyticsConfigured,
 }) => {
-  const t = TRANSLATIONS[language];
+  const isTamil = language === 'ta';
+  const links = [
+    { label: isTamil ? 'முகப்பு' : 'Home', tab: 'home' },
+    { label: isTamil ? 'வாகனங்கள்' : 'Vehicles', tab: 'vehicles' },
+    { label: isTamil ? 'சுற்றுலா' : 'Tours', tab: 'tours' },
+    { label: isTamil ? 'இடங்கள்' : 'Destinations', tab: 'destinations' },
+    { label: isTamil ? 'தொடர்பு' : 'Contact', tab: 'contact' },
+    { label: isTamil ? 'தனியுரிமை' : 'Privacy policy', tab: 'privacy' },
+    { label: isTamil ? 'விதிமுறைகள்' : 'Terms of use', tab: 'terms' },
+  ];
 
   return (
-    <footer className="bg-slate-950 text-slate-300 pt-12 sm:pt-16 pb-24 sm:pb-12 border-t border-slate-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        {/* Top Free Coimbatore Pickup Banner */}
-        <div className="bg-gradient-to-r from-sky-900 to-slate-900 rounded-2xl p-6 sm:p-8 mb-12 border border-sky-800/50 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div className="space-y-1">
-            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400 bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20">
-              <MapPin className="w-3.5 h-3.5" />
-              {t.hero.freePickupBadge}
-            </div>
-            <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-              {language === 'ta' ? 'கோவையில் நீங்கள் இருக்கும் இடத்திற்கே வந்து பிக்கப் செய்கிறோம்!' : 'Zero Dead Mileage – Free Pickup Across All Coimbatore Suburbs'}
-            </h3>
-            <p className="text-xs sm:text-sm text-sky-200/90 max-w-2xl">
-              {t.hero.freePickupDesc}
+    <footer className="border-t border-slate-800 bg-[#142B49] pb-24 pt-9 text-slate-200 sm:pb-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr]">
+          <div>
+            <BrandLogo variant="footer" />
+            <p className="mt-2 max-w-sm text-sm leading-6 text-slate-300">
+              {isTamil
+                ? 'கோயம்புத்தூரிலிருந்து உள்ளூர் மற்றும் வெளியூர் பயணங்களுக்கு வாகன விருப்பங்களை விசாரிக்கவும்.'
+                : 'Ask about vehicle options for local travel and journeys from Coimbatore. Quotes and availability are confirmed directly for each trip.'}
             </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:flex sm:flex-wrap items-center gap-3 w-full md:w-auto shrink-0">
             <button
+              type="button"
               onClick={onOpenBooking}
-              className="min-h-[48px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-sm bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-950 shadow-lg transition-colors cursor-pointer"
+              className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-xl bg-amber-400 px-4 py-2 text-sm font-bold text-slate-950 hover:bg-amber-300"
             >
-              <MessageCircle className="w-4 h-4" />
-              <span>{t.nav.bookNow}</span>
+              <MessageCircle className="h-4 w-4" aria-hidden="true" />
+              {isTamil ? 'விசாரிக்கவும்' : 'Request a quote'}
             </button>
-            <a
-              href={`tel:${BUSINESS_INFO.primaryPhone}`}
-              className="min-h-[48px] inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-bold text-sm bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all"
-            >
-              <Phone className="w-4 h-4" />
-              <span className="tabular-nums">{BUSINESS_INFO.primaryPhone}</span>
-            </a>
-          </div>
-        </div>
-
-        {/* 4-Column Footer Navigation Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-slate-800">
-          {/* Col 1: Business Brand & Owner Profile */}
-          <div className="space-y-4">
-            <div>
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-xl font-extrabold text-white tracking-tight">BROTHER'S</span>
-                <span className="text-xl font-black text-orange-500 tracking-tight">TRAVELS</span>
-              </div>
-              <p className="text-xs font-semibold text-slate-400 mt-0.5">
-                Proprietor: <span className="text-white">{BUSINESS_INFO.owner}</span>
-              </p>
-            </div>
-
-            <p className="text-xs text-slate-400 leading-relaxed">
-              {t.footer.aboutText}
-            </p>
-
-            <div className="pt-2 text-xs space-y-1.5 text-slate-300">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>All India National Tourist Permit (NTP)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>Verified Veteran Mountain Drivers</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>Sanitized & AC Maintained Fleet</span>
-              </div>
-            </div>
           </div>
 
-          {/* Col 2: Core Navigation Pages */}
-          <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
-              {t.footer.quickLinks}
-            </h4>
-            <ul className="space-y-2.5 text-xs">
-              <li>
-                <button
-                  onClick={() => onNavigate('home')}
-                  className="hover:text-white transition-colors cursor-pointer text-left"
-                >
-                  {t.nav.home}
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('about')}
-                  className="hover:text-white transition-colors cursor-pointer text-left"
-                >
-                  {t.nav.about}
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('vehicles')}
-                  className="hover:text-white transition-colors cursor-pointer text-left"
-                >
-                  {t.nav.vehicles}
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('tours')}
-                  className="hover:text-white transition-colors cursor-pointer text-left"
-                >
-                  {t.nav.tours}
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('destinations')}
-                  className="hover:text-white transition-colors cursor-pointer text-left"
-                >
-                  {t.nav.destinations}
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('events')}
-                  className="hover:text-white transition-colors cursor-pointer text-left"
-                >
-                  {t.nav.events}
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => onNavigate('contact')}
-                  className="hover:text-white transition-colors cursor-pointer text-left"
-                >
-                  {t.nav.contact}
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          {/* Col 3: SEO Landing Pages / Popular Services */}
-          <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
-              {t.footer.seoPages}
-            </h4>
-            <ul className="space-y-2 text-xs">
-              {SEO_LANDING_PAGES.map((page) => (
-                <li key={page.slug}>
+          <nav aria-label={isTamil ? 'அடிக்குறிப்பு இணைப்புகள்' : 'Footer'}>
+            <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              {isTamil ? 'இணைப்புகள்' : 'Explore'}
+            </h2>
+            <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+              {links.map((link) => (
+                <li key={link.tab}>
                   <button
-                    onClick={() => onNavigate('seo-page', page.slug)}
-                    className="hover:text-sky-400 transition-colors cursor-pointer text-left flex items-center gap-1.5 group"
+                    type="button"
+                    onClick={() => onNavigate(link.tab)}
+                    className="min-h-8 text-left text-slate-200 underline-offset-4 hover:text-white hover:underline"
                   >
-                    <span className="text-slate-600 group-hover:text-sky-400">›</span>
-                    <span>{page.h1[language]}</span>
+                    {link.label}
                   </button>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
-          {/* Col 4: Verified Contact Information */}
-          <div className="space-y-4">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-              {t.footer.contactTitle}
-            </h4>
-
-            <div className="space-y-2 text-xs">
-              <div className="bg-slate-900 p-3 rounded-xl border border-slate-800">
-                <span className="text-[11px] text-slate-400 block mb-0.5">Primary & WhatsApp:</span>
-                <a
-                  href={`tel:${BUSINESS_INFO.primaryPhone}`}
-                  className="text-base font-bold text-white hover:text-sky-400 transition-colors flex items-center gap-1.5"
-                >
-                  <Phone className="w-4 h-4 text-sky-400" />
-                  <span>{BUSINESS_INFO.primaryPhone}</span>
-                </a>
-              </div>
-
-              <div className="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-1">
-                <span className="text-[11px] text-slate-400 block">Additional Lines:</span>
-                {BUSINESS_INFO.additionalPhones.map((phone, idx) => (
-                  <a
-                    key={idx}
-                    href={`tel:${phone}`}
-                    className="block font-semibold text-slate-200 hover:text-white transition-colors"
-                  >
-                    +91 {phone}
-                  </a>
-                ))}
-              </div>
-
-              <div className="flex items-start gap-2 pt-1 text-slate-400">
-                <MapPin className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
-                <span>Coimbatore, Tamil Nadu – Serving All Over India</span>
-              </div>
-            </div>
+          <div>
+            <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              {isTamil ? 'தொடர்பு' : 'Contact'}
+            </h2>
+            <p className="mt-3 flex items-start gap-2 text-sm text-slate-200">
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-teal-300" aria-hidden="true" />
+              Coimbatore, Tamil Nadu
+            </p>
+            <a
+              href={`tel:${BUSINESS_INFO.primaryPhone}`}
+              className="mt-2 inline-flex min-h-10 items-center gap-2 text-sm font-semibold text-white underline-offset-4 hover:underline"
+            >
+              <Phone className="h-4 w-4 text-teal-300" aria-hidden="true" />
+              {BUSINESS_INFO.primaryPhone}
+            </a>
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("BROTHER'S TRAVELS Coimbatore")}`}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-2 block text-sm text-slate-300 underline-offset-4 hover:text-white hover:underline"
+            >
+              {isTamil ? 'வரைபடத்தில் தேடுங்கள்' : 'Find on Google Maps'}
+            </a>
           </div>
         </div>
 
-        {/* Bottom Bar: Copyright & SEO Utilities */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <div>
-            © {new Date().getFullYear()} BROTHER'S TRAVELS · Owner: {BUSINESS_INFO.owner} · {t.footer.rights}
-          </div>
-
-          <div className="flex items-center gap-4">
-            <button
-              onClick={onOpenSitemap}
-              className="hover:text-slate-300 transition-colors flex items-center gap-1 cursor-pointer font-medium"
-            >
-              <FileText className="w-3.5 h-3.5" />
-              <span>{t.footer.viewSitemap}</span>
+        <div className="mt-8 flex flex-col gap-3 border-t border-white/10 pt-5 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} BROTHER'S TRAVELS · Coimbatore</p>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            {analyticsConfigured && (
+              <button
+                type="button"
+                onClick={onManageAnalytics}
+                className="inline-flex min-h-8 items-center gap-1.5 hover:text-white"
+              >
+                <FileText className="h-3.5 w-3.5" aria-hidden="true" />
+                {isTamil ? 'பகுப்பாய்வு விருப்பங்கள்' : 'Analytics preferences'}
+              </button>
+            )}
+            <button type="button" onClick={onOpenSitemap} className="min-h-8 hover:text-white">
+              {isTamil ? 'தள வரைபடம்' : 'Sitemap'}
             </button>
           </div>
         </div>

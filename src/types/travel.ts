@@ -3,9 +3,20 @@ export type Language = 'en' | 'ta';
 export interface Vehicle {
   id: string;
   name: string;
-  seatingCapacity: string;
+  category: {
+    en: string;
+    ta: string;
+  };
   seatsCount: number;
+  passengerRange: {
+    min: number;
+    max: number;
+  };
   image: string;
+  whatsappLabel: {
+    en: string;
+    ta: string;
+  };
   shortDescription: {
     en: string;
     ta: string;
@@ -18,7 +29,10 @@ export interface Vehicle {
     en: string[];
     ta: string[];
   };
-  luggageCapacity: string;
+  luggageCapacity: {
+    en: string;
+    ta: string;
+  };
   idealGroup: string;
 }
 
@@ -71,10 +85,13 @@ export interface TouristDestination {
     ta: string;
   };
   state: string;
-  distanceFromCoimbatore: string;
-  approxTravelTime: string;
-  bestTimeToVisit: string;
-  image: string;
+  image?: string;
+  imageCredit?: {
+    author: string;
+    sourceUrl: string;
+    license: string;
+    licenseUrl: string;
+  };
   description: {
     en: string;
     ta: string;
@@ -90,6 +107,7 @@ export interface BookingEnquiry {
   destination: string;
   travelDate: string;
   returnDate?: string;
+  duration?: string;
   passengers: number | string;
   selectedVehicle: string;
   travelType: string;

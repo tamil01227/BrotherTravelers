@@ -1,19 +1,27 @@
 import React, { useState } from 'react';
 import { Users, MapPin, Route, MessageCircle, Info } from 'lucide-react';
 import { Language } from '../types/travel';
-import { VEHICLES_DATA } from '../data/travelData';
+import { VEHICLES_DATA } from '../data/vehicles';
 import { VehicleCard } from '../components/VehicleCard';
 
 interface VehiclesPageProps {
   language: Language;
-  onOpenBookingModal: (prefill?: { vehicle?: string }) => void;
 }
 
-export const VehiclesPage: React.FC<VehiclesPageProps> = ({
-  language,
-  onOpenBookingModal,
-}) => {
+export const VehiclesPage: React.FC<VehiclesPageProps> = ({ language }) => {
   const [capacityFilter, setCapacityFilter] = useState<'all' | 'small' | 'medium' | 'large'>('all');
+  const [comparisonIds, setComparisonIds] = useState<string[]>([]);
+  const comparisonVehicles = VEHICLES_DATA.filter((vehicle) => comparisonIds.includes(vehicle.id));
+
+  const toggleComparisonVehicle = (vehicleId: string) => {
+    setComparisonIds((currentIds) => {
+      if (currentIds.includes(vehicleId)) {
+        return currentIds.filter((id) => id !== vehicleId);
+      }
+      return currentIds.length < 3 ? [...currentIds, vehicleId] : currentIds;
+    });
+  };
+
   const filteredVehicles = VEHICLES_DATA.filter((v) => {
     if (capacityFilter === 'small') return v.seatsCount <= 7;
     if (capacityFilter === 'medium') return v.seatsCount > 7 && v.seatsCount <= 16;
@@ -42,8 +50,8 @@ export const VehiclesPage: React.FC<VehiclesPageProps> = ({
           <Info className="w-4 h-4 text-sky-700 shrink-0" />
           <span>
             {language === 'ta'
-              ? 'பயண தூரம் மற்றும் நாட்களுக்கு ஏற்ப நியாயமான சிறந்த கட்டணத்தை வாட்ஸ்அப்பில் அறியலாம்.'
-              : 'Transparent, tailored quotations based on your specific itinerary. Click any vehicle to request a quick WhatsApp quotation.'}
+              ? 'உங்கள் பயண விவரங்களுடன் தனிப்பயன் விலை கேளுங்கள். ஆன்லைனில் விலை அல்லது வாகனக் கிடைக்கும் நிலை ஊகிக்கப்படாது.'
+              : 'Request a customised quotation for your itinerary. Prices and vehicle availability are not estimated online.'}
           </span>
         </div>
       </div>
@@ -158,88 +166,104 @@ export const VehiclesPage: React.FC<VehiclesPageProps> = ({
             key={vehicle.id}
             vehicle={vehicle}
             language={language}
-            onBookClick={(name) => onOpenBookingModal({ vehicle: name })}
           />
         ))}
       </div>
 
-      {/* Fleet Amenities Summary Table */}
-      <div className="mt-16 bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
-        <div className="bg-slate-900 text-white p-5 sm:p-6">
-          <h2 className="text-xl font-bold">
-            {language === 'ta' ? 'வாகன ஒப்பீடு மற்றும் விவரங்கள்' : 'Fleet Comparison & Specifications'}
-          </h2>
-          <p className="text-xs text-slate-400 mt-1">
-            Compare seating capacity, luggage capacity, and primary use cases across all 5 vehicles.
-          </p>
-        </div>
+      <details className="rounded-2xl border border-slate-200 bg-white shadow-xs">
+        <summary className="cursor-pointer rounded-2xl px-5 py-4 text-sm font-bold text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-900">
+          {language === 'ta' ? 'வாகனங்களை ஒப்பிடுங்கள் (விருப்பம்)' : 'Compare vehicles (optional)'}
+        </summary>
+        <div className="space-y-4 border-t border-slate-200 p-4 sm:p-6">
+          <div>
+            <h2 className="text-base font-bold text-slate-900">
+              {language === 'ta' ? 'ஒப்பிட 2 அல்லது 3 வாகனங்களைத் தேர்வு செய்யுங்கள்' : 'Choose 2 or 3 vehicles to compare'}
+            </h2>
+            <p className="mt-1 text-xs text-slate-600">
+              {language === 'ta' ? 'இருக்கைகள், லக்கேஜ் மற்றும் முக்கிய வசதிகள் வாகனத் தரவிலிருந்து காட்டப்படும்.' : 'Compare seats, luggage and key features from the vehicle data.'}
+            </p>
+          </div>
 
-        {/* Mobile Spec Cards */}
-        <div className="md:hidden divide-y divide-slate-100">
-          {VEHICLES_DATA.map((v) => (
-            <div key={v.id} className="p-4 flex items-center justify-between gap-3">
-              <div className="min-w-0">
-                <h3 className="font-bold text-sm text-slate-900 truncate">{v.name}</h3>
-                <p className="text-xs text-slate-600 mt-0.5 tabular-nums">
-                  {v.seatingCapacity} <span aria-hidden="true">·</span> {v.luggageCapacity}
-                </p>
-                <p className="text-[11px] text-slate-500 mt-0.5 truncate">
-                  {v.suitableFor[language][0]}
-                </p>
-              </div>
-              <button
-                onClick={() => onOpenBookingModal({ vehicle: v.name })}
-                className="shrink-0 min-h-[44px] inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 transition-colors cursor-pointer"
-              >
-                <MessageCircle className="w-3.5 h-3.5 fill-current" />
-                <span>Quote</span>
-              </button>
+          <fieldset className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            <legend className="sr-only">
+              {language === 'ta' ? 'ஒப்பிட வேண்டிய வாகனங்கள்' : 'Vehicles to compare'}
+            </legend>
+            {VEHICLES_DATA.map((vehicle) => {
+              const isSelected = comparisonIds.includes(vehicle.id);
+              const isLimitReached = comparisonIds.length === 3 && !isSelected;
+              return (
+                <label
+                  key={vehicle.id}
+                  htmlFor={`compare-${vehicle.id}`}
+                  className={`flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border px-3 py-2 text-sm ${
+                    isSelected ? 'border-sky-700 bg-sky-50 text-sky-950' : 'border-slate-200 bg-white text-slate-700'
+                  } ${isLimitReached ? 'cursor-not-allowed opacity-50' : ''}`}
+                >
+                  <input
+                    id={`compare-${vehicle.id}`}
+                    type="checkbox"
+                    checked={isSelected}
+                    disabled={isLimitReached}
+                    onChange={() => toggleComparisonVehicle(vehicle.id)}
+                    className="h-4 w-4 accent-sky-900"
+                  />
+                  <span>{vehicle.name}</span>
+                </label>
+              );
+            })}
+          </fieldset>
+
+          {comparisonVehicles.length < 2 && (
+            <p className="text-sm text-slate-600" aria-live="polite">
+              {comparisonVehicles.length === 0
+                ? (language === 'ta' ? 'ஒப்பீட்டைத் தொடங்க குறைந்தது 2 வாகனங்களைத் தேர்வு செய்யுங்கள்.' : 'Select at least 2 vehicles to see their comparison.')
+                : (language === 'ta' ? 'ஒப்பீட்டைக் காண இன்னும் ஒரு வாகனத்தைத் தேர்வு செய்யுங்கள்.' : 'Select one more vehicle to see the comparison.')}
+            </p>
+          )}
+
+          {comparisonVehicles.length >= 2 && (
+            <div className="overflow-x-auto rounded-xl border border-slate-200">
+              <table className="w-full min-w-[36rem] border-collapse text-left text-xs sm:text-sm">
+                <caption className="sr-only">
+                  {language === 'ta' ? 'தேர்ந்தெடுக்கப்பட்ட வாகனங்களின் ஒப்பீடு' : 'Comparison of selected vehicles'}
+                </caption>
+                <thead className="bg-slate-50 text-slate-800">
+                  <tr>
+                    <th scope="col" className="w-36 p-3 font-bold">{language === 'ta' ? 'விவரம்' : 'Specification'}</th>
+                    {comparisonVehicles.map((vehicle) => (
+                      <th scope="col" key={vehicle.id} className="min-w-48 p-3 font-bold text-slate-950">
+                        {vehicle.name}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-200">
+                  <tr>
+                    <th scope="row" className="p-3 font-semibold text-slate-700">{language === 'ta' ? 'இருக்கைகள்' : 'Seats'}</th>
+                    {comparisonVehicles.map((vehicle) => (
+                      <td key={vehicle.id} className="p-3 text-slate-700">{vehicle.seatsCount}</td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <th scope="row" className="p-3 font-semibold text-slate-700">{language === 'ta' ? 'லக்கேஜ்' : 'Luggage'}</th>
+                    {comparisonVehicles.map((vehicle) => (
+                      <td key={vehicle.id} className="p-3 text-slate-700">{vehicle.luggageCapacity[language]}</td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <th scope="row" className="p-3 font-semibold text-slate-700">{language === 'ta' ? 'முக்கிய வசதிகள்' : 'Key features'}</th>
+                    {comparisonVehicles.map((vehicle) => (
+                      <td key={vehicle.id} className="p-3 leading-relaxed text-slate-700">
+                        {vehicle.amenities[language].slice(0, 3).join(' · ')}
+                      </td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
             </div>
-          ))}
+          )}
         </div>
-
-        {/* Desktop Comparison Table */}
-        <div className="hidden md:block overflow-x-auto">
-          <table className="w-full text-xs sm:text-sm text-left border-collapse">
-            <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 font-bold">
-              <tr>
-                <th className="p-4">Vehicle Model</th>
-                <th className="p-4">Seating Capacity</th>
-                <th className="p-4">Luggage Capacity</th>
-                <th className="p-4">Best For</th>
-                <th className="p-4 text-right">Direct Enquiry</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {VEHICLES_DATA.map((v) => (
-                <tr key={v.id} className="hover:bg-slate-50/70 transition-colors">
-                  <td className="p-4 font-bold text-slate-900">
-                    {v.name}
-                  </td>
-                  <td className="p-4 text-slate-600 tabular-nums">
-                    {v.seatingCapacity}
-                  </td>
-                  <td className="p-4 text-slate-600">
-                    {v.luggageCapacity}
-                  </td>
-                  <td className="p-4 text-slate-600">
-                    {v.suitableFor[language][0]}
-                  </td>
-                  <td className="p-4 text-right">
-                    <button
-                      onClick={() => onOpenBookingModal({ vehicle: v.name })}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 transition-colors cursor-pointer"
-                    >
-                      <MessageCircle className="w-3.5 h-3.5 fill-current" />
-                      <span>Quote</span>
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      </details>
     </div>
   );
 };

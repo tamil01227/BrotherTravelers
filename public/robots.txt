@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://brothertravelers.tamilselvir932.workers.dev/sitemap.xml

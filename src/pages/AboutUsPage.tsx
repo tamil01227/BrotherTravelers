@@ -1,151 +1,86 @@
 import React from 'react';
-import { ShieldCheck, MapPin, Phone, MessageCircle, Award, Users, CheckCircle, Car } from 'lucide-react';
+import { Car, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { Language } from '../types/travel';
-import { BUSINESS_INFO, TRANSLATIONS } from '../data/travelData';
-import urbaniaImage from '../assets/images/fleet_force_urbania_1794284646206-optimized.jpg';
+import { BUSINESS_INFO, VEHICLES_DATA } from '../data/travelData';
 
 interface AboutUsPageProps {
   language: Language;
   onOpenBooking: () => void;
 }
 
-export const AboutUsPage: React.FC<AboutUsPageProps> = ({
-  language,
-  onOpenBooking,
-}) => {
-  const t = TRANSLATIONS[language];
+export const AboutUsPage: React.FC<AboutUsPageProps> = ({ language, onOpenBooking }) => {
+  const isTamil = language === 'ta';
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16 space-y-16">
-      {/* Page Header */}
-      <div className="text-center max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-sky-800 bg-sky-50 px-3 py-1 rounded-full mb-3 border border-sky-100">
-          <span>{language === 'ta' ? 'நம்பகமான பயண பங்குதாரர்' : 'About BROTHER\'S TRAVELS'}</span>
-        </div>
-        <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight text-balance">
-          {language === 'ta' 
-            ? 'அமைதியான, பாதுகாப்பான மற்றும் நம்பகமான பயணம்' 
-            : 'Committed to Safe, Reliable & Comfortable Travel Across India'}
-        </h1>
-        <p className="mt-4 text-sm sm:text-base text-slate-600 leading-relaxed text-balance">
-          {language === 'ta'
-            ? 'கோவை மாநகரை தலைமையிடமாக கொண்டு செயல்படும் பிரதர்ஸ் டிராவல்ஸ், உரிமையாளர் தினேஷ்குமார் ஆர் தலைமையில் இந்தியா முழுவதும் சிறப்பான சுற்றுலா வாகன சேவைகளை வழங்கி வருகிறது.'
-            : 'Headquartered in Coimbatore, Tamil Nadu, BROTHER\'S TRAVELS is founded and actively managed by DINESHKUMAR R with a dedicated fleet of luxury passenger vehicles serving tourists, families, and organizations nationwide.'}
+    <article className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-16">
+      <header className="max-w-3xl">
+        <p className="text-sm font-bold uppercase tracking-wide text-teal-800">
+          {isTamil ? 'எங்களைப் பற்றி' : "About BROTHER'S TRAVELS"}
         </p>
-      </div>
+        <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-[#142B49] sm:text-5xl">
+          {isTamil ? 'கோயம்புத்தூரிலிருந்து உங்கள் பயணத்தைத் திட்டமிடுங்கள்' : 'Plan a trip from Coimbatore'}
+        </h1>
+        <p className="mt-4 text-base leading-7 text-slate-600">
+          {isTamil
+            ? 'குடும்பம், சிறு குழு அல்லது பெரிய குழுப் பயணத்திற்கான வாகன விருப்பங்களை ஆராய்ந்து, உங்கள் வழித்தடம் மற்றும் தேதியுடன் விசாரிக்கவும்.'
+            : "BROTHER'S TRAVELS is based in Coimbatore, Tamil Nadu. Explore the listed passenger vehicles and share your route, travel dates and group size to discuss a trip quotation."}
+        </p>
+      </header>
 
-      {/* Founder & Business Profile Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-        {/* Left Visual Banner */}
-        <div className="lg:col-span-5 relative rounded-2xl overflow-hidden border border-slate-200 shadow-lg aspect-4/3 lg:aspect-auto lg:h-full min-h-[320px]">
-          <img
-            src={urbaniaImage}
-            alt="BROTHER'S TRAVELS Luxury Commercial Fleet"
-            className="w-full h-full object-cover"
-            loading="lazy"
-            referrerPolicy="no-referrer"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-6">
-            <div className="text-white">
-              <div className="text-xs font-bold text-amber-400 uppercase tracking-wider">Proprietor & Operator</div>
-              <div className="text-xl font-bold">{BUSINESS_INFO.owner}</div>
-              <div className="text-xs text-slate-300">BROTHER'S TRAVELS, Coimbatore</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Core Details */}
-        <div className="lg:col-span-7 space-y-6">
-          <div className="space-y-3">
-            <h2 className="text-2xl font-bold text-slate-900">
-              {language === 'ta' ? 'எங்கள் நிறுவனம் பற்றி' : 'Our Story & Operating Philosophy'}
+      <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
+        <div className="flex items-start gap-3">
+          <MapPin className="mt-1 h-5 w-5 shrink-0 text-teal-700" aria-hidden="true" />
+          <div>
+            <h2 className="text-lg font-bold text-slate-950">
+              {isTamil ? 'சேவை மையம்' : 'Service base'}
             </h2>
-            <p className="text-sm text-slate-600 leading-relaxed">
-              {language === 'ta'
-                ? 'பிரதர்ஸ் டிராவல்ஸ் வாடிக்கையாளர்களின் தேவைகளை அறிந்து, எவ்வித மறைமுக கட்டணங்களும் இன்றி மிக நேர்மையான முறையில் தொடங்கப்பட்டது. குடும்ப சுற்றுலா, திருமண நிகழ்வுகள், பள்ளி-கல்லூரி சுற்றுலா மற்றும் ஆன்மீக பயணங்களுக்கு தேவையான அனைத்து வாகனங்களையும் ஒரே இடத்தில் வழங்குகிறோம்.'
-                : 'Founded with the core belief that long-distance travel should be relaxing rather than stressful, BROTHER\'S TRAVELS delivers transparent vehicle rentals with zero hidden commissions. Every trip is planned meticulously—from early morning Coimbatore doorstep pickup to smooth highway cruising and safe hill ascent.'}
-            </p>
-            <p className="text-sm text-slate-600 leading-relaxed">
-              {language === 'ta'
-                ? 'எங்களின் அனைத்து வாகனங்களும் முறையான ஆவணங்கள், அகில இந்திய சுற்றுலா அனுமதி மற்றும் குளிர்ந்த ஏசி வசதியுடன் பராமரிக்கப்படுகின்றன.'
-                : 'We operate pristine 14-seater Force Travellers, next-generation 16-seater Force Urbanias, 21-seater SML Tourist Coaches, and premium 7-seater Toyota Innovas and Maruti Ertigas. Every passenger seat is inspected for clean upholstery, functional air conditioning, and smooth suspension.'}
-            </p>
-          </div>
-
-          {/* Quick Metrics */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2">
-            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
-              <div className="text-2xl font-extrabold text-sky-900">100%</div>
-              <div className="text-xs text-slate-600 mt-0.5">Free Coimbatore Pickup</div>
-            </div>
-            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
-              <div className="text-2xl font-extrabold text-sky-900">All India</div>
-              <div className="text-xs text-slate-600 mt-0.5">National Tourist Permits</div>
-            </div>
-            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
-              <div className="text-2xl font-extrabold text-sky-900">8+ Yrs</div>
-              <div className="text-xs text-slate-600 mt-0.5">Ghat-Road Driving Expertise</div>
-            </div>
-          </div>
-
-          {/* Direct Contact Button */}
-          <div className="pt-2 flex flex-wrap items-center gap-3">
-            <button
-              onClick={onOpenBooking}
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl font-bold text-sm bg-green-600 hover:bg-green-700 active:bg-green-800 text-white shadow-md cursor-pointer"
-            >
-              <MessageCircle className="w-4 h-4 fill-current" />
-              <span>Contact via WhatsApp</span>
-            </button>
-            <a
-              href={`tel:${BUSINESS_INFO.primaryPhone}`}
-              className="inline-flex items-center gap-2 px-4 py-3 rounded-xl font-bold text-sm border border-slate-300 text-slate-800 hover:bg-slate-50 transition-colors"
-            >
-              <Phone className="w-4 h-4 text-sky-700" />
-              <span>Call DINESHKUMAR R ({BUSINESS_INFO.primaryPhone})</span>
-            </a>
+            <p className="mt-1 text-sm text-slate-600">{BUSINESS_INFO.baseLocation}</p>
           </div>
         </div>
-      </div>
+        <p className="mt-5 max-w-3xl text-sm leading-6 text-slate-600">
+          {isTamil
+            ? 'கிடைக்கும் நிலை, பயண அனுமதிகள், பிக்கப் விவரங்கள் மற்றும் இறுதி கட்டணம் ஆகியவை ஒவ்வொரு பயணத்திற்கும் நேரடியாக உறுதி செய்யப்படும்.'
+            : 'Vehicle availability, pickup arrangements, applicable permits and the final quotation are confirmed directly for each requested itinerary.'}
+        </p>
+      </section>
 
-      {/* Verified Business Information Card */}
-      <div className="bg-sky-50/70 border border-sky-200 rounded-2xl p-6 sm:p-8">
-        <h3 className="text-xl font-bold text-sky-950 mb-4">
-          {language === 'ta' ? 'அங்கீகரிக்கப்பட்ட வணிக தகவல்கள்' : 'Verified Business Details'}
-        </h3>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-xs sm:text-sm">
-          <div>
-            <span className="font-semibold text-slate-500 block">Registered Trade Name:</span>
-            <span className="font-bold text-slate-900 text-base">BROTHER'S TRAVELS</span>
-          </div>
-
-          <div>
-            <span className="font-semibold text-slate-500 block">Managing Proprietor:</span>
-            <span className="font-bold text-slate-900 text-base">{BUSINESS_INFO.owner}</span>
-          </div>
-
-          <div>
-            <span className="font-semibold text-slate-500 block">Primary & WhatsApp:</span>
-            <span className="font-bold text-slate-900 text-base">{BUSINESS_INFO.primaryPhone}</span>
-          </div>
-
-          <div>
-            <span className="font-semibold text-slate-500 block">Additional Contact Numbers:</span>
-            <span className="font-semibold text-slate-800">{BUSINESS_INFO.additionalPhones.join(', ')}</span>
-          </div>
-
-          <div>
-            <span className="font-semibold text-slate-500 block">Primary Service Coverage:</span>
-            <span className="font-semibold text-slate-800">All Over India (Interstate Commercial Carriage)</span>
-          </div>
-
-          <div>
-            <span className="font-semibold text-slate-500 block">Coimbatore Special Facility:</span>
-            <span className="font-semibold text-emerald-700 font-bold">100% Free Pickup Across Coimbatore</span>
-          </div>
+      <section className="mt-10">
+        <div className="flex items-center gap-2">
+          <Car className="h-5 w-5 text-teal-700" aria-hidden="true" />
+          <h2 className="text-2xl font-bold text-[#142B49]">
+            {isTamil ? 'பட்டியலிடப்பட்ட வாகனங்கள்' : 'Listed vehicle options'}
+          </h2>
         </div>
+        <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {VEHICLES_DATA.map((vehicle) => (
+            <li key={vehicle.id} className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+              <img src={vehicle.image} alt={vehicle.name} className="aspect-[16/9] w-full object-cover" loading="lazy" />
+              <div className="p-4">
+                <h3 className="font-bold text-slate-950">{vehicle.name}</h3>
+                <p className="mt-1 text-sm text-slate-600">{vehicle.shortDescription[language]}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <div className="mt-10 flex flex-wrap gap-3">
+        <button
+          type="button"
+          onClick={onOpenBooking}
+          className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-amber-400 px-5 py-3 text-sm font-bold text-slate-950 hover:bg-amber-300"
+        >
+          <MessageCircle className="h-4 w-4" aria-hidden="true" />
+          {isTamil ? 'பயண விவரங்களுடன் விசாரிக்கவும்' : 'Enquire about a trip'}
+        </button>
+        <a
+          href={`tel:${BUSINESS_INFO.primaryPhone}`}
+          className="inline-flex min-h-12 items-center gap-2 rounded-xl border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-100"
+        >
+          <Phone className="h-4 w-4" aria-hidden="true" />
+          {isTamil ? 'அழைக்க' : 'Call'} {BUSINESS_INFO.primaryPhone}
+        </a>
       </div>
-    </div>
+    </article>
   );
 };

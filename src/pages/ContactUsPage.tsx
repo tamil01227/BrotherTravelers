@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Phone, MessageCircle, MapPin, Mail, Clock, Send, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Phone, MessageCircle, MapPin, Send } from 'lucide-react';
 import { Language, BookingEnquiry } from '../types/travel';
-import { BUSINESS_INFO, TRANSLATIONS, VEHICLES_DATA } from '../data/travelData';
+import { BUSINESS_INFO, TRANSLATIONS } from '../data/travelData';
+import { VEHICLES_DATA } from '../data/vehicles';
 import { generateWhatsAppUrl, openWhatsApp, PRIMARY_WHATSAPP_NUMBER } from '../utils/whatsapp';
 
 interface ContactUsPageProps {
@@ -42,7 +43,7 @@ export const ContactUsPage: React.FC<ContactUsPageProps> = ({ language }) => {
     setFormSent(true);
     const url = generateWhatsAppUrl(contactForm);
     setTimeout(() => {
-      openWhatsApp(url);
+      openWhatsApp(url, 'contact_form');
       setFormSent(false);
     }, 400);
   };
@@ -51,7 +52,7 @@ export const ContactUsPage: React.FC<ContactUsPageProps> = ({ language }) => {
     const url = `https://wa.me/${PRIMARY_WHATSAPP_NUMBER}?text=${encodeURIComponent(
       "Hello BROTHER'S TRAVELS, I am contacting you regarding travel and vehicle booking across India."
     )}`;
-    openWhatsApp(url);
+    openWhatsApp(url, 'other');
   };
 
   return (
@@ -60,15 +61,15 @@ export const ContactUsPage: React.FC<ContactUsPageProps> = ({ language }) => {
       <div className="text-center max-w-3xl mx-auto">
         <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-sky-800 bg-sky-50 px-3 py-1 rounded-full mb-3 border border-sky-100">
           <Phone className="w-3.5 h-3.5" />
-          <span>24x7 Customer Support</span>
+          <span>{language === 'ta' ? 'தொடர்பு விவரங்கள்' : 'Direct contact'}</span>
         </div>
         <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight text-balance">
           {language === 'ta' ? 'எங்களை தொடர்பு கொள்ள' : 'Contact BROTHER\'S TRAVELS'}
         </h1>
         <p className="mt-4 text-sm sm:text-base text-slate-600 leading-relaxed text-balance">
           {language === 'ta'
-            ? 'வாகன முன்பதிவு மற்றும் பயணத் திட்டங்களுக்கு உரிமையாளர் தினேஷ்குமார் ஆர் அவர்களை நேரடியாக வாட்ஸ்அப் அல்லது தொலைபேசி மூலம் தொடர்பு கொள்ளலாம்.'
-            : 'Get in touch directly with owner DINESHKUMAR R for quick quotations, vehicle inspections, and tour customizations. Serving all of India with free Coimbatore pickup.'}
+            ? 'வாகன விருப்பங்கள் மற்றும் பயணக் கட்டணத்தைப் பற்றி பேச, வாட்ஸ்அப் அல்லது தொலைபேசி மூலம் தொடர்பு கொள்ளுங்கள்.'
+            : 'Contact BROTHER\'S TRAVELS by phone or WhatsApp to discuss vehicle options and request a quotation. Availability and trip arrangements are confirmed directly.'}
         </p>
       </div>
 
@@ -80,11 +81,8 @@ export const ContactUsPage: React.FC<ContactUsPageProps> = ({ language }) => {
             <div>
               <div className="flex items-baseline gap-1.5 mb-1">
                 <span className="text-xl font-extrabold text-sky-950 tracking-tight">BROTHER'S</span>
-                <span className="text-xl font-black text-orange-600 tracking-tight">TRAVELS</span>
+                <span className="text-xl font-black text-sky-950 tracking-tight">TRAVELS</span>
               </div>
-              <p className="text-xs font-bold text-slate-700">
-                Proprietor: <span className="text-sky-900 font-extrabold">{BUSINESS_INFO.owner}</span>
-              </p>
             </div>
 
             {/* Primary Phone / WhatsApp */}
@@ -142,32 +140,8 @@ export const ContactUsPage: React.FC<ContactUsPageProps> = ({ language }) => {
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-sky-700 shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-slate-900 block">Headquarters:</strong>
-                  <span>Coimbatore, Tamil Nadu, India (PIN: 641012)</span>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-2.5">
-                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900 block">Service Coverage:</strong>
-                  <span>{BUSINESS_INFO.serviceCoverage[language]}</span>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900 block">Free Doorstep Pickup:</strong>
-                  <span>{BUSINESS_INFO.pickupFacility[language]}</span>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-2.5">
-                <Clock className="w-4 h-4 text-slate-500 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900 block">Working Hours:</strong>
-                  <span>{BUSINESS_INFO.operatingHours}</span>
+                  <strong className="text-slate-900 block">{language === 'ta' ? 'சேவை மையம்:' : 'Service base:'}</strong>
+                  <span>Coimbatore, Tamil Nadu</span>
                 </div>
               </div>
             </div>
@@ -324,48 +298,13 @@ export const ContactUsPage: React.FC<ContactUsPageProps> = ({ language }) => {
               </button>
 
               <p className="text-[11px] text-slate-500 text-center leading-relaxed">
-                Direct WhatsApp enquiry to owner DINESHKUMAR R. You will receive quotation and availability confirmation immediately.
+                Sending this form opens a WhatsApp draft for you to review. A quote and availability must be confirmed directly.
               </p>
             </form>
           </div>
         </div>
       </div>
 
-      {/* Google Maps Location Section (Allows business owner to customize later) */}
-      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
-        <div className="p-6 bg-slate-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-amber-400">Coimbatore Hub</span>
-            <h3 className="text-xl font-bold">BROTHER'S TRAVELS Base & Pickup Network</h3>
-            <p className="text-xs text-slate-400 mt-0.5">
-              Serving Coimbatore Railway Station, Coimbatore Airport (CJB), Gandhipuram, RS Puram, and all surrounding areas.
-            </p>
-          </div>
-          <a
-            href="https://maps.google.com/?q=Coimbatore,Tamil+Nadu"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold bg-sky-700 hover:bg-sky-600 text-white transition-colors self-start sm:self-auto"
-          >
-            <MapPin className="w-3.5 h-3.5" />
-            <span>Open in Google Maps</span>
-          </a>
-        </div>
-
-        {/* Embedded Interactive Map Frame (Coimbatore) */}
-        <div className="relative w-full h-80 bg-slate-100">
-          <iframe
-            title="BROTHER'S TRAVELS Coimbatore Location Map"
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            loading="lazy"
-            allowFullScreen
-            referrerPolicy="no-referrer-when-downgrade"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125322.44173113175!2d76.89719875971439!3d11.014298150414902!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba859af2f971cb5%3A0x2fc1c81e183ed282!2sCoimbatore%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
-          />
-        </div>
-      </div>
     </div>
   );
 };

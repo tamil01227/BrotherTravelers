@@ -1,54 +1,100 @@
 @import "tailwindcss";
 
+:root {
+  --brand-navy: #203b4a;
+  --brand-amber: #d9a441;
+  --brand-sage: #829c89;
+  --brand-mist: #eff4f0;
+  --brand-ivory: #faf9f5;
+  --brand-text: #394640;
+  --brand-muted: #718078;
+  --brand-border: #e2e9e3;
+  --brand-whatsapp: #25d366;
+  --brand-success: #16865c;
+  --brand-danger: #d64545;
+}
+
 @theme {
-  --color-slate-950: #142b49;
-  --color-slate-900: #142b49;
-  --color-slate-800: #203b5a;
-  --color-slate-700: #38516e;
-  --color-slate-600: #52677f;
-  --color-slate-500: #71839a;
-  --color-slate-400: #97a5b6;
-  --color-slate-300: #c7d0db;
-  --color-slate-200: #e0e6ed;
-  --color-slate-100: #eef2f6;
-  --color-slate-50: #f7f9fc;
+  --color-slate-950: var(--brand-navy);
+  --color-slate-900: var(--brand-navy);
+  --color-slate-800: var(--brand-text);
+  --color-slate-700: #4e5d55;
+  --color-slate-600: #586a60;
+  --color-slate-500: var(--brand-muted);
+  --color-slate-400: #98a49d;
+  --color-slate-300: #cdd6ce;
+  --color-slate-200: var(--brand-border);
+  --color-slate-100: var(--brand-mist);
+  --color-slate-50: var(--brand-ivory);
 
-  --color-sky-950: #142b49;
-  --color-sky-900: #142b49;
-  --color-sky-800: #1b4d60;
-  --color-sky-700: #137e78;
-  --color-sky-600: #159a91;
-  --color-sky-500: #159a91;
-  --color-sky-400: #43b9ae;
-  --color-sky-300: #86d4cc;
-  --color-sky-200: #bfe9e5;
-  --color-sky-100: #dff3f1;
-  --color-sky-50: #eff9f7;
+  --color-sky-950: var(--brand-navy);
+  --color-sky-900: var(--brand-navy);
+  --color-sky-800: #2f5564;
+  --color-sky-700: #416a65;
+  --color-sky-600: #5a8275;
+  --color-sky-500: var(--brand-sage);
+  --color-sky-400: #9eb2a1;
+  --color-sky-300: #bdccbf;
+  --color-sky-200: #d8e3db;
+  --color-sky-100: #e6eee7;
+  --color-sky-50: #f1f5f1;
 
-  --color-amber-900: #78350f;
-  --color-amber-800: #92400e;
-  --color-amber-700: #b45309;
-  --color-amber-600: #d97706;
-  --color-amber-500: #f59e0b;
-  --color-amber-400: #f9b743;
-  --color-amber-300: #fbd38d;
-  --color-amber-200: #fde6bd;
-  --color-amber-100: #fef3dc;
-  --color-amber-50: #fffaf0;
+  --color-amber-900: #6f4e12;
+  --color-amber-800: #8c661c;
+  --color-amber-700: #a9822b;
+  --color-amber-600: #bf922e;
+  --color-amber-500: var(--brand-amber);
+  --color-amber-400: #e3b75f;
+  --color-amber-300: #ebcb8a;
+  --color-amber-200: #f1ddb1;
+  --color-amber-100: #f7edd5;
+  --color-amber-50: #fbf5e8;
 
-  --color-orange-700: #b45309;
-  --color-orange-600: #f59e0b;
-  --color-orange-500: #f59e0b;
-  --color-orange-400: #f9b743;
-  --color-orange-100: #fef3dc;
-  --color-orange-50: #fffaf0;
+  --color-orange-700: #a9822b;
+  --color-orange-600: var(--brand-amber);
+  --color-orange-500: var(--brand-amber);
+  --color-orange-400: #e3b75f;
+  --color-orange-100: #f7edd5;
+  --color-orange-50: #fbf5e8;
 
-  --color-emerald-900: #115e59;
-  --color-emerald-800: #136f69;
-  --color-emerald-700: #137e78;
-  --color-emerald-600: #159a91;
-  --color-emerald-500: #159a91;
-  --color-emerald-50: #eff9f7;
+  --color-emerald-900: #0c5639;
+  --color-emerald-800: #116b49;
+  --color-emerald-700: var(--brand-success);
+  --color-emerald-600: var(--brand-whatsapp);
+  --color-emerald-500: var(--brand-whatsapp);
+  --color-emerald-400: #62dd91;
+  --color-emerald-50: #e9f9ef;
+  --color-green-900: #0c5639;
+  --color-green-800: #0c5639;
+  --color-green-700: #116b49;
+  --color-green-600: var(--brand-success);
+  --color-green-500: var(--brand-whatsapp);
+  --color-green-400: #62dd91;
+  --color-green-50: #e9f9ef;
+  --color-teal-700: #16865c;
+  --color-teal-600: #16865c;
+  --color-teal-50: #e9f9ef;
+  --color-blue-950: var(--brand-navy);
+  --color-blue-900: var(--brand-navy);
+  --color-blue-800: #2f5564;
+  --color-blue-700: #416a65;
+  --color-blue-600: #5a8275;
+  --color-blue-500: var(--brand-sage);
+  --color-blue-100: #e6eee7;
+  --color-blue-50: #f1f5f1;
+  --color-indigo-700: #416a65;
+  --color-indigo-800: #2f5564;
+  --color-purple-700: #416a65;
+  --color-purple-600: #5a8275;
+  --color-purple-100: #e6eee7;
+  --color-purple-50: #f1f5f1;
+  --color-red-800: #8d2929;
+  --color-red-700: #b53232;
+  --color-red-600: var(--brand-danger);
+  --color-red-500: var(--brand-danger);
+  --color-red-200: #f2c5c5;
+  --color-red-100: #fae8e8;
+  --color-red-50: #fdf2f2;
 }
 
 @layer base {
@@ -59,8 +105,8 @@
 
   body {
     font-family: var(--font-body);
-    color: #142b49;
-    background-color: #f7f9fc;
+    color: var(--brand-text);
+    background-color: var(--brand-ivory);
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -90,7 +136,7 @@ html {
 }
 
 :focus-visible {
-  outline: 3px solid #159a91;
+  outline: 3px solid var(--brand-navy);
   outline-offset: 2px;
 }
 

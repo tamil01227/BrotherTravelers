@@ -1,11 +1,16 @@
-import { Vehicle, TourPackage, TouristDestination, SEOLandingData } from '../types/travel';
-import fleetTravellerImage from '../assets/images/fleet_force_traveller_1794284646646-optimized.jpg';
-import fleetUrbaniaImage from '../assets/images/fleet_force_urbania_1794284646206-optimized.jpg';
-import fleetSmlCoachImage from '../assets/images/fleet_sml_coach_1794284664007-optimized.jpg';
-import fleetInnovaImage from '../assets/images/fleet_toyota_innova_1794284663766-optimized.jpg';
-import fleetErtigaImage from '../assets/images/fleet_maruti_ertiga_1794284663239-optimized.jpg';
+import { TourPackage, TouristDestination, SEOLandingData } from '../types/travel';
 import ootyDestinationImage from '../assets/images/destination_ooty_hills_1794284647653-optimized.jpg';
-import coimbatoreHeroImage from '../assets/images/hero_travel_coimbatore_1794284646361-optimized.jpg';
+
+const munnarDestinationImage =
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/0/09/Munnar_-_Tea_Plantations.jpg/960px-Munnar_-_Tea_Plantations.jpg';
+const kodaikanalDestinationImage =
+  'https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Kodaikanal_Lake_2.jpg/960px-Kodaikanal_Lake_2.jpg';
+const wikimediaAttribution = (author: string, fileName: string) => ({
+  author,
+  sourceUrl: `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(fileName).replaceAll('%20', '_')}`,
+  license: 'CC BY-SA 4.0',
+  licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+});
 
 export const BUSINESS_INFO = {
   name: "BROTHER'S TRAVELS",
@@ -14,126 +19,10 @@ export const BUSINESS_INFO = {
   primaryPhone: "6381186895",
   whatsappNumber: "6381186895",
   additionalPhones: ["9677373602", "8220405252"],
-  serviceCoverage: {
-    en: "All Over India (Special Tourist Permits & Experienced Drivers)",
-    ta: "இந்தியா முழுவதும் (அனைத்து மாநில அனுமதிகள் & அனுபவம் வாய்ந்த ஓட்டுநர்கள்)",
-  },
-  pickupFacility: {
-    en: "Free Pickup Throughout Coimbatore City & Suburbs",
-    ta: "கோவை மாநகரம் முழுவதும் இலவச பிக்கப் வசதி",
-  },
   baseLocation: "Coimbatore, Tamil Nadu, India",
-  operatingHours: "24x7 Customer Support & Emergency Assistance",
-  establishedYear: 2018,
 };
 
-export const VEHICLES_DATA: Vehicle[] = [
-  {
-    id: "force-traveller-14",
-    name: "Force Traveller – 14 Seater",
-    seatingCapacity: "14 Passengers + 1 Driver",
-    seatsCount: 14,
-    image: fleetTravellerImage,
-    shortDescription: {
-      en: "Spacious 14-seater luxury Force Traveller featuring high-back pushback seats, dual AC chilling, wide panoramic windows, and ample luggage rack for comfortable group & family journeys.",
-      ta: "14 பேர் அமரக்கூடிய சொகுசு போர்ஸ் டிராவலர். புஷ்பேக் இருக்கைகள், சக்திவாய்ந்த ஏசி, அகன்ற ஜன்னல்கள் மற்றும் போதுமான லக்கேஜ் இடவசதியுடன் கூடிய பயணம்.",
-    },
-    suitableFor: {
-      en: ["Family Outings", "Hill Station Trips (Ooty/Kodaikanal)", "Temple Tours", "Airport Transfers", "Group Expeditions"],
-      ta: ["குடும்ப சுற்றுலா", "மலை வாசஸ்தல பயணங்கள் (ஊட்டி/கொடைக்கானல்)", "கோயில் சுற்றுலா", "விமான நிலைய பிக்கப்", "குழு பயணங்கள்"],
-    },
-    amenities: {
-      en: ["Comfort Pushback Seats", "Powerful Dual AC", "Stereo Sound System", "Spacious Roof & Rear Luggage Space", "Charging Ports"],
-      ta: ["புஷ்பேக் இருக்கைகள்", "இரட்டை ஏசி வசதி", "மியூசிக் சிஸ்டம்", "போதுமான லக்கேஜ் வசதி", "மொபைல் சார்ஜிங்"],
-    },
-    luggageCapacity: "10-12 Large Suitcases",
-    idealGroup: "10 - 14 Passengers",
-  },
-  {
-    id: "force-urbania-16",
-    name: "Force Urbania – 16 Seater",
-    seatingCapacity: "16 Passengers + 1 Driver",
-    seatsCount: 16,
-    image: fleetUrbaniaImage,
-    shortDescription: {
-      en: "Next-generation European-styled ultra-luxury van. World-class ride comfort, individual reclining seats with armrests, whisper-quiet cabin, and premium ambient LED lighting.",
-      ta: "அதிநவீன ஐரோப்பிய வடிவமைப்பு கொண்ட பிரீமியம் 16 சீட்டர் போர்ஸ் அர்பானியா. சொகுசு இருக்கைகள், அமைதியான உள்பகுதி மற்றும் சிறப்பான பயண அனுபவம்.",
-    },
-    suitableFor: {
-      en: ["Executive Corporate Travel", "Luxury Wedding Guests", "Long-Distance All India Tours", "VIP Delegations", "Celebrity Transit"],
-      ta: ["கார்ப்பரேட் நிறுவன பயணங்கள்", "திருமண விருந்தினர் வரவேற்பு", "நீண்ட தூர சுற்றுலா", "விஐபி பயணங்கள்"],
-    },
-    amenities: {
-      en: ["Ultra-Comfort Reclining Seats", "Individual AC Louvers & Lights", "USB Fast Chargers at Every Seat", "Quiet Monocoque Suspension", "Premium Audio System"],
-      ta: ["சொகுசு சாய்வு இருக்கைகள்", "தனித்தனி ஏசி & விளக்குகள்", "ஒவ்வொரு இருக்கையிலும் யுஎஸ்பி சார்ஜர்", "மென்மையான சவாரி", "பிரீமியம் ஆடியோ"],
-    },
-    luggageCapacity: "12-14 Medium Luggage Bags",
-    idealGroup: "12 - 16 Passengers",
-  },
-  {
-    id: "sml-coach-21",
-    name: "SML Coach – 21 Seater",
-    seatingCapacity: "21 Passengers + 1 Driver + 1 Guide",
-    seatsCount: 21,
-    image: fleetSmlCoachImage,
-    shortDescription: {
-      en: "Heavy-duty 21-seater tourist mini-coach bus engineered for large family reunions, corporate outings, pilgrimage groups, and school/college industrial tours across all Indian states.",
-      ta: "21 பேர் பயணிக்கக்கூடிய எஸ்எம்எல் சொகுசு மினி பஸ். பெரிய குடும்பங்கள், திருமண குழுக்கள், பள்ளி/கல்லூரி சுற்றுலா மற்றும் கோயில் யாத்திரைகளுக்கு மிகச் சிறந்தது.",
-    },
-    suitableFor: {
-      en: ["Large Group Pilgrimages", "Wedding Guest Shuttles", "School & College Industrial Visits", "Corporate Team Outings", "Multi-Day Interstate Tours"],
-      ta: ["பெரிய ஆன்மீக சுற்றுலா", "திருமண வரவேற்பு பஸ்", "பள்ளி & கல்லூரி சுற்றுலா", "கார்ப்பரேட் சுற்றுலா"],
-    },
-    amenities: {
-      en: ["Cushioned 2x2 Pushback Seating", "Central Air Conditioning", "Overhead Luggage Racks & Boot", "Mic & PA Tour Audio System", "Spacious Aisle"],
-      ta: ["2x2 குஷன் புஷ்பேக் இருக்கைகள்", "முழு ஏசி வசதி", "மேல்புற லக்கேஜ் ரேக்", "மைக் மற்றும் ஆடியோ வசதி", "அகன்ற நடைபாதை"],
-    },
-    luggageCapacity: "18-22 Large Travel Bags",
-    idealGroup: "16 - 21 Passengers",
-  },
-  {
-    id: "toyota-innova-7",
-    name: "Toyota Innova – 7 Seater",
-    seatingCapacity: "6-7 Passengers + 1 Driver",
-    seatsCount: 7,
-    image: fleetInnovaImage,
-    shortDescription: {
-      en: "The undisputed king of Indian highway travel. Legendary reliability, plush middle-row captain seats, superior hill climbing performance on ghat roads, and silent cabin comfort.",
-      ta: "இந்திய நெடுஞ்சாலைகளின் நம்பகமான டொயோட்டா இன்னோவா 7 சீட்டர். மலைப் பாதைகளில் சுலபமான இயக்கம் மற்றும் குடும்பங்களுக்கு மிகச் சிறந்த சௌகரியம்.",
-    },
-    suitableFor: {
-      en: ["Family Vacationing", "Hill Station Driving (Ooty / Valparai / Munnar)", "Business Executive Travel", "Airport Fast Transit", "Weekend Getaways"],
-      ta: ["குடும்ப சுற்றுலா", "ஊட்டி/வால்பாறை மலைப்பயணம்", "வியாபார பயணங்கள்", "விமான நிலைய சேவை"],
-    },
-    amenities: {
-      en: ["Plush Captain Seating", "Rear Dual Blower AC", "Smooth Ghat-Road Suspension", "Generous Boot Luggage Space", "Bluetooth Infotainment"],
-      ta: ["சொகுசு கேப்டன் சீட்கள்", "பின்புற ஏசி வசதி", "சிறந்த சஸ்பென்ஷன்", "பூட் லக்கேஜ் இடம்", "மியூசிக் கனெக்ஷன்"],
-    },
-    luggageCapacity: "4-5 Medium Travel Bags",
-    idealGroup: "4 - 7 Passengers",
-  },
-  {
-    id: "maruti-ertiga-7",
-    name: "Maruti Ertiga – 7 Seater",
-    seatingCapacity: "6 Passengers + 1 Driver",
-    seatsCount: 7,
-    image: fleetErtigaImage,
-    shortDescription: {
-      en: "Smart, fuel-efficient, and budget-friendly 7-seater MPV ideal for city errands, small family weekend getaways, outstation cab booking, and quick airport transfers from Coimbatore.",
-      ta: "சிக்கனமான மற்றும் வசதியான மாருதி எர்டிகா 7 சீட்டர். சிறு குடும்பங்களின் வார இறுதி சுற்றுலா மற்றும் வெளிவட்டார பயணங்களுக்கு உகந்தது.",
-    },
-    suitableFor: {
-      en: ["Budget Family Trips", "Weekend Outstation Travels", "City Pickup & Local Sightseeing", "Coimbatore Airport & Railway Drops"],
-      ta: ["பட்ஜெட் குடும்ப சுற்றுலா", "வார இறுதி பயணங்கள்", "கோவை உள்ளூர் பயணம்", "விமான நிலைய பிக்கப்"],
-    },
-    amenities: {
-      en: ["Smart Hybrid AC Cooling", "Flexible Folding Rear Seats", "Clean Interiors & Charging Sockets", "Smooth City & Highway Ride"],
-      ta: ["குளிர்ந்த ஏசி வசதி", "மடக்கக்கூடிய பின்புற இருக்கைகள்", "சுத்தமான உள்பகுதி", "மென்மையான சவாரி"],
-    },
-    luggageCapacity: "3-4 Medium Travel Bags",
-    idealGroup: "3 - 6 Passengers",
-  },
-];
+export { VEHICLES_DATA } from './vehicles';
 
 export const TOUR_PACKAGES_DATA: TourPackage[] = [
   {
@@ -308,9 +197,6 @@ export const POPULAR_DESTINATIONS: TouristDestination[] = [
       ta: "ஊட்டி (உதகமண்டலம்)",
     },
     state: "Tamil Nadu",
-    distanceFromCoimbatore: "86 km",
-    approxTravelTime: "2.5 - 3 Hours",
-    bestTimeToVisit: "October to June",
     image: ootyDestinationImage,
     description: {
       en: "Nestled in the blue Nilgiri mountains, Ooty is famous for vast tea estates, heritage toy train routes, cool misty weather, and the scenic Doddabetta peak.",
@@ -326,10 +212,8 @@ export const POPULAR_DESTINATIONS: TouristDestination[] = [
       ta: "மூணார் தேயிலை பள்ளத்தாக்கு",
     },
     state: "Kerala",
-    distanceFromCoimbatore: "155 km",
-    approxTravelTime: "4.5 Hours",
-    bestTimeToVisit: "September to May",
-    image: coimbatoreHeroImage,
+    image: munnarDestinationImage,
+    imageCredit: wikimediaAttribution("Ingo Mehling", "Munnar - Tea Plantations.jpg"),
     description: {
       en: "Famous for rolling carpet-like tea gardens, Anamudi peak, waterfalls, and fresh mountain breezes in God's Own Country, easily accessible from Coimbatore via Pollachi.",
       ta: "பசுமையான தேயிலை தோட்டங்கள், அருவிகள் மற்றும் இயற்கை எழில் கொஞ்சும் கேரளாவின் மூணார், கோவையிலிருந்து பொள்ளாச்சி வழியாக எளிதில் சென்றடையலாம்.",
@@ -344,10 +228,8 @@ export const POPULAR_DESTINATIONS: TouristDestination[] = [
       ta: "கொடைக்கானல் (மலைகளின் இளவரசி)",
     },
     state: "Tamil Nadu",
-    distanceFromCoimbatore: "170 km",
-    approxTravelTime: "4.5 Hours",
-    bestTimeToVisit: "Throughout the Year",
-    image: ootyDestinationImage,
+    image: kodaikanalDestinationImage,
+    imageCredit: wikimediaAttribution("Devasenathipathi1957", "Kodaikanal Lake 2.jpg"),
     description: {
       en: "Situated in the Palani hills at 2,133m elevation, Kodaikanal charms visitors with star-shaped lakes, cool waterfalls, deep green valleys, and quiet pine forests.",
       ta: "பழனி மலையில் அமைந்துள்ள கொடைக்கானல், நட்சத்திர வடிவ ஏரி, குளிர்ந்த நீர்வீழ்ச்சிகள் மற்றும் பைன் காடுகளுடன் மனதை மயக்கும் சுற்றுலா தலம்.",
@@ -362,10 +244,6 @@ export const POPULAR_DESTINATIONS: TouristDestination[] = [
       ta: "வால்பாறை & டாப்ஸ்லிப் வன சுற்றுலா",
     },
     state: "Tamil Nadu",
-    distanceFromCoimbatore: "105 km",
-    approxTravelTime: "3.5 Hours",
-    bestTimeToVisit: "October to March",
-    image: coimbatoreHeroImage,
     description: {
       en: "Known for 40 thrilling hairpin bends, endless tea plantations, wild elephants, and lion-tailed macaques near the Anamalai Tiger Reserve.",
       ta: "40 கொண்டை ஊசி வளைவுகள், ஆனைமலை புலிகள் காப்பகம் மற்றும் வன விலங்குகளுடன் கூடிய சிலிர்ப்பான மலைப்பயணம்.",
@@ -380,10 +258,6 @@ export const POPULAR_DESTINATIONS: TouristDestination[] = [
       ta: "ராமேஸ்வரம் & மதுரை ஆன்மீக பயணம்",
     },
     state: "Tamil Nadu",
-    distanceFromCoimbatore: "380 km",
-    approxTravelTime: "7.5 Hours",
-    bestTimeToVisit: "October to April",
-    image: ootyDestinationImage,
     description: {
       en: "The divine coastal town connected by the iconic Pamban Bridge, home to 22 sacred teerthams and the historic ghost town of Dhanushkodi.",
       ta: "பாம்பன் பாலம், 22 புனித தீர்த்தங்கள் மற்றும் தனுஷ்கோடி கொண்ட புகழ்பெற்ற புண்ணிய பூமி.",
@@ -398,10 +272,6 @@ export const POPULAR_DESTINATIONS: TouristDestination[] = [
       ta: "மைசூர் & கூர்க் (கர்நாடகா)",
     },
     state: "Karnataka",
-    distanceFromCoimbatore: "195 km",
-    approxTravelTime: "5 Hours",
-    bestTimeToVisit: "September to April",
-    image: fleetUrbaniaImage,
     description: {
       en: "The historic city of grand palaces and Chamundi hills, paired with the coffee-scented evergreen slopes and waterfalls of Coorg.",
       ta: "அழகிய மைசூர் அரண்மனை மற்றும் காபி தோட்டங்கள் நிறைந்த கூர்க் மலைவாசஸ்தலம்.",
@@ -666,16 +536,16 @@ export const TRANSLATIONS = {
       allCategories: "All Tour Categories",
     },
     features: {
-      heading: "Why Choose BROTHER'S TRAVELS?",
-      subheading: "Committed to passenger safety, transparent pricing, and punctual service since 2018.",
-      item1Title: "Free Coimbatore Pickup",
-      item1Desc: "Doorstep pickup from anywhere in Coimbatore without hidden dead-mileage charges.",
-      item2Title: "All India Tourist Permit",
-      item2Desc: "Full legal permits and experienced interstate drivers for seamless travel across any Indian state.",
-      item3Title: "Transparent Quotes on WhatsApp",
-      item3Desc: "No middlemen fees. Receive honest, clear quotations directly from owner DINESHKUMAR R.",
-      item4Title: "Verified Mountain Drivers",
-      item4Desc: "Drivers with 8+ years of dedicated hill station ghat road experience for total peace of mind.",
+      heading: "Plan your journey with clear details",
+      subheading: "Share your route, dates and group size to discuss suitable vehicle options.",
+      item1Title: "Coimbatore base",
+      item1Desc: "Start an enquiry for local travel or a trip departing from Coimbatore.",
+      item2Title: "Vehicle choices",
+      item2Desc: "Compare listed vehicles by seating, luggage and features.",
+      item3Title: "Direct enquiry",
+      item3Desc: "Send your trip requirements through WhatsApp and discuss them directly.",
+      item4Title: "Custom itineraries",
+      item4Desc: "Share preferred stops and travel needs to discuss a route and quotation.",
     },
     fleetSection: {
       title: "Our Premium Vehicle Fleet",
@@ -759,16 +629,16 @@ export const TRANSLATIONS = {
       allCategories: "அனைத்து சுற்றுலா வகைகள்",
     },
     features: {
-      heading: "பிரதர்ஸ் டிராவல்ஸை ஏன் தேர்வு செய்ய வேண்டும்?",
-      subheading: "பயணிகள் பாதுகாப்பு, வெளிப்படையான கட்டணம் மற்றும் நேரந்தவறாமை எங்கள் அடையாளம்.",
-      item1Title: "கோவை முழுவதும் இலவச பிக்கப்",
-      item1Desc: "கோவையில் நீங்கள் இருக்கும் இடத்திற்கே வந்து கூடுதல் கட்டணமின்றி பிக்கப் செய்கிறோம்.",
-      item2Title: "அகில இந்திய சுற்றுலா அனுமதி",
-      item2Desc: "எந்த மாநிலத்திற்கும் எவ்வித தடையுமின்றி பயணிக்க உரிய அரசு அனுமதிகள்.",
-      item3Title: "வாட்ஸ்அப்பில் வெளிப்படையான கட்டணம்",
-      item3Desc: "இடைத்தரகர் இல்லை. உரிமையாளர் தினேஷ்குமார் நேரடியாக கட்டண விபரங்களை வழங்குவார்.",
-      item4Title: "அனுபவம் வாய்ந்த ஓட்டுநர்கள்",
-      item4Desc: "ஊட்டி, கொடைக்கானல் மலைப்பாதைகளில் 8+ ஆண்டுகள் அனுபவம் வாய்ந்த ஓட்டுநர்கள்.",
+      heading: "பயண விவரங்களுடன் திட்டமிடுங்கள்",
+      subheading: "உங்கள் வழித்தடம், தேதி மற்றும் குழு அளவைப் பகிர்ந்து வாகன விருப்பங்களை விசாரிக்கவும்.",
+      item1Title: "கோயம்புத்தூரை மையமாகக் கொண்டு",
+      item1Desc: "உள்ளூர் பயணம் அல்லது கோயம்புத்தூரிலிருந்து தொடங்கும் பயணத்திற்கான விசாரணையைத் தொடங்குங்கள்.",
+      item2Title: "வாகனத் தேர்வுகள்",
+      item2Desc: "இருக்கைகள், லக்கேஜ் மற்றும் வசதிகளின் அடிப்படையில் பட்டியலிடப்பட்ட வாகனங்களை ஒப்பிடுங்கள்.",
+      item3Title: "நேரடி விசாரணை",
+      item3Desc: "உங்கள் பயணத் தேவைகளை வாட்ஸ்அப் மூலம் அனுப்பி நேரடியாகப் பேசுங்கள்.",
+      item4Title: "தனிப்பயன் பயணத் திட்டம்",
+      item4Desc: "விரும்பும் நிறுத்தங்கள் மற்றும் பயணத் தேவைகளைப் பகிர்ந்து வழித்தடம் மற்றும் கட்டணத்தைப் பேசுங்கள்.",
     },
     fleetSection: {
       title: "எங்களின் சிறந்த வாகனங்கள்",

@@ -2,7 +2,7 @@ import React from 'react';
 import { ShieldCheck, MapPin, Phone, MessageCircle, Award, Users, CheckCircle, Car } from 'lucide-react';
 import { Language } from '../types/travel';
 import { BUSINESS_INFO, TRANSLATIONS } from '../data/travelData';
-import urbaniaImage from '../assets/images/fleet_force_urbania_1794284646206.jpg';
+import urbaniaImage from '../assets/images/fleet_force_urbania_1794284646206-optimized.jpg';
 
 interface AboutUsPageProps {
   language: Language;

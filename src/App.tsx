@@ -28,6 +28,9 @@ export default function App() {
     vehicle?: string;
     tour?: string;
     destination?: string;
+    pickupLocation?: string;
+    travelDate?: string;
+    passengers?: string | number;
   }>({});
 
   // Sitemap Modal State
@@ -57,7 +60,14 @@ export default function App() {
     document.title = titles[currentTab] || "BROTHER'S TRAVELS – Travel & Vehicle Booking in Coimbatore";
   }, [currentTab, selectedSeoSlug, language]);
 
-  const handleOpenBooking = (prefill?: { vehicle?: string; tour?: string; destination?: string }) => {
+  const handleOpenBooking = (prefill?: {
+    vehicle?: string;
+    tour?: string;
+    destination?: string;
+    pickupLocation?: string;
+    travelDate?: string;
+    passengers?: string | number;
+  }) => {
     if (prefill) {
       setBookingPrefill(prefill);
     } else {
@@ -182,6 +192,9 @@ export default function App() {
         initialVehicle={bookingPrefill.vehicle}
         initialTour={bookingPrefill.tour}
         initialDestination={bookingPrefill.destination}
+        initialPickupLocation={bookingPrefill.pickupLocation}
+        initialTravelDate={bookingPrefill.travelDate}
+        initialPassengers={bookingPrefill.passengers}
       />
 
       {/* Sitemap & Robots.txt SEO Inspector Modal */}

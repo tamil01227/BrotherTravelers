@@ -39,9 +39,9 @@ export const Footer: React.FC<FooterProps> = ({
           <div className="flex flex-wrap items-center gap-3 shrink-0">
             <button
               onClick={onOpenBooking}
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl font-bold text-sm bg-green-600 hover:bg-green-700 active:bg-green-800 text-white shadow-lg transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl font-bold text-sm bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-950 shadow-lg transition-colors cursor-pointer"
             >
-              <MessageCircle className="w-4 h-4 fill-current" />
+              <MessageCircle className="w-4 h-4" />
               <span>{t.nav.bookNow}</span>
             </button>
             <a

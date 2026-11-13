@@ -1,11 +1,11 @@
-import { Vehicle, TourPackage, TouristDestination, Testimonial, SEOLandingData } from '../types/travel';
-import fleetTravellerImage from '../assets/images/fleet_force_traveller_1794284646646.jpg';
-import fleetUrbaniaImage from '../assets/images/fleet_force_urbania_1794284646206.jpg';
-import fleetSmlCoachImage from '../assets/images/fleet_sml_coach_1794284664007.jpg';
-import fleetInnovaImage from '../assets/images/fleet_toyota_innova_1794284663766.jpg';
-import fleetErtigaImage from '../assets/images/fleet_maruti_ertiga_1794284663239.jpg';
-import ootyDestinationImage from '../assets/images/destination_ooty_hills_1794284647653.jpg';
-import coimbatoreHeroImage from '../assets/images/hero_travel_coimbatore_1794284646361.jpg';
+import { Vehicle, TourPackage, TouristDestination, SEOLandingData } from '../types/travel';
+import fleetTravellerImage from '../assets/images/fleet_force_traveller_1794284646646-optimized.jpg';
+import fleetUrbaniaImage from '../assets/images/fleet_force_urbania_1794284646206-optimized.jpg';
+import fleetSmlCoachImage from '../assets/images/fleet_sml_coach_1794284664007-optimized.jpg';
+import fleetInnovaImage from '../assets/images/fleet_toyota_innova_1794284663766-optimized.jpg';
+import fleetErtigaImage from '../assets/images/fleet_maruti_ertiga_1794284663239-optimized.jpg';
+import ootyDestinationImage from '../assets/images/destination_ooty_hills_1794284647653-optimized.jpg';
+import coimbatoreHeroImage from '../assets/images/hero_travel_coimbatore_1794284646361-optimized.jpg';
 
 export const BUSINESS_INFO = {
   name: "BROTHER'S TRAVELS",
@@ -408,48 +408,6 @@ export const POPULAR_DESTINATIONS: TouristDestination[] = [
     },
     topAttractions: ["Mysore Palace", "Chamundeshwari Temple", "Abbey Falls Coorg", "Raja's Seat", "Dubare Elephant Camp"],
     recommendedVehicleTypes: ["Force Urbania 16S", "Toyota Innova", "Force Traveller 14S"],
-  },
-];
-
-export const TESTIMONIALS_DATA: Testimonial[] = [
-  {
-    id: "t1",
-    name: "Karthikeyan Shanmugam",
-    location: "R.S. Puram, Coimbatore",
-    trip: "Family Trip to Ooty (3 Days)",
-    vehicle: "Force Traveller – 14 Seater",
-    review: {
-      en: "Booked a 14-seater Force Traveller for our family trip to Ooty. Driver arrived right at our doorstep in RS Puram 15 minutes before time. He was extremely skilled on the Kallatti hairpin curves. Vehicles were clean, AC worked flawlessly. Free pickup in Coimbatore is a big plus!",
-      ta: "எங்கள் குடும்ப ஊட்டி சுற்றுலாவுக்காக 14 சீட்டர் போர்ஸ் டிராவலர் புக் செய்தோம். ஓட்டுநர் சொன்ன நேரத்திற்கு முன்பே ஆர்.எஸ்.புரத்திற்கு வந்தார். கொண்டை ஊசி வளைவுகளில் மிக பாதுகாப்பாக ஓட்டினார். வாகனம் மிகவும் சுத்தமாக இருந்தது.",
-    },
-    rating: 5,
-    date: "February 2026",
-  },
-  {
-    id: "t2",
-    name: "Senthil Nathan & Priya",
-    location: "Saravanampatti, Coimbatore",
-    trip: "Wedding Guest Shuttles",
-    vehicle: "Force Urbania (16 Seater) & SML Coach",
-    review: {
-      en: "DINESHKUMAR brother managed the transportation for my sister's wedding at Codissia. Coordinated guest pickups from Coimbatore Airport smoothly. The Force Urbania impressed all our VIP guests with its luxury seating. Highly recommended for weddings!",
-      ta: "எனது தங்கை திருமணத்திற்கு விருந்தினர் போக்குவரத்துக்காக பிரதர்ஸ் டிராவல்ஸை அணுகினோம். தினேஷ்குமார் அவர்கள் மிகச் சிறப்பாக ஒருங்கிணைத்தார். அர்பானியா வண்டி மிகவும் சொகுசாக இருந்தது.",
-    },
-    rating: 5,
-    date: "January 2026",
-  },
-  {
-    id: "t3",
-    name: "Vigneshwaran M",
-    location: "Gandhipuram, Coimbatore",
-    trip: "Kerala Munnar & Alleppey Tour",
-    vehicle: "Toyota Innova – 7 Seater",
-    review: {
-      en: "Had a great 4-day vacation in Munnar and Alleppey with Innova. Smooth driving, no hidden toll or permit hassles, everything was clearly communicated on WhatsApp beforehand. Genuine service!",
-      ta: "இன்னோவாவில் மூணார் மற்றும் ஆலப்புழா சுற்றுலா சென்றோம். ஓட்டுநர் மிகவும் பண்பானவர். மறைமுக கட்டணங்கள் எதுவும் இல்லை, வாட்ஸ்அப்பில் தெளிவான விளக்கம் கிடைத்தது.",
-    },
-    rating: 5,
-    date: "December 2025",
   },
 ];
 

@@ -11,6 +11,9 @@ interface BookingModalProps {
   initialVehicle?: string;
   initialTour?: string;
   initialDestination?: string;
+  initialPickupLocation?: string;
+  initialTravelDate?: string;
+  initialPassengers?: string | number;
 }
 
 export const BookingModal: React.FC<BookingModalProps> = ({
@@ -20,17 +23,20 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   initialVehicle,
   initialTour,
   initialDestination,
+  initialPickupLocation,
+  initialTravelDate,
+  initialPassengers,
 }) => {
   const t = TRANSLATIONS[language];
 
   const [formData, setFormData] = useState<BookingEnquiry>({
     customerName: '',
     mobileNumber: '',
-    pickupLocation: 'Coimbatore (Free Doorstep Pickup)',
+    pickupLocation: initialPickupLocation || 'Coimbatore (Free Doorstep Pickup)',
     destination: initialDestination || '',
-    travelDate: '',
+    travelDate: initialTravelDate || '',
     returnDate: '',
-    passengers: 4,
+    passengers: initialPassengers || 4,
     selectedVehicle: initialVehicle || VEHICLES_DATA[0].name,
     travelType: initialTour || 'Family Holiday / Outstation',
     additionalRequirements: '',
@@ -40,16 +46,23 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
-    if (initialVehicle) {
-      setFormData((prev) => ({ ...prev, selectedVehicle: initialVehicle }));
-    }
-    if (initialTour) {
-      setFormData((prev) => ({ ...prev, travelType: initialTour }));
-    }
-    if (initialDestination) {
-      setFormData((prev) => ({ ...prev, destination: initialDestination }));
-    }
-  }, [initialVehicle, initialTour, initialDestination]);
+    if (!isOpen) return;
+
+    setFormData({
+      customerName: '',
+      mobileNumber: '',
+      pickupLocation: initialPickupLocation || 'Coimbatore (Free Doorstep Pickup)',
+      destination: initialDestination || '',
+      travelDate: initialTravelDate || '',
+      returnDate: '',
+      passengers: initialPassengers || 4,
+      selectedVehicle: initialVehicle || VEHICLES_DATA[0].name,
+      travelType: initialTour || 'Family Holiday / Outstation',
+      additionalRequirements: '',
+    });
+    setErrors({});
+    setIsSubmitted(false);
+  }, [isOpen, initialVehicle, initialTour, initialDestination, initialPickupLocation, initialTravelDate, initialPassengers]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -119,7 +132,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         aria-labelledby="modal-title"
       >
         {/* Header Bar */}
-        <div className="bg-sky-950 text-white px-5 sm:px-6 py-4 flex items-start justify-between gap-4">
+        <div className="bg-slate-950 text-white px-5 sm:px-6 py-4 flex items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-green-500/20 text-green-400 border border-green-500/30">
@@ -151,11 +164,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Customer Name */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label htmlFor="booking-name" className="block text-xs font-semibold text-slate-700 mb-1">
                 {t.bookingModal.nameLabel} <span className="text-rose-500">*</span>
               </label>
               <input
+                id="booking-name"
                 type="text"
+                aria-invalid={Boolean(errors.customerName)}
+                aria-describedby={errors.customerName ? 'booking-name-error' : undefined}
                 value={formData.customerName}
                 onChange={(e) => setFormData({ ...formData, customerName: e.target.value })}
                 placeholder="e.g. Ramesh Kumar"
@@ -164,17 +180,20 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 }`}
               />
               {errors.customerName && (
-                <p className="text-[11px] text-rose-500 mt-1">{errors.customerName}</p>
+                <p id="booking-name-error" className="text-[11px] text-rose-500 mt-1">{errors.customerName}</p>
               )}
             </div>
 
             {/* Mobile Number */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label htmlFor="booking-phone" className="block text-xs font-semibold text-slate-700 mb-1">
                 {t.bookingModal.phoneLabel} <span className="text-rose-500">*</span>
               </label>
               <input
+                id="booking-phone"
                 type="tel"
+                aria-invalid={Boolean(errors.mobileNumber)}
+                aria-describedby={errors.mobileNumber ? 'booking-phone-error' : undefined}
                 value={formData.mobileNumber}
                 onChange={(e) => setFormData({ ...formData, mobileNumber: e.target.value })}
                 placeholder="e.g. 9876543210"
@@ -183,7 +202,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 }`}
               />
               {errors.mobileNumber && (
-                <p className="text-[11px] text-rose-500 mt-1">{errors.mobileNumber}</p>
+                <p id="booking-phone-error" className="text-[11px] text-rose-500 mt-1">{errors.mobileNumber}</p>
               )}
             </div>
           </div>
@@ -191,12 +210,13 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Pickup Location */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label htmlFor="booking-pickup" className="block text-xs font-semibold text-slate-700 mb-1">
                 {t.bookingModal.pickupLabel}
               </label>
               <div className="relative">
                 <MapPin className="w-4 h-4 text-slate-400 absolute left-3 top-2.5 pointer-events-none" />
                 <input
+                  id="booking-pickup"
                   type="text"
                   value={formData.pickupLocation}
                   onChange={(e) => setFormData({ ...formData, pickupLocation: e.target.value })}
@@ -208,11 +228,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
             {/* Destination */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label htmlFor="booking-destination" className="block text-xs font-semibold text-slate-700 mb-1">
                 {t.bookingModal.destinationLabel} <span className="text-rose-500">*</span>
               </label>
               <input
+                id="booking-destination"
                 type="text"
+                aria-invalid={Boolean(errors.destination)}
+                aria-describedby={errors.destination ? 'booking-destination-error' : undefined}
                 value={formData.destination}
                 onChange={(e) => setFormData({ ...formData, destination: e.target.value })}
                 placeholder="e.g. Ooty, Munnar, Palani, Rameswaram"
@@ -221,7 +244,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 }`}
               />
               {errors.destination && (
-                <p className="text-[11px] text-rose-500 mt-1">{errors.destination}</p>
+                <p id="booking-destination-error" className="text-[11px] text-rose-500 mt-1">{errors.destination}</p>
               )}
             </div>
           </div>
@@ -229,12 +252,15 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Travel Date */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label htmlFor="booking-travel-date" className="block text-xs font-semibold text-slate-700 mb-1">
                 {t.bookingModal.travelDateLabel} <span className="text-rose-500">*</span>
               </label>
               <div className="relative">
                 <input
+                  id="booking-travel-date"
                   type="date"
+                  aria-invalid={Boolean(errors.travelDate)}
+                  aria-describedby={errors.travelDate ? 'booking-travel-date-error' : undefined}
                   value={formData.travelDate}
                   onChange={(e) => setFormData({ ...formData, travelDate: e.target.value })}
                   className={`w-full px-3 py-2 text-sm rounded-lg border bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 ${
@@ -243,16 +269,17 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                 />
               </div>
               {errors.travelDate && (
-                <p className="text-[11px] text-rose-500 mt-1">{errors.travelDate}</p>
+                <p id="booking-travel-date-error" className="text-[11px] text-rose-500 mt-1">{errors.travelDate}</p>
               )}
             </div>
 
             {/* Return Date (Optional) */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label htmlFor="booking-return-date" className="block text-xs font-semibold text-slate-700 mb-1">
                 {t.bookingModal.returnDateLabel}
               </label>
               <input
+                id="booking-return-date"
                 type="date"
                 value={formData.returnDate}
                 onChange={(e) => setFormData({ ...formData, returnDate: e.target.value })}
@@ -264,10 +291,11 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Selected Vehicle */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label htmlFor="booking-vehicle" className="block text-xs font-semibold text-slate-700 mb-1">
                 {t.bookingModal.vehicleLabel}
               </label>
               <select
+                id="booking-vehicle"
                 value={formData.selectedVehicle}
                 onChange={(e) => setFormData({ ...formData, selectedVehicle: e.target.value })}
                 className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 cursor-pointer"
@@ -282,10 +310,11 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
             {/* Number of Passengers */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
+              <label htmlFor="booking-passengers" className="block text-xs font-semibold text-slate-700 mb-1">
                 {t.bookingModal.passengersLabel}
               </label>
               <input
+                id="booking-passengers"
                 type="number"
                 min="1"
                 max="50"
@@ -298,10 +327,11 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
           {/* Travel / Event Type */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
+            <label htmlFor="booking-trip-type" className="block text-xs font-semibold text-slate-700 mb-1">
               {t.bookingModal.tourTypeLabel}
             </label>
             <select
+              id="booking-trip-type"
               value={formData.travelType}
               onChange={(e) => setFormData({ ...formData, travelType: e.target.value })}
               className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 cursor-pointer"
@@ -316,10 +346,11 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
           {/* Additional Requirements */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
+            <label htmlFor="booking-notes" className="block text-xs font-semibold text-slate-700 mb-1">
               {t.bookingModal.notesLabel}
             </label>
             <textarea
+              id="booking-notes"
               rows={2}
               value={formData.additionalRequirements}
               onChange={(e) => setFormData({ ...formData, additionalRequirements: e.target.value })}
@@ -333,9 +364,9 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             <button
               type="submit"
               disabled={isSubmitted}
-              className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-bold text-white bg-green-600 hover:bg-green-700 active:bg-green-800 shadow-md hover:shadow-lg transition-all text-sm sm:text-base cursor-pointer disabled:opacity-75"
+              className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-bold text-slate-950 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 shadow-md hover:shadow-lg transition-colors text-sm sm:text-base cursor-pointer disabled:opacity-75"
             >
-              <MessageCircle className="w-5 h-5 fill-current shrink-0" />
+              <MessageCircle className="w-5 h-5 shrink-0" />
               <span>
                 {isSubmitted
                   ? (language === 'ta' ? 'வாட்ஸ்அப்பிற்கு இணைக்கிறது...' : 'Redirecting to WhatsApp...')

@@ -11,7 +11,6 @@ import {
   Clock, 
   Award, 
   CheckCircle2, 
-  Star, 
   ArrowRight,
   Sparkles,
   ChevronRight
@@ -21,17 +20,22 @@ import {
   BUSINESS_INFO, 
   VEHICLES_DATA, 
   POPULAR_DESTINATIONS, 
-  TESTIMONIALS_DATA, 
   TRANSLATIONS 
 } from '../data/travelData';
 import { VehicleCard } from '../components/VehicleCard';
-import { generateQuickWhatsAppUrl, openWhatsApp } from '../utils/whatsapp';
-import heroImage from '../assets/images/hero_travel_coimbatore_1794284646361.jpg';
+import heroImage from '../assets/images/hero_travel_coimbatore_1794284646361-optimized.jpg';
 
 interface HomePageProps {
   language: Language;
   onNavigate: (tab: string, slug?: string) => void;
-  onOpenBookingModal: (prefill?: { vehicle?: string; tour?: string; destination?: string }) => void;
+  onOpenBookingModal: (prefill?: {
+    vehicle?: string;
+    tour?: string;
+    destination?: string;
+    pickupLocation?: string;
+    travelDate?: string;
+    passengers?: string | number;
+  }) => void;
 }
 
 export const HomePage: React.FC<HomePageProps> = ({
@@ -55,95 +59,89 @@ export const HomePage: React.FC<HomePageProps> = ({
       vehicle: searchVehicle !== 'All' ? searchVehicle : undefined,
       tour: searchCategory !== 'All' ? searchCategory : undefined,
       destination: searchDestination || undefined,
+      pickupLocation: searchPickup || undefined,
+      travelDate: searchDate || undefined,
+      passengers: searchPassengers,
     });
-  };
-
-  const handleQuickWhatsAppChat = () => {
-    const url = generateQuickWhatsAppUrl("General Tour & Vehicle Rental", "general");
-    openWhatsApp(url);
   };
 
   return (
     <div className="space-y-16 sm:space-y-24">
       {/* 1. HERO SECTION */}
-      <section className="relative min-h-[580px] lg:min-h-[640px] flex items-center justify-center overflow-hidden bg-slate-950">
-        {/* Background Image with Scrim */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src={heroImage}
-            alt="Explore India with BROTHER'S TRAVELS Coimbatore"
-            className="w-full h-full object-cover opacity-35 transform scale-105"
-            loading="eager"
-            referrerPolicy="no-referrer"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent" />
-          <div className="absolute inset-0 bg-radial from-transparent via-slate-950/40 to-slate-950/90" />
-        </div>
-
-        {/* Hero Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center">
-          {/* Coimbatore Trust Badge */}
-          <div className="inline-flex items-center gap-2 bg-sky-950/80 backdrop-blur-md border border-sky-600/40 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold text-sky-200 mb-6 shadow-lg">
-            <span className="w-2 h-2 rounded-full bg-amber-400" />
-            <span>{t.hero.tag}</span>
+      <section className="bg-slate-50 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16 lg:py-20 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="lg:col-span-6">
+            <div className="inline-flex items-center gap-2 bg-sky-50 border border-sky-100 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold text-sky-900 mb-5">
+              <MapPin className="w-4 h-4 text-sky-700" />
+              <span>{t.hero.tag}</span>
+            </div>
+            <h1 className="text-3xl sm:text-5xl lg:text-[3.5rem] font-extrabold text-slate-950 tracking-tight text-balance leading-[1.08]">
+              {t.hero.h1}
+            </h1>
+            <p className="mt-5 text-base sm:text-lg text-slate-600 max-w-xl leading-relaxed text-balance">
+              {t.hero.p}
+            </p>
+            <p className="mt-4 flex items-center gap-2 text-sm font-semibold text-sky-900">
+              <MapPin className="w-4 h-4 text-sky-700 shrink-0" />
+              {language === 'ta' ? 'கோவையில் இலவச பிக்கப் வசதி' : 'Free pickup throughout Coimbatore'}
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <button
+                onClick={() => onOpenBookingModal()}
+                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base text-slate-950 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 shadow-sm transition-colors cursor-pointer"
+              >
+                <MessageCircle className="w-5 h-5" />
+                <span>{t.nav.bookNow}</span>
+              </button>
+              <button
+                onClick={() => onNavigate('vehicles')}
+                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base text-slate-900 bg-white hover:bg-slate-100 border border-slate-300 transition-colors cursor-pointer"
+              >
+                <Car className="w-5 h-5 text-sky-700" />
+                <span>{t.hero.exploreVehicles}</span>
+              </button>
+            </div>
+            <div className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-xs sm:text-sm text-slate-600">
+              <span className="inline-flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-sky-700" />
+                {language === 'ta' ? 'அகில இந்திய பயண சேவை' : 'Travel across India'}
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <Phone className="w-4 h-4 text-sky-700" />
+                <a href={`tel:${BUSINESS_INFO.primaryPhone}`} className="font-semibold text-slate-900 hover:underline">
+                  {BUSINESS_INFO.primaryPhone}
+                </a>
+              </span>
+            </div>
           </div>
 
-          {/* Main H1 Heading */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight text-balance max-w-4xl mx-auto leading-tight">
-            {t.hero.h1}
-          </h1>
-
-          {/* Supporting Text */}
-          <p className="mt-4 sm:mt-6 text-base sm:text-xl text-slate-200 max-w-2xl mx-auto font-normal leading-relaxed text-balance">
-            {t.hero.p}
-          </p>
-
-          {/* Free Coimbatore Pickup Highlight Callout */}
-          <div className="mt-6 inline-flex items-center gap-2.5 bg-amber-500/15 border border-amber-400/30 text-amber-300 px-4 py-2 rounded-xl text-xs sm:text-sm font-medium">
-            <MapPin className="w-4 h-4 text-amber-400 shrink-0" />
-            <span>{t.hero.freePickupBadge}: <strong>{language === 'ta' ? 'எவ்வித கூடுதல் கட்டணமும் இன்றி உங்கள் இடத்திற்கே வருகிறோம்' : 'Zero dead-mileage charges across Coimbatore'}</strong></span>
-          </div>
-
-          {/* Action CTAs Cluster */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-            {/* Primary WhatsApp Booking Button */}
-            <button
-              onClick={() => onOpenBookingModal()}
-              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl font-bold text-sm sm:text-base text-white bg-green-600 hover:bg-green-700 active:bg-green-800 shadow-xl hover:shadow-2xl hover:scale-105 transition-all cursor-pointer"
-            >
-              <MessageCircle className="w-5 h-5 fill-current" />
-              <span>{t.hero.whatsappDirect}</span>
-            </button>
-
-            {/* Explore Vehicles Button */}
-            <button
-              onClick={() => onNavigate('vehicles')}
-              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base text-white bg-sky-900/80 hover:bg-sky-800 backdrop-blur-md border border-sky-700/60 transition-all cursor-pointer"
-            >
-              <Car className="w-5 h-5 text-sky-400" />
-              <span>{t.hero.exploreVehicles}</span>
-            </button>
-
-            {/* Plan Your Trip Button */}
-            <button
-              onClick={() => onNavigate('tours')}
-              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base text-slate-300 hover:text-white bg-slate-900/60 hover:bg-slate-800/80 backdrop-blur-md border border-slate-700 transition-all cursor-pointer"
-            >
-              <Compass className="w-5 h-5 text-amber-400" />
-              <span>{t.hero.planTrip}</span>
-            </button>
-          </div>
-
-          {/* Contact Direct Strip */}
-          <div className="mt-8 pt-6 border-t border-slate-800/70 flex flex-wrap items-center justify-center gap-6 text-xs sm:text-sm text-slate-300">
-            <span className="flex items-center gap-1.5">
-              <Phone className="w-4 h-4 text-sky-400" />
-              Call Directly: <a href={`tel:${BUSINESS_INFO.primaryPhone}`} className="text-white font-bold hover:underline">{BUSINESS_INFO.primaryPhone}</a>
-            </span>
-            <span className="hidden sm:inline text-slate-600">·</span>
-            <span>Owner: <strong className="text-white">{BUSINESS_INFO.owner}</strong></span>
-            <span className="hidden sm:inline text-slate-600">·</span>
-            <span>Additional: {BUSINESS_INFO.additionalPhones.join(', ')}</span>
+          <div className="lg:col-span-6 relative min-w-0">
+            <img
+              src={heroImage}
+              alt="Scenic Ooty hill country, a popular trip from Coimbatore"
+              className="w-full aspect-[4/3] sm:aspect-[16/10] object-cover rounded-2xl sm:rounded-3xl shadow-md"
+              width="1200"
+              height="750"
+              loading="eager"
+              fetchPriority="high"
+            />
+            <div className="absolute bottom-3 left-3 right-3 sm:bottom-5 sm:left-5 sm:right-5 bg-white/95 backdrop-blur-sm rounded-xl p-3 sm:p-4 flex items-center justify-between gap-3 shadow-sm">
+              <div>
+                <p className="text-xs sm:text-sm font-bold text-slate-900">
+                  {language === 'ta' ? 'உங்கள் பயணத்திற்கான வாகனம்' : 'The right vehicle for your trip'}
+                </p>
+                <p className="text-[11px] sm:text-xs text-slate-600 mt-0.5">
+                  {language === 'ta' ? 'குடும்பம், குழு மற்றும் சுற்றுலா பயணங்கள்' : 'Family, group and sightseeing journeys'}
+                </p>
+              </div>
+              <button
+                onClick={() => onNavigate('tours')}
+                className="shrink-0 text-xs sm:text-sm font-bold text-sky-900 hover:text-sky-700 transition-colors"
+              >
+                {language === 'ta' ? 'சுற்றுலாக்கள்' : 'Explore trips'}
+                <span className="sr-only"> and tour packages</span>
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -163,10 +161,11 @@ export const HomePage: React.FC<HomePageProps> = ({
           <form onSubmit={handleSearchSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 sm:gap-4">
             {/* Pickup */}
             <div className="lg:col-span-1">
-              <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+              <label htmlFor="search-pickup" className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
                 {language === 'ta' ? 'பிக்கப் இடம்' : 'Pickup'}
               </label>
               <input
+                id="search-pickup"
                 type="text"
                 value={searchPickup}
                 onChange={(e) => setSearchPickup(e.target.value)}
@@ -177,10 +176,11 @@ export const HomePage: React.FC<HomePageProps> = ({
 
             {/* Destination */}
             <div className="lg:col-span-1">
-              <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+              <label htmlFor="search-destination" className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
                 {language === 'ta' ? 'செல்லும் இடம்' : 'Destination'}
               </label>
               <input
+                id="search-destination"
                 type="text"
                 value={searchDestination}
                 onChange={(e) => setSearchDestination(e.target.value)}
@@ -191,10 +191,11 @@ export const HomePage: React.FC<HomePageProps> = ({
 
             {/* Date */}
             <div className="lg:col-span-1">
-              <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+              <label htmlFor="search-date" className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
                 {t.searchWidget.dateLabel}
               </label>
               <input
+                id="search-date"
                 type="date"
                 value={searchDate}
                 onChange={(e) => setSearchDate(e.target.value)}
@@ -204,10 +205,11 @@ export const HomePage: React.FC<HomePageProps> = ({
 
             {/* Passengers */}
             <div className="lg:col-span-1">
-              <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+              <label htmlFor="search-passengers" className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
                 {t.searchWidget.passengersLabel}
               </label>
               <select
+                id="search-passengers"
                 value={searchPassengers}
                 onChange={(e) => setSearchPassengers(e.target.value)}
                 className="w-full px-3 py-2 text-xs sm:text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 cursor-pointer"
@@ -222,10 +224,11 @@ export const HomePage: React.FC<HomePageProps> = ({
 
             {/* Vehicle Preference */}
             <div className="lg:col-span-1">
-              <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+              <label htmlFor="search-vehicle" className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
                 {t.searchWidget.vehicleLabel}
               </label>
               <select
+                id="search-vehicle"
                 value={searchVehicle}
                 onChange={(e) => setSearchVehicle(e.target.value)}
                 className="w-full px-3 py-2 text-xs sm:text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 cursor-pointer"
@@ -241,9 +244,9 @@ export const HomePage: React.FC<HomePageProps> = ({
             <div className="lg:col-span-1 flex items-end">
               <button
                 type="submit"
-                className="w-full py-2.5 px-4 rounded-lg bg-sky-900 hover:bg-sky-800 text-white font-bold text-xs sm:text-sm transition-colors cursor-pointer flex items-center justify-center gap-1.5 shadow-sm"
+                className="w-full py-2.5 px-4 rounded-lg bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs sm:text-sm transition-colors cursor-pointer flex items-center justify-center gap-1.5 shadow-sm"
               >
-                <MessageCircle className="w-4 h-4 text-green-400 fill-current" />
+                <MessageCircle className="w-4 h-4" />
                 <span>Get Quote</span>
               </button>
             </div>
@@ -434,56 +437,46 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* 6. TESTIMONIALS SECTION */}
-      <section className="bg-slate-900 text-white py-16 sm:py-20 rounded-3xl mx-4 sm:mx-6">
+      <section className="bg-slate-950 text-white py-12 sm:py-16 rounded-2xl sm:rounded-3xl mx-4 sm:mx-6">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-xs font-bold uppercase tracking-wider text-amber-400">
-              Verified Client Stories
+              Customer feedback
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mt-1">
-              {t.testimonialsSection.title}
+              {language === 'ta' ? 'வாடிக்கையாளர் கருத்துகள்' : 'Customer reviews'}
             </h2>
             <p className="text-xs sm:text-sm text-slate-400 mt-2">
-              {t.testimonialsSection.subtitle}
+              {language === 'ta'
+                ? 'வாடிக்கையாளர்களின் உண்மையான கருத்துகள் பகிரப்பட்டதும் இங்கே சேர்க்கப்படும்.'
+                : 'We’re not showing unverified ratings or testimonials. Contact us to discuss your route, vehicle options and pickup before you decide.'}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {TESTIMONIALS_DATA.map((item) => (
-              <div
-                key={item.id}
-                className="bg-slate-800/80 border border-slate-700 p-6 rounded-2xl flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center gap-1 text-amber-400 mb-3">
-                    {[...Array(item.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-current" />
-                    ))}
-                  </div>
-
-                  <p className="text-xs sm:text-sm text-slate-200 italic leading-relaxed mb-4">
-                    "{item.review[language]}"
-                  </p>
-                </div>
-
-                <div className="pt-3 border-t border-slate-700 text-xs">
-                  <div className="font-bold text-white">{item.name}</div>
-                  <div className="text-[11px] text-slate-400">{item.location}</div>
-                  <div className="text-[11px] text-sky-400 mt-0.5">{item.trip} · {item.vehicle}</div>
-                </div>
-              </div>
-            ))}
+          <div className="mx-auto max-w-3xl rounded-xl border border-slate-700 bg-slate-800/60 p-5 sm:p-7 text-center">
+            <p className="text-sm sm:text-base text-slate-100 leading-relaxed">
+              {language === 'ta'
+                ? 'உங்கள் பயணத் தேவைகளை எங்களுடன் பகிர்ந்து, சரியான வாகனம் மற்றும் பயணத் திட்டத்தைப் பற்றி நேரடியாகப் பேசுங்கள்.'
+                : 'Tell us where you’re going and how many people are travelling. We’ll help you discuss a suitable vehicle and trip plan directly.'}
+            </p>
+            <button
+              onClick={() => onOpenBookingModal()}
+              className="mt-5 inline-flex items-center justify-center gap-2 rounded-lg bg-amber-500 px-4 py-2.5 text-sm font-bold text-slate-950 hover:bg-amber-600 transition-colors cursor-pointer"
+            >
+              <MessageCircle className="w-4 h-4" />
+              {t.nav.bookNow}
+            </button>
           </div>
         </div>
       </section>
 
       {/* 7. QUICK CONTACT & WHATSAPP ACTION CALLOUT */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-6">
-        <div className="bg-gradient-to-r from-sky-950 to-slate-900 rounded-3xl p-8 sm:p-12 text-white shadow-xl border border-sky-800/40 text-center relative overflow-hidden">
+        <div className="bg-slate-950 rounded-2xl sm:rounded-3xl p-7 sm:p-12 text-white shadow-md text-center relative overflow-hidden">
           <div className="max-w-3xl mx-auto space-y-4">
-            <div className="inline-flex items-center gap-2 bg-green-500/20 text-green-400 border border-green-500/30 px-3.5 py-1 rounded-full text-xs font-bold">
+            <div className="inline-flex items-center gap-2 bg-sky-900 text-sky-100 border border-sky-700 px-3.5 py-1 rounded-full text-xs font-bold">
               <MessageCircle className="w-3.5 h-3.5 fill-current" />
-              <span>Instant Availability Check on WhatsApp</span>
+              <span>Ask about your trip on WhatsApp</span>
             </div>
 
             <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
@@ -499,9 +492,9 @@ export const HomePage: React.FC<HomePageProps> = ({
             <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
               <button
                 onClick={() => onOpenBookingModal()}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm sm:text-base bg-green-600 hover:bg-green-700 active:bg-green-800 text-white shadow-lg cursor-pointer"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm sm:text-base bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-950 shadow-sm cursor-pointer"
               >
-                <MessageCircle className="w-5 h-5 fill-current" />
+                <MessageCircle className="w-5 h-5" />
                 <span>{t.nav.bookNow}</span>
               </button>
 

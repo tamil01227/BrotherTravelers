@@ -1,5 +1,56 @@
 @import "tailwindcss";
 
+@theme {
+  --color-slate-950: #142b49;
+  --color-slate-900: #142b49;
+  --color-slate-800: #203b5a;
+  --color-slate-700: #38516e;
+  --color-slate-600: #52677f;
+  --color-slate-500: #71839a;
+  --color-slate-400: #97a5b6;
+  --color-slate-300: #c7d0db;
+  --color-slate-200: #e0e6ed;
+  --color-slate-100: #eef2f6;
+  --color-slate-50: #f7f9fc;
+
+  --color-sky-950: #142b49;
+  --color-sky-900: #142b49;
+  --color-sky-800: #1b4d60;
+  --color-sky-700: #137e78;
+  --color-sky-600: #159a91;
+  --color-sky-500: #159a91;
+  --color-sky-400: #43b9ae;
+  --color-sky-300: #86d4cc;
+  --color-sky-200: #bfe9e5;
+  --color-sky-100: #dff3f1;
+  --color-sky-50: #eff9f7;
+
+  --color-amber-900: #78350f;
+  --color-amber-800: #92400e;
+  --color-amber-700: #b45309;
+  --color-amber-600: #d97706;
+  --color-amber-500: #f59e0b;
+  --color-amber-400: #f9b743;
+  --color-amber-300: #fbd38d;
+  --color-amber-200: #fde6bd;
+  --color-amber-100: #fef3dc;
+  --color-amber-50: #fffaf0;
+
+  --color-orange-700: #b45309;
+  --color-orange-600: #f59e0b;
+  --color-orange-500: #f59e0b;
+  --color-orange-400: #f9b743;
+  --color-orange-100: #fef3dc;
+  --color-orange-50: #fffaf0;
+
+  --color-emerald-900: #115e59;
+  --color-emerald-800: #136f69;
+  --color-emerald-700: #137e78;
+  --color-emerald-600: #159a91;
+  --color-emerald-500: #159a91;
+  --color-emerald-50: #eff9f7;
+}
+
 @layer base {
   :root {
     --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -8,8 +59,8 @@
 
   body {
     font-family: var(--font-body);
-    color: #1e293b;
-    background-color: #ffffff;
+    color: #142b49;
+    background-color: #f7f9fc;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -21,6 +72,26 @@
 /* Custom smooth scroll and typography helpers */
 html {
   scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+:focus-visible {
+  outline: 3px solid #159a91;
+  outline-offset: 2px;
 }
 
 .text-balance {

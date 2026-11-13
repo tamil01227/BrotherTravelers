@@ -61,7 +61,7 @@ export const Footer: React.FC<FooterProps> = ({
             <div>
               <div className="flex items-baseline gap-1.5">
                 <span className="text-xl font-extrabold text-white tracking-tight">BROTHER'S</span>
-                <span className="text-xl font-black text-orange-500 tracking-tight">TRAVELS</span>
+                <span className="text-xl font-black text-sky-950 tracking-tight">TRAVELS</span>
               </div>
               <p className="text-xs font-semibold text-slate-400 mt-0.5">
                 Proprietor: <span className="text-white">{BUSINESS_INFO.owner}</span>

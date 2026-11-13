@@ -1,8 +1,7 @@
 import React from 'react';
-import { MapPin, Clock, Calendar, Compass, ArrowRight, MessageCircle } from 'lucide-react';
-import { Language, TouristDestination } from '../types/travel';
+import { MapPin, Clock, Calendar, ImageOff, ArrowRight } from 'lucide-react';
+import { Language } from '../types/travel';
 import { POPULAR_DESTINATIONS, TRANSLATIONS } from '../data/travelData';
-import { generateQuickWhatsAppUrl, openWhatsApp } from '../utils/whatsapp';
 
 interface DestinationsPageProps {
   language: Language;
@@ -14,11 +13,6 @@ export const DestinationsPage: React.FC<DestinationsPageProps> = ({
   onOpenBookingModal,
 }) => {
   const t = TRANSLATIONS[language];
-
-  const handleQuickWhatsApp = (destName: string) => {
-    const url = generateQuickWhatsAppUrl(destName, 'tour');
-    openWhatsApp(url);
-  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16 space-y-12">
@@ -48,13 +42,20 @@ export const DestinationsPage: React.FC<DestinationsPageProps> = ({
             <div>
               {/* Image banner */}
               <div className="relative aspect-16/10 bg-slate-100 overflow-hidden">
-                <img
-                  src={dest.image}
-                  alt={`${dest.name[language]} tourism by BROTHER'S TRAVELS`}
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                />
+                {dest.image ? (
+                  <img
+                    src={dest.image}
+                    alt={`${dest.name[language]} tourism from Coimbatore`}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <div className="flex h-full flex-col items-center justify-center gap-2 bg-slate-100 text-slate-500">
+                    <ImageOff className="h-6 w-6" aria-hidden="true" />
+                    <span className="text-xs">{language === 'ta' ? 'படம் இல்லை' : 'Photo unavailable'}</span>
+                  </div>
+                )}
                 <div className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-xs text-white text-xs font-semibold px-2.5 py-1 rounded-md">
                   {dest.state}
                 </div>
@@ -105,21 +106,13 @@ export const DestinationsPage: React.FC<DestinationsPageProps> = ({
             </div>
 
             {/* Bottom Actions */}
-            <div className="p-4 sm:p-6 pt-0 border-t border-slate-100 mt-4 flex items-center justify-between gap-3">
+            <div className="p-4 sm:p-6 pt-0 border-t border-slate-100 mt-4">
               <button
                 onClick={() => onOpenBookingModal({ destination: dest.name[language] })}
-                className="text-xs font-bold text-sky-950 hover:text-sky-800 transition-colors flex items-center gap-1 cursor-pointer"
+                className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-amber-500 px-4 py-3 text-sm font-bold text-[#203B4A] transition-colors hover:bg-amber-600 cursor-pointer"
               >
-                <span>Plan Journey</span>
+                <span>{language === 'ta' ? 'என் பயணத்தைத் திட்டமிடுங்கள்' : 'Plan My Trip'}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-
-              <button
-                onClick={() => handleQuickWhatsApp(dest.name[language])}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-green-600 hover:bg-green-700 transition-colors shadow-xs cursor-pointer"
-              >
-                <MessageCircle className="w-3.5 h-3.5 fill-current" />
-                <span>WhatsApp Quote</span>
               </button>
             </div>
           </div>

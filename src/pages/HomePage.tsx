@@ -1,29 +1,26 @@
 import React, { useState } from 'react';
 import { 
-  Phone, 
   MessageCircle, 
   MapPin, 
   Users, 
-  Calendar, 
-  Compass, 
   Car, 
   ShieldCheck, 
-  Clock, 
   Award, 
-  CheckCircle2, 
-  ArrowRight,
-  Sparkles,
-  ChevronRight
+  ChevronRight,
+  Route,
+  Headset,
+  ImageOff
 } from 'lucide-react';
-import { Language, Vehicle, TourCategory } from '../types/travel';
+import { Language, BookingEnquiry } from '../types/travel';
 import { 
   BUSINESS_INFO, 
-  VEHICLES_DATA, 
   POPULAR_DESTINATIONS, 
   TRANSLATIONS 
 } from '../data/travelData';
+import { VEHICLES_DATA } from '../data/vehicles';
 import { VehicleCard } from '../components/VehicleCard';
 import heroImage from '../assets/images/hero_travel_coimbatore_1794284646361-optimized.jpg';
+import { generateWhatsAppUrl, openWhatsApp } from '../utils/whatsapp';
 
 interface HomePageProps {
   language: Language;
@@ -45,73 +42,84 @@ export const HomePage: React.FC<HomePageProps> = ({
 }) => {
   const t = TRANSLATIONS[language];
 
-  // Search & Discovery State
   const [searchDestination, setSearchDestination] = useState('');
-  const [searchPickup, setSearchPickup] = useState('Coimbatore (Free Pickup)');
+  const [searchPickup, setSearchPickup] = useState('Coimbatore');
   const [searchDate, setSearchDate] = useState('');
-  const [searchPassengers, setSearchPassengers] = useState('4');
-  const [searchVehicle, setSearchVehicle] = useState('All');
-  const [searchCategory, setSearchCategory] = useState<string>('All');
+  const [searchPassengers, setSearchPassengers] = useState('');
+  const [searchVehicle, setSearchVehicle] = useState('');
+  const [returnDate, setReturnDate] = useState('');
+  const [tripDuration, setTripDuration] = useState('');
+  const [tripPurpose, setTripPurpose] = useState('');
+  const [additionalRequirements, setAdditionalRequirements] = useState('');
+  const [formMessage, setFormMessage] = useState('');
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onOpenBookingModal({
-      vehicle: searchVehicle !== 'All' ? searchVehicle : undefined,
-      tour: searchCategory !== 'All' ? searchCategory : undefined,
-      destination: searchDestination || undefined,
-      pickupLocation: searchPickup || undefined,
-      travelDate: searchDate || undefined,
-      passengers: searchPassengers,
-    });
+    const enquiry: BookingEnquiry = {
+      customerName: '',
+      mobileNumber: '',
+      pickupLocation: searchPickup.trim(),
+      destination: searchDestination.trim(),
+      travelDate: searchDate,
+      returnDate,
+      duration: tripDuration,
+      passengers: Number(searchPassengers),
+      selectedVehicle: searchVehicle,
+      travelType: tripPurpose || 'Not specified',
+      additionalRequirements,
+    };
+    openWhatsApp(generateWhatsAppUrl(enquiry));
+    setFormMessage(language === 'ta'
+      ? 'உங்கள் பயண விவரங்கள் வாட்ஸ்அப்பில் தயாராக உள்ளன. சரிபார்த்து அனுப்புங்கள்.'
+      : 'Your trip details are ready in WhatsApp. Review the enquiry and send it there.');
   };
 
+  const passengerCount = Number(searchPassengers);
+  const recommendedVehicles = Number.isInteger(passengerCount) && passengerCount > 0
+    ? VEHICLES_DATA
+        .filter((vehicle) => vehicle.passengerRange.min <= passengerCount && passengerCount <= vehicle.passengerRange.max)
+        .sort((a, b) => a.passengerRange.max - b.passengerRange.max)
+        .filter((vehicle, _, matches) => vehicle.passengerRange.max === matches[0]?.passengerRange.max)
+    : [];
+  const today = new Date();
+  today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+  const minTravelDate = today.toISOString().slice(0, 10);
+
   return (
-    <div className="space-y-12 sm:space-y-24">
+    <div className="space-y-10 sm:space-y-16 pb-8">
       {/* 1. HERO SECTION */}
       <section className="bg-slate-50 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-16 lg:py-20 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-14 lg:py-16 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           <div className="lg:col-span-6">
-            <p className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-sky-900 mb-3 sm:mb-4">
-              <MapPin className="w-4 h-4 text-sky-700 shrink-0" />
-              <span>{t.hero.tag}</span>
-            </p>
             <h1 className="text-[1.75rem] sm:text-5xl lg:text-[3.5rem] font-extrabold text-slate-950 tracking-tight text-balance leading-[1.12]">
-              {t.hero.h1}
+              {language === 'ta' ? 'கோவையில் குழுப் பயணம் மற்றும் வாகன வாடகை' : 'Group Travel & Vehicle Rental in Coimbatore'}
             </h1>
             <p className="mt-4 sm:mt-5 text-[15px] sm:text-lg text-slate-600 max-w-xl leading-relaxed text-balance">
-              {t.hero.p}
-            </p>
-            <p className="mt-3 sm:mt-4 flex items-center gap-2 text-sm font-semibold text-sky-900">
-              <MapPin className="w-4 h-4 text-sky-700 shrink-0" />
-              {language === 'ta' ? 'கோவையில் இலவச பிக்கப் வசதி' : 'Free pickup throughout Coimbatore'}
+              {language === 'ta'
+                ? 'குடும்பச் சுற்றுலா, குழுப் பயணம் மற்றும் வெளியூர் பயணங்களுக்கு வசதியான, நம்பகமான வாகனங்கள்.'
+                : 'Comfortable and reliable vehicles for family trips, group tours and outstation journeys across India.'}
             </p>
             <div className="mt-6 sm:mt-7 grid grid-cols-1 sm:flex sm:flex-wrap gap-3">
               <button
-                onClick={() => onOpenBookingModal()}
-                className="min-h-[48px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-sm sm:text-base text-slate-950 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 shadow-sm transition-colors cursor-pointer"
+                onClick={() => document.getElementById('trip-enquiry')?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
+                className="min-h-12 inline-flex items-center justify-center gap-2 rounded-xl bg-amber-500 px-5 py-3 text-sm sm:text-base font-bold text-[#203B4A] shadow-sm transition-colors hover:bg-amber-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#203B4A] cursor-pointer"
               >
-                <MessageCircle className="w-5 h-5" />
-                <span>{t.nav.bookNow}</span>
+                <span>{language === 'ta' ? 'இலவச விலை கேளுங்கள்' : 'Get Free Quote'}</span>
               </button>
               <button
                 onClick={() => onNavigate('vehicles')}
-                className="min-h-[48px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-sm sm:text-base text-slate-900 bg-white hover:bg-slate-100 border border-slate-300 transition-colors cursor-pointer"
+                className="min-h-12 inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm sm:text-base font-bold text-slate-900 transition-colors hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#203B4A] cursor-pointer"
               >
-                <Car className="w-5 h-5 text-sky-700" />
-                <span>{t.hero.exploreVehicles}</span>
+                <Car className="h-5 w-5 text-sky-700" aria-hidden="true" />
+                <span>{language === 'ta' ? 'வாகனங்களைப் பாருங்கள்' : 'Explore Vehicles'}</span>
               </button>
             </div>
-            <div className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-xs sm:text-sm text-slate-600">
-              <span className="inline-flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-sky-700" />
-                {language === 'ta' ? 'அகில இந்திய பயண சேவை' : 'Travel across India'}
-              </span>
-              <span className="inline-flex items-center gap-2">
-                <Phone className="w-4 h-4 text-sky-700" />
-                <a href={`tel:${BUSINESS_INFO.primaryPhone}`} className="font-semibold text-slate-900 hover:underline">
-                  {BUSINESS_INFO.primaryPhone}
-                </a>
-              </span>
+            <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3 text-xs sm:text-sm text-slate-700">
+              <span className="inline-flex items-center gap-2"><MapPin className="h-4 w-4 shrink-0 text-sky-700" aria-hidden="true" />{language === 'ta' ? 'கோவையில் இலவச பிக்கப்' : 'Free Coimbatore pickup'}</span>
+              <span className="inline-flex items-center gap-2"><ShieldCheck className="h-4 w-4 shrink-0 text-sky-700" aria-hidden="true" />{language === 'ta' ? 'அகில இந்திய சுற்றுலா அனுமதிகள்' : 'All India Tourist Permits'}</span>
+              <span className="inline-flex items-center gap-2"><Users className="h-4 w-4 shrink-0 text-sky-700" aria-hidden="true" />{language === 'ta' ? 'பல குழு அளவுகளுக்கான வாகனங்கள்' : 'Vehicles for different group sizes'}</span>
+              <span className="inline-flex items-center gap-2"><Headset className="h-4 w-4 shrink-0 text-sky-700" aria-hidden="true" />{language === 'ta' ? 'நேரடி முன்பதிவு உதவி' : 'Direct booking assistance'}</span>
+              <span className="inline-flex items-center gap-2 sm:col-span-2"><Route className="h-4 w-4 shrink-0 text-sky-700" aria-hidden="true" />{language === 'ta' ? 'வெளியூர் மற்றும் மாநிலங்களுக்கு இடையிலான பயணங்கள்' : 'Outstation and interstate travel'}</span>
             </div>
           </div>
 
@@ -119,137 +127,159 @@ export const HomePage: React.FC<HomePageProps> = ({
             <img
               src={heroImage}
               alt="Scenic Ooty hill country, a popular trip from Coimbatore"
-              className="w-full aspect-[4/3] sm:aspect-[16/10] object-cover rounded-2xl sm:rounded-3xl shadow-md"
+              className="w-full aspect-[16/10] object-cover rounded-2xl sm:rounded-3xl shadow-md"
               width="1200"
               height="750"
               loading="eager"
               fetchPriority="high"
             />
-            <div className="mt-3 sm:mt-0 sm:absolute sm:bottom-5 sm:left-5 sm:right-5 bg-white/95 backdrop-blur-sm rounded-xl p-3.5 sm:p-4 flex items-center justify-between gap-3 border border-slate-200 sm:border-0 shadow-xs sm:shadow-sm">
-              <div>
-                <p className="text-xs sm:text-sm font-bold text-slate-900">
-                  {language === 'ta' ? 'உங்கள் பயணத்திற்கான வாகனம்' : 'The right vehicle for your trip'}
-                </p>
-                <p className="text-xs text-slate-600 mt-0.5">
-                  {language === 'ta' ? 'குடும்பம், குழு மற்றும் சுற்றுலா பயணங்கள்' : 'Family, group and sightseeing journeys'}
-                </p>
-              </div>
-              <button
-                onClick={() => onNavigate('tours')}
-                className="shrink-0 min-h-[40px] px-2 inline-flex items-center text-xs sm:text-sm font-bold text-sky-900 hover:text-sky-700 transition-colors cursor-pointer"
-              >
-                {language === 'ta' ? 'சுற்றுலாக்கள்' : 'Explore trips'}
-                <span className="sr-only"> and tour packages</span>
-              </button>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* 2. SEARCH & ENQUIRY DISCOVERY BAR (Below Hero) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 mt-4 sm:-mt-14 lg:-mt-16 relative z-20">
-        <div className="bg-white rounded-2xl shadow-lg sm:shadow-xl border border-slate-200 p-4 sm:p-7">
-          <div className="mb-4">
-            <h2 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
-              {t.searchWidget.title}
+      <section id="trip-enquiry" className="max-w-7xl mx-auto px-4 sm:px-6 scroll-mt-24">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-7">
+          <div className="mb-5">
+            <h2 className="text-lg font-bold tracking-tight text-slate-900 sm:text-xl">
+              {language === 'ta' ? 'உங்கள் பயணத்திற்கான விலை கேளுங்கள்' : 'Plan your trip and get a quote'}
             </h2>
-            <p className="text-xs text-slate-500 mt-0.5">
-              {t.searchWidget.subtitle}
+            <p className="mt-1 text-xs text-slate-600 sm:text-sm">
+              {language === 'ta' ? 'பயண விவரங்களை நிரப்புங்கள்; உங்கள் செய்தியை வாட்ஸ்அப்பில் சரிபார்த்து அனுப்பலாம்.' : 'Enter your trip details. Review your enquiry in WhatsApp before sending it.'}
             </p>
           </div>
 
-          <form onSubmit={handleSearchSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3.5 sm:gap-4">
-            {/* Pickup */}
-            <div className="lg:col-span-1">
-              <label htmlFor="search-pickup" className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
-                {language === 'ta' ? 'பிக்கப் இடம்' : 'Pickup'}
+          <form
+            onSubmit={handleSearchSubmit}
+            onInvalid={() => setFormMessage(language === 'ta'
+              ? 'தொடர்வதற்கு தேவையான பயண விவரங்களை நிரப்புங்கள்.'
+              : 'Please complete the required trip details to continue.')}
+            onInput={() => setFormMessage('')}
+            className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6"
+          >
+            <div className="lg:col-span-2">
+              <label htmlFor="search-pickup" className="mb-1 block text-xs font-semibold text-slate-700">
+                {language === 'ta' ? 'பிக்கப் இடம்' : 'Pickup location'} <span aria-hidden="true">*</span>
               </label>
               <input
                 id="search-pickup"
                 type="text"
                 value={searchPickup}
                 onChange={(e) => setSearchPickup(e.target.value)}
-                placeholder="Coimbatore"
-                className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
+                autoComplete="address-level2"
+                required
+                className="min-h-12 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-base focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600 sm:text-sm"
               />
             </div>
-
-            {/* Destination */}
-            <div className="lg:col-span-1">
-              <label htmlFor="search-destination" className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
-                {language === 'ta' ? 'செல்லும் இடம்' : 'Destination'}
+            <div className="lg:col-span-2">
+              <label htmlFor="search-destination" className="mb-1 block text-xs font-semibold text-slate-700">
+                {language === 'ta' ? 'செல்லும் இடம்' : 'Destination'} <span aria-hidden="true">*</span>
               </label>
               <input
                 id="search-destination"
                 type="text"
                 value={searchDestination}
                 onChange={(e) => setSearchDestination(e.target.value)}
-                placeholder="e.g. Ooty / Munnar"
-                className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
+                placeholder={language === 'ta' ? 'எ.கா. ஊட்டி' : 'e.g. Ooty or Munnar'}
+                required
+                className="min-h-12 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-base focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600 sm:text-sm"
               />
             </div>
-
-            {/* Date */}
-            <div className="lg:col-span-1">
-              <label htmlFor="search-date" className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
-                {t.searchWidget.dateLabel}
+            <div className="lg:col-span-2">
+              <label htmlFor="search-date" className="mb-1 block text-xs font-semibold text-slate-700">
+                {language === 'ta' ? 'பயண தேதி' : 'Travel date'} <span aria-hidden="true">*</span>
               </label>
               <input
                 id="search-date"
                 type="date"
                 value={searchDate}
+                min={minTravelDate}
                 onChange={(e) => setSearchDate(e.target.value)}
-                className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
+                required
+                className="min-h-12 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-base focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600 sm:text-sm"
               />
             </div>
-
-            {/* Passengers */}
-            <div className="lg:col-span-1">
-              <label htmlFor="search-passengers" className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
-                {t.searchWidget.passengersLabel}
+            <div className="lg:col-span-2">
+              <label htmlFor="search-passengers" className="mb-1 block text-xs font-semibold text-slate-700">
+                {language === 'ta' ? 'பயணிகள் எண்ணிக்கை' : 'Number of passengers'} <span aria-hidden="true">*</span>
               </label>
-              <select
+              <input
                 id="search-passengers"
+                type="number"
+                min="1"
+                step="1"
+                inputMode="numeric"
                 value={searchPassengers}
                 onChange={(e) => setSearchPassengers(e.target.value)}
-                className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 cursor-pointer"
-              >
-                <option value="4">1 - 4 Passengers</option>
-                <option value="7">5 - 7 Passengers (Innova/Ertiga)</option>
-                <option value="14">8 - 14 Passengers (Traveller)</option>
-                <option value="16">15 - 16 Passengers (Urbania)</option>
-                <option value="21">17 - 21 Passengers (SML Coach)</option>
-              </select>
+                required
+                aria-describedby="passenger-suggestion"
+                className="min-h-12 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-base focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600 sm:text-sm"
+              />
+              <p id="passenger-suggestion" className="mt-2 min-h-5 text-xs text-slate-600" aria-live="polite">
+                {searchPassengers && recommendedVehicles.length > 0
+                  ? `${language === 'ta' ? 'பொருந்தக்கூடிய வாகனம்:' : 'Suggested vehicle:'} ${recommendedVehicles.map((vehicle) => vehicle.name).join(', ')}`
+                  : searchPassengers && passengerCount > 0
+                    ? (language === 'ta' ? 'இந்த குழு அளவிற்கு ஏற்ற ஒற்றை வாகனம் பட்டியலில் இல்லை.' : 'No single listed vehicle fits this group size.')
+                    : ''}
+              </p>
             </div>
-
-            {/* Vehicle Preference */}
-            <div className="lg:col-span-1">
-              <label htmlFor="search-vehicle" className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
-                {t.searchWidget.vehicleLabel}
+            <div className="lg:col-span-2">
+              <label htmlFor="search-vehicle" className="mb-1 block text-xs font-semibold text-slate-700">
+                {language === 'ta' ? 'விரும்பும் வாகனம்' : 'Vehicle preference'} <span aria-hidden="true">*</span>
               </label>
               <select
                 id="search-vehicle"
                 value={searchVehicle}
                 onChange={(e) => setSearchVehicle(e.target.value)}
-                className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 cursor-pointer"
+                required
+                className="min-h-12 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-base focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600 sm:text-sm"
               >
-                <option value="All">{t.searchWidget.allVehicles}</option>
-                {VEHICLES_DATA.map((v) => (
-                  <option key={v.id} value={v.name}>{v.name}</option>
+                <option value="" disabled>{language === 'ta' ? 'வாகனத்தைத் தேர்வு செய்யுங்கள்' : 'Choose a vehicle option'}</option>
+                <option value="Any available">{language === 'ta' ? 'வாகனத்தைப் பரிந்துரைக்கவும்' : 'Please recommend a vehicle'}</option>
+                {VEHICLES_DATA.map((vehicle) => (
+                  <option key={vehicle.id} value={vehicle.name}>{vehicle.name}</option>
                 ))}
               </select>
             </div>
-
-            {/* Submit Action */}
-            <div className="lg:col-span-1 flex items-end pt-1 sm:pt-0">
-              <button
-                type="submit"
-                className="w-full min-h-[48px] sm:min-h-[44px] py-2.5 px-4 rounded-xl sm:rounded-lg bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm transition-colors cursor-pointer flex items-center justify-center gap-1.5 shadow-sm"
-              >
-                <MessageCircle className="w-4 h-4" />
-                <span>Get Quote</span>
-              </button>
-            </div>
+            <details className="sm:col-span-2 lg:col-span-6">
+              <summary className="min-h-11 cursor-pointer py-2 text-sm font-semibold text-sky-950">
+                {language === 'ta' ? 'கூடுதல் பயண விவரங்களைச் சேர்க்கவும் (விருப்பம்)' : 'Add optional trip details'}
+              </summary>
+              <div className="grid grid-cols-1 gap-4 border-t border-slate-200 pt-4 sm:grid-cols-2 lg:grid-cols-4">
+                <div>
+                  <label htmlFor="return-date" className="mb-1 block text-xs font-semibold text-slate-700">{language === 'ta' ? 'திரும்பும் தேதி' : 'Return date'}</label>
+                  <input id="return-date" type="date" min={searchDate || minTravelDate} value={returnDate} onChange={(e) => setReturnDate(e.target.value)} className="min-h-12 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-base focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600 sm:text-sm" />
+                </div>
+                <div>
+                  <label htmlFor="trip-duration" className="mb-1 block text-xs font-semibold text-slate-700">{language === 'ta' ? 'பயண காலம்' : 'Trip duration'}</label>
+                  <input id="trip-duration" type="text" value={tripDuration} onChange={(e) => setTripDuration(e.target.value)} placeholder={language === 'ta' ? 'எ.கா. 3 நாட்கள்' : 'e.g. 3 days'} className="min-h-12 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-base focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600 sm:text-sm" />
+                </div>
+                <div>
+                  <label htmlFor="trip-purpose" className="mb-1 block text-xs font-semibold text-slate-700">{language === 'ta' ? 'பயண நோக்கம்' : 'Trip purpose'}</label>
+                  <select id="trip-purpose" value={tripPurpose} onChange={(e) => setTripPurpose(e.target.value)} className="min-h-12 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-base focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600 sm:text-sm">
+                    <option value="">{language === 'ta' ? 'தேர்வு செய்யுங்கள்' : 'Select if useful'}</option>
+                    <option value="Family">{language === 'ta' ? 'குடும்பம்' : 'Family'}</option>
+                    <option value="Friends">{language === 'ta' ? 'நண்பர்கள்' : 'Friends'}</option>
+                    <option value="Corporate">{language === 'ta' ? 'நிறுவனம்' : 'Corporate'}</option>
+                    <option value="Pilgrimage">{language === 'ta' ? 'ஆன்மீகம்' : 'Pilgrimage'}</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="trip-requirements" className="mb-1 block text-xs font-semibold text-slate-700">{language === 'ta' ? 'கூடுதல் தேவைகள்' : 'Additional requirements'}</label>
+                  <textarea id="trip-requirements" value={additionalRequirements} onChange={(e) => setAdditionalRequirements(e.target.value)} rows={2} className="w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-base focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-600 sm:text-sm" />
+                </div>
+              </div>
+            </details>
+            <button
+              type="submit"
+              className="min-h-12 w-full rounded-xl bg-amber-500 px-4 py-3 text-sm font-bold text-[#203B4A] shadow-sm transition-colors hover:bg-amber-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#203B4A] sm:col-span-2 lg:col-span-6"
+            >
+              {language === 'ta' ? 'வாட்ஸ்அப்பில் இலவச விலை கேளுங்கள்' : 'Get Free Quote'}
+            </button>
+            {formMessage && (
+              <p className="text-sm text-slate-700 sm:col-span-2 lg:col-span-6" role="status" aria-live="polite">
+                {formMessage}
+              </p>
+            )}
           </form>
         </div>
       </section>
@@ -285,7 +315,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               key={vehicle.id}
               vehicle={vehicle}
               language={language}
-              onBookClick={(name) => onOpenBookingModal({ vehicle: name })}
+              isRecommended={recommendedVehicles.some((suggestion) => suggestion.id === vehicle.id)}
             />
           ))}
         </div>
@@ -393,13 +423,20 @@ export const HomePage: React.FC<HomePageProps> = ({
               className="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all flex flex-col"
             >
               <div className="relative aspect-16/10 bg-slate-100 overflow-hidden">
-                <img
-                  src={dest.image}
-                  alt={`${dest.name[language]} tourism from Coimbatore`}
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                />
+                {dest.image ? (
+                  <img
+                    src={dest.image}
+                    alt={`${dest.name[language]} tourism from Coimbatore`}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <div className="flex h-full flex-col items-center justify-center gap-2 bg-slate-100 text-slate-500">
+                    <ImageOff className="h-6 w-6" aria-hidden="true" />
+                    <span className="text-xs">{language === 'ta' ? 'படம் இல்லை' : 'Photo unavailable'}</span>
+                  </div>
+                )}
                 <div className="absolute top-3 left-3 bg-slate-900/80 text-white text-xs font-semibold px-2.5 py-1 rounded-md">
                   {dest.distanceFromCoimbatore} from CBE
                 </div>
@@ -417,17 +454,15 @@ export const HomePage: React.FC<HomePageProps> = ({
                   {dest.description[language]}
                 </p>
 
-                <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                <div className="mt-4 pt-3 border-t border-slate-100">
                   <span className="text-[11px] text-slate-500">
                     Recommended: <strong className="text-slate-700">{dest.recommendedVehicleTypes[0]}</strong>
                   </span>
-
                   <button
                     onClick={() => onOpenBookingModal({ destination: dest.name[language] })}
-                    className="inline-flex items-center gap-1 text-xs font-bold text-sky-900 hover:text-sky-700 cursor-pointer"
+                    className="mt-3 inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-amber-500 px-4 py-2.5 text-sm font-bold text-[#203B4A] transition-colors hover:bg-amber-600 cursor-pointer"
                   >
-                    <span>Enquire</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    {language === 'ta' ? 'என் பயணத்தைத் திட்டமிடுங்கள்' : 'Plan My Trip'}
                   </button>
                 </div>
               </div>
@@ -436,74 +471,26 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* 6. TESTIMONIALS SECTION */}
-      <section className="bg-slate-950 text-white py-12 sm:py-16 rounded-2xl sm:rounded-3xl mx-4 sm:mx-6">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs font-bold uppercase tracking-wider text-amber-400">
-              Customer feedback
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mt-1">
-              {language === 'ta' ? 'வாடிக்கையாளர் கருத்துகள்' : 'Customer reviews'}
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-400 mt-2">
-              {language === 'ta'
-                ? 'வாடிக்கையாளர்களின் உண்மையான கருத்துகள் பகிரப்பட்டதும் இங்கே சேர்க்கப்படும்.'
-                : 'We’re not showing unverified ratings or testimonials. Contact us to discuss your route, vehicle options and pickup before you decide.'}
-            </p>
-          </div>
-
-          <div className="mx-auto max-w-3xl rounded-xl border border-slate-700 bg-slate-800/60 p-5 sm:p-7 text-center">
-            <p className="text-sm sm:text-base text-slate-100 leading-relaxed">
-              {language === 'ta'
-                ? 'உங்கள் பயணத் தேவைகளை எங்களுடன் பகிர்ந்து, சரியான வாகனம் மற்றும் பயணத் திட்டத்தைப் பற்றி நேரடியாகப் பேசுங்கள்.'
-                : 'Tell us where you’re going and how many people are travelling. We’ll help you discuss a suitable vehicle and trip plan directly.'}
-            </p>
-            <button
-              onClick={() => onOpenBookingModal()}
-              className="mt-5 inline-flex items-center justify-center gap-2 rounded-lg bg-amber-500 px-4 py-2.5 text-sm font-bold text-slate-950 hover:bg-amber-600 transition-colors cursor-pointer"
-            >
-              <MessageCircle className="w-4 h-4" />
-              {t.nav.bookNow}
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* 7. QUICK CONTACT & WHATSAPP ACTION CALLOUT */}
+      {/* 6. QUICK CONTACT */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-6">
         <div className="bg-slate-950 rounded-2xl sm:rounded-3xl p-7 sm:p-12 text-white shadow-md text-center relative overflow-hidden">
           <div className="max-w-3xl mx-auto space-y-4">
-            <div className="inline-flex items-center gap-2 bg-sky-900 text-sky-100 border border-sky-700 px-3.5 py-1 rounded-full text-xs font-bold">
-              <MessageCircle className="w-3.5 h-3.5 fill-current" />
-              <span>Ask about your trip on WhatsApp</span>
-            </div>
-
             <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
-              {language === 'ta' ? 'உங்கள் அடுத்த பயணத்தை இன்றே திட்டமிடுங்கள்' : 'Ready to Plan Your Next Journey Across India?'}
+              {language === 'ta' ? 'உங்கள் பயணத்தைத் திட்டமிட உதவுகிறோம்' : 'Need help planning your trip?'}
             </h2>
 
-            <p className="text-xs sm:text-base text-sky-200 max-w-xl mx-auto leading-relaxed">
-              {language === 'ta' 
-                ? 'தினேஷ்குமார் அவர்களை நேரடியாக தொடர்பு கொண்டு உங்கள் பயணத்திற்கான சிறந்த கட்டணத்தை உடனே பெறுங்கள்.'
-                : 'Connect directly with owner DINESHKUMAR R on WhatsApp (6381186895) for prompt custom quotations and vehicle availability.'}
+            <p className="text-xs sm:text-base text-slate-200 max-w-xl mx-auto leading-relaxed">
+              {language === 'ta'
+                ? 'உங்கள் வழி மற்றும் வாகனத் தேவையைப் பற்றி நேரடியாகப் பேசுங்கள்.'
+                : 'Call us to discuss your route and vehicle requirements.'}
             </p>
 
-            <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
-              <button
-                onClick={() => onOpenBookingModal()}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm sm:text-base bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-950 shadow-sm cursor-pointer"
-              >
-                <MessageCircle className="w-5 h-5" />
-                <span>{t.nav.bookNow}</span>
-              </button>
-
+            <div className="pt-2">
               <a
                 href={`tel:${BUSINESS_INFO.primaryPhone}`}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm sm:text-base bg-white/10 hover:bg-white/20 border border-white/20 text-white transition-colors"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/30 bg-white px-6 py-3 font-bold text-sm sm:text-base text-slate-900 transition-colors hover:bg-slate-100"
               >
-                <Phone className="w-5 h-5" />
-                <span>Call {BUSINESS_INFO.primaryPhone}</span>
+                <span>{language === 'ta' ? 'இப்போது அழைக்கவும்' : 'Call Now'}</span>
               </a>
             </div>
           </div>

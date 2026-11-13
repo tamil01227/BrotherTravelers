@@ -18,6 +18,9 @@ export function buildWhatsAppMessage(enquiry: BookingEnquiry): string {
   const notesLine = enquiry.additionalRequirements && enquiry.additionalRequirements.trim() !== ''
     ? `\nSpecial Notes: ${enquiry.additionalRequirements.trim()}`
     : '';
+  const durationLine = enquiry.duration && enquiry.duration.trim() !== ''
+    ? `Trip Duration: ${enquiry.duration.trim()}`
+    : '';
 
   return `Hello BROTHER'S TRAVELS,
 
@@ -29,6 +32,7 @@ Pickup Location: ${enquiry.pickupLocation || 'Coimbatore'}
 Destination: ${enquiry.destination || 'Not specified'}
 Travel Date: ${enquiry.travelDate || 'Flexible'}
 ${returnDateLine}
+${durationLine ? `\n${durationLine}` : ''}
 Passengers: ${enquiry.passengers || '1'}
 Vehicle: ${enquiry.selectedVehicle || 'Any available'}
 Travel Type: ${enquiry.travelType || 'Tour/Outstation'}${notesLine}

@@ -107,7 +107,6 @@ export default function App() {
         return (
           <VehiclesPage
             language={language}
-            onOpenBookingModal={handleOpenBooking}
           />
         );
       case 'tours':
@@ -161,7 +160,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-slate-800">
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">
       {/* Sticky Top Navbar */}
       <Navbar
         currentTab={currentTab}
@@ -204,9 +203,8 @@ export default function App() {
         onNavigate={handleNavigate}
       />
 
-      {/* Floating WhatsApp and Call Action Cluster */}
+      {/* Single floating WhatsApp action */}
       <FloatingWhatsApp
-        onOpenBookingModal={() => handleOpenBooking()}
         language={language}
       />
     </div>

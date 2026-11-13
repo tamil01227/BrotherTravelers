@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Phone, MessageCircle, MapPin, Mail, Clock, Send, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { Language, BookingEnquiry } from '../types/travel';
-import { BUSINESS_INFO, TRANSLATIONS, VEHICLES_DATA } from '../data/travelData';
+import { BUSINESS_INFO, TRANSLATIONS } from '../data/travelData';
+import { VEHICLES_DATA } from '../data/vehicles';
 import { generateWhatsAppUrl, openWhatsApp, PRIMARY_WHATSAPP_NUMBER } from '../utils/whatsapp';
 
 interface ContactUsPageProps {
@@ -80,7 +81,7 @@ export const ContactUsPage: React.FC<ContactUsPageProps> = ({ language }) => {
             <div>
               <div className="flex items-baseline gap-1.5 mb-1">
                 <span className="text-xl font-extrabold text-sky-950 tracking-tight">BROTHER'S</span>
-                <span className="text-xl font-black text-orange-600 tracking-tight">TRAVELS</span>
+                <span className="text-xl font-black text-sky-950 tracking-tight">TRAVELS</span>
               </div>
               <p className="text-xs font-bold text-slate-700">
                 Proprietor: <span className="text-sky-900 font-extrabold">{BUSINESS_INFO.owner}</span>

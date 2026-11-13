@@ -13,7 +13,8 @@ import {
   Compass,
 } from 'lucide-react';
 import { Language, TouristDestination, BookingEnquiry } from '../types/travel';
-import { VEHICLES_DATA, BUSINESS_INFO } from '../data/travelData';
+import { BUSINESS_INFO } from '../data/travelData';
+import { VEHICLES_DATA } from '../data/vehicles';
 import { generateWhatsAppUrl, openWhatsApp } from '../utils/whatsapp';
 
 interface JourneyPlannerDrawerProps {
@@ -449,7 +450,7 @@ export const JourneyPlannerDrawer: React.FC<JourneyPlannerDrawerProps> = ({
                         )}
                       </div>
                       <p className="text-xs text-slate-500 mt-0.5 tabular-nums">
-                        {vehicle.seatsCount} {language === 'ta' ? 'இருக்கைகள்' : 'seats'} · {vehicle.luggageCapacity}
+                        {vehicle.seatsCount} {language === 'ta' ? 'இருக்கைகள்' : 'seats'} · {vehicle.luggageCapacity[language]}
                       </p>
                     </div>
 

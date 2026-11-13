@@ -1,7 +1,8 @@
 import React from 'react';
 import { ChevronRight, Home, MapPin, CheckCircle, MessageCircle, Phone, ArrowLeft, Shield, Clock } from 'lucide-react';
 import { Language, SEOLandingData } from '../types/travel';
-import { VEHICLES_DATA, BUSINESS_INFO, TRANSLATIONS, SEO_LANDING_PAGES } from '../data/travelData';
+import { BUSINESS_INFO, TRANSLATIONS, SEO_LANDING_PAGES } from '../data/travelData';
+import { VEHICLES_DATA } from '../data/vehicles';
 import { VehicleCard } from '../components/VehicleCard';
 import { generateQuickWhatsAppUrl, openWhatsApp } from '../utils/whatsapp';
 
@@ -163,7 +164,6 @@ export const SEOLandingPage: React.FC<SEOLandingPageProps> = ({
               <VehicleCard
                 vehicle={recommendedVehicle}
                 language={language}
-                onBookClick={(name) => onOpenBookingModal({ vehicle: name, tour: pageData.h1[language] })}
               />
             </div>
 

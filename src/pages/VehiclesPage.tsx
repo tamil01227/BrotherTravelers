@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
 import { Users, MapPin, Route, MessageCircle, Info } from 'lucide-react';
 import { Language } from '../types/travel';
-import { VEHICLES_DATA } from '../data/travelData';
+import { VEHICLES_DATA } from '../data/vehicles';
 import { VehicleCard } from '../components/VehicleCard';
 
 interface VehiclesPageProps {
   language: Language;
-  onOpenBookingModal: (prefill?: { vehicle?: string }) => void;
 }
 
-export const VehiclesPage: React.FC<VehiclesPageProps> = ({
-  language,
-  onOpenBookingModal,
-}) => {
+export const VehiclesPage: React.FC<VehiclesPageProps> = ({ language }) => {
   const [capacityFilter, setCapacityFilter] = useState<'all' | 'small' | 'medium' | 'large'>('all');
   const filteredVehicles = VEHICLES_DATA.filter((v) => {
     if (capacityFilter === 'small') return v.seatsCount <= 7;
@@ -158,7 +154,6 @@ export const VehiclesPage: React.FC<VehiclesPageProps> = ({
             key={vehicle.id}
             vehicle={vehicle}
             language={language}
-            onBookClick={(name) => onOpenBookingModal({ vehicle: name })}
           />
         ))}
       </div>
@@ -170,30 +165,25 @@ export const VehiclesPage: React.FC<VehiclesPageProps> = ({
             {language === 'ta' ? 'வாகன ஒப்பீடு மற்றும் விவரங்கள்' : 'Fleet Comparison & Specifications'}
           </h2>
           <p className="text-xs text-slate-400 mt-1">
-            Compare seating capacity, luggage capacity, and primary use cases across all 5 vehicles.
+            {language === 'ta'
+              ? 'பயணிகள் எண்ணிக்கை, லக்கேஜ் கொள்ளளவு மற்றும் பயன்பாட்டை வாகனங்களுக்கு இடையே ஒப்பிடுங்கள்.'
+              : 'Compare passenger capacity, luggage capacity and primary use cases across the listed vehicles.'}
           </p>
         </div>
 
         {/* Mobile Spec Cards */}
         <div className="md:hidden divide-y divide-slate-100">
           {VEHICLES_DATA.map((v) => (
-            <div key={v.id} className="p-4 flex items-center justify-between gap-3">
+            <div key={v.id} className="p-4">
               <div className="min-w-0">
                 <h3 className="font-bold text-sm text-slate-900 truncate">{v.name}</h3>
                 <p className="text-xs text-slate-600 mt-0.5 tabular-nums">
-                  {v.seatingCapacity} <span aria-hidden="true">·</span> {v.luggageCapacity}
+                  {language === 'ta' ? `${v.passengerRange.max} பயணிகள் வரை` : `Up to ${v.passengerRange.max} passengers`} <span aria-hidden="true">·</span> {v.luggageCapacity[language]}
                 </p>
                 <p className="text-[11px] text-slate-500 mt-0.5 truncate">
                   {v.suitableFor[language][0]}
                 </p>
               </div>
-              <button
-                onClick={() => onOpenBookingModal({ vehicle: v.name })}
-                className="shrink-0 min-h-[44px] inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 transition-colors cursor-pointer"
-              >
-                <MessageCircle className="w-3.5 h-3.5 fill-current" />
-                <span>Quote</span>
-              </button>
             </div>
           ))}
         </div>
@@ -203,11 +193,10 @@ export const VehiclesPage: React.FC<VehiclesPageProps> = ({
           <table className="w-full text-xs sm:text-sm text-left border-collapse">
             <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 font-bold">
               <tr>
-                <th className="p-4">Vehicle Model</th>
-                <th className="p-4">Seating Capacity</th>
-                <th className="p-4">Luggage Capacity</th>
-                <th className="p-4">Best For</th>
-                <th className="p-4 text-right">Direct Enquiry</th>
+                <th className="p-4">{language === 'ta' ? 'வாகன மாடல்' : 'Vehicle Model'}</th>
+                <th className="p-4">{language === 'ta' ? 'பயணிகள் கொள்ளளவு' : 'Passenger Capacity'}</th>
+                <th className="p-4">{language === 'ta' ? 'லக்கேஜ் கொள்ளளவு' : 'Luggage Capacity'}</th>
+                <th className="p-4">{language === 'ta' ? 'ஏற்ற பயன்பாடு' : 'Best For'}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -217,22 +206,13 @@ export const VehiclesPage: React.FC<VehiclesPageProps> = ({
                     {v.name}
                   </td>
                   <td className="p-4 text-slate-600 tabular-nums">
-                    {v.seatingCapacity}
+                    {language === 'ta' ? `${v.passengerRange.max} பயணிகள் வரை` : `Up to ${v.passengerRange.max} passengers`}
                   </td>
                   <td className="p-4 text-slate-600">
-                    {v.luggageCapacity}
+                    {v.luggageCapacity[language]}
                   </td>
                   <td className="p-4 text-slate-600">
                     {v.suitableFor[language][0]}
-                  </td>
-                  <td className="p-4 text-right">
-                    <button
-                      onClick={() => onOpenBookingModal({ vehicle: v.name })}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 transition-colors cursor-pointer"
-                    >
-                      <MessageCircle className="w-3.5 h-3.5 fill-current" />
-                      <span>Quote</span>
-                    </button>
                   </td>
                 </tr>
               ))}

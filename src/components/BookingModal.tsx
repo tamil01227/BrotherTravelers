@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { X, MessageCircle, Calendar, Users, MapPin, Car, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { Language, BookingEnquiry } from '../types/travel';
-import { VEHICLES_DATA, BUSINESS_INFO, TRANSLATIONS } from '../data/travelData';
+import { BUSINESS_INFO, TRANSLATIONS } from '../data/travelData';
+import { VEHICLES_DATA } from '../data/vehicles';
 import { generateWhatsAppUrl, openWhatsApp } from '../utils/whatsapp';
 
 interface BookingModalProps {

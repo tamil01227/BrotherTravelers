@@ -4,6 +4,7 @@ import { Language, BookingEnquiry } from '../types/travel';
 import { BUSINESS_INFO, TRANSLATIONS } from '../data/travelData';
 import { VEHICLES_DATA } from '../data/vehicles';
 import { generateWhatsAppUrl, openWhatsApp } from '../utils/whatsapp';
+import { focusFirstInvalidField } from '../utils/formValidation';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -84,7 +85,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     }
     if (!formData.mobileNumber.trim()) {
       newErrors.mobileNumber = language === 'ta' ? 'மொபைல் எண்ணை உள்ளிடவும்' : 'Please enter your mobile number';
-    } else if (formData.mobileNumber.replace(/\D/g, '').length < 10) {
+    } else if (formData.mobileNumber.replace(/\D/g, '').length !== 10) {
       newErrors.mobileNumber = language === 'ta' ? 'சரியான 10 இலக்க மொபைல் எண்ணை உள்ளிடவும்' : 'Please enter a valid 10-digit mobile number';
     }
     if (!formData.destination.trim()) {
@@ -97,9 +98,12 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!validate()) return;
+    if (!validate()) {
+      focusFirstInvalidField(e.currentTarget);
+      return;
+    }
 
     setIsSubmitted(true);
     const whatsappUrl = generateWhatsAppUrl(formData);

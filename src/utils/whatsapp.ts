@@ -23,20 +23,20 @@ export function buildWhatsAppMessage(enquiry: BookingEnquiry): string {
     ? `Trip Duration: ${enquiry.duration.trim()}`
     : '';
 
-  return `Hello BROTHER'S TRAVELS,
+  return `Hello BROTHER'S TRAVELS 👋
 
-I would like to enquire about a booking.
+🧳 Trip Booking Enquiry
 
-Customer Name: ${enquiry.customerName || 'Customer'}
-Mobile Number: ${enquiry.mobileNumber || 'Not specified'}
-Pickup Location: ${enquiry.pickupLocation || 'Coimbatore'}
-Destination: ${enquiry.destination || 'Not specified'}
-Travel Date: ${enquiry.travelDate || 'Flexible'}
-${returnDateLine}
-${durationLine ? `\n${durationLine}` : ''}
-Passengers: ${enquiry.passengers || '1'}
-Vehicle: ${enquiry.selectedVehicle || 'Any available'}
-Travel Type: ${enquiry.travelType || 'Tour/Outstation'}${notesLine}
+👤 Customer: ${enquiry.customerName || 'Customer'}
+📞 Mobile: ${enquiry.mobileNumber || 'Not specified'}
+📍 Pickup: ${enquiry.pickupLocation || 'Coimbatore'}
+🗺️ Destination: ${enquiry.destination || 'Not specified'}
+📅 Travel Date: ${enquiry.travelDate || 'Flexible'}
+${returnDateLine.replace('Return Date:', '🔁 Return Date:')}
+${durationLine ? `\n⏱️ ${durationLine}` : ''}
+👥 Passengers: ${enquiry.passengers || '1'}
+🚘 Vehicle: ${enquiry.selectedVehicle || 'Any available'}
+🎒 Trip Type: ${enquiry.travelType || 'Tour/Outstation'}${notesLine.replace('Special Notes:', '📝 Special Notes:')}
 
 Please share the availability and quotation.
 
@@ -57,28 +57,28 @@ export function generateWhatsAppUrl(enquiry: BookingEnquiry): string {
 export function generateQuickWhatsAppUrl(subject: string, type: 'vehicle' | 'tour' | 'general' = 'vehicle'): string {
   let text = '';
   if (type === 'vehicle') {
-    text = `Hello BROTHER'S TRAVELS,
+    text = `Hello BROTHER'S TRAVELS 👋
 
-I would like to check the availability and best quotation for:
+🚘 Vehicle Enquiry
 Vehicle: ${subject}
-Pickup: Coimbatore (Free Pickup)
+📍 Pickup: Coimbatore
 
 Please share your rates and package details.
 Thank you.`;
   } else if (type === 'tour') {
-    text = `Hello BROTHER'S TRAVELS,
+    text = `Hello BROTHER'S TRAVELS 👋
 
-I am interested in planning a trip for:
-Tour: ${subject}
-Starting from: Coimbatore
+🧳 Trip Enquiry
+🗺️ Tour: ${subject}
+📍 Starting from: Coimbatore
 
 Please share itinerary details, vehicle options, and best quotation.
 Thank you.`;
   } else {
-    text = `Hello BROTHER'S TRAVELS,
+    text = `Hello BROTHER'S TRAVELS 👋
 
-I would like to enquire about your travel and vehicle rental services across India.
-Pickup Location: Coimbatore
+🧳 Travel Enquiry
+📍 Pickup: Coimbatore
 
 Please contact me with details.
 Thank you.`;

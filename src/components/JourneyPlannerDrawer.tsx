@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   X,
   MapPin,
@@ -16,6 +16,7 @@ import { Language, TouristDestination, BookingEnquiry } from '../types/travel';
 import { BUSINESS_INFO } from '../data/travelData';
 import { VEHICLES_DATA } from '../data/vehicles';
 import { generateWhatsAppUrl, openWhatsApp } from '../utils/whatsapp';
+import { focusFirstInvalidField } from '../utils/formValidation';
 
 interface JourneyPlannerDrawerProps {
   destination: TouristDestination | null;
@@ -40,6 +41,7 @@ export const JourneyPlannerDrawer: React.FC<JourneyPlannerDrawerProps> = ({
   const [notes, setNotes] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (!destination) return;
@@ -110,7 +112,7 @@ export const JourneyPlannerDrawer: React.FC<JourneyPlannerDrawerProps> = ({
       nextErrors.customerName =
         language === 'ta' ? 'உங்கள் பெயரை உள்ளிடவும்' : 'Please enter your name';
     }
-    if (!mobileNumber.trim() || mobileNumber.replace(/\D/g, '').length < 10) {
+    if (!mobileNumber.trim() || mobileNumber.replace(/\D/g, '').length !== 10) {
       nextErrors.mobileNumber =
         language === 'ta'
           ? 'சரியான 10 இலக்க மொபைல் எண்ணை உள்ளிடவும்'
@@ -124,9 +126,12 @@ export const JourneyPlannerDrawer: React.FC<JourneyPlannerDrawerProps> = ({
     return Object.keys(nextErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!validate()) return;
+    if (!validate()) {
+      focusFirstInvalidField(e.currentTarget);
+      return;
+    }
 
     setIsSubmitting(true);
 
@@ -205,7 +210,7 @@ export const JourneyPlannerDrawer: React.FC<JourneyPlannerDrawerProps> = ({
         </div>
 
         {/* Scrollable Planner Body */}
-        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto px-5 sm:px-6 py-5 space-y-6">
+        <form ref={formRef} onSubmit={handleSubmit} className="flex-1 overflow-y-auto px-5 sm:px-6 py-5 space-y-6">
           {/* Step 1: Sightseeing Stops */}
           <section aria-labelledby="planner-stops-heading" className="space-y-3">
             <div className="flex items-center justify-between gap-2">
@@ -333,6 +338,8 @@ export const JourneyPlannerDrawer: React.FC<JourneyPlannerDrawerProps> = ({
                   <input
                     id="planner-start-date"
                     type="date"
+                    aria-invalid={Boolean(errors.travelDate)}
+                    aria-describedby={errors.travelDate ? 'planner-start-date-error' : undefined}
                     value={travelDate}
                     onChange={(e) => {
                       setTravelDate(e.target.value);
@@ -344,7 +351,7 @@ export const JourneyPlannerDrawer: React.FC<JourneyPlannerDrawerProps> = ({
                   />
                 </div>
                 {errors.travelDate && (
-                  <p className="text-[11px] text-rose-600 mt-1">{errors.travelDate}</p>
+                  <p id="planner-start-date-error" className="text-[11px] text-rose-600 mt-1">{errors.travelDate}</p>
                 )}
               </div>
 
@@ -479,6 +486,8 @@ export const JourneyPlannerDrawer: React.FC<JourneyPlannerDrawerProps> = ({
                 <input
                   id="planner-name"
                   type="text"
+                  aria-invalid={Boolean(errors.customerName)}
+                  aria-describedby={errors.customerName ? 'planner-name-error' : undefined}
                   value={customerName}
                   onChange={(e) => {
                     setCustomerName(e.target.value);
@@ -490,7 +499,7 @@ export const JourneyPlannerDrawer: React.FC<JourneyPlannerDrawerProps> = ({
                   }`}
                 />
                 {errors.customerName && (
-                  <p className="text-[11px] text-rose-600 mt-1">{errors.customerName}</p>
+                  <p id="planner-name-error" className="text-[11px] text-rose-600 mt-1">{errors.customerName}</p>
                 )}
               </div>
 
@@ -501,6 +510,8 @@ export const JourneyPlannerDrawer: React.FC<JourneyPlannerDrawerProps> = ({
                 <input
                   id="planner-phone"
                   type="tel"
+                  aria-invalid={Boolean(errors.mobileNumber)}
+                  aria-describedby={errors.mobileNumber ? 'planner-phone-error' : undefined}
                   value={mobileNumber}
                   onChange={(e) => {
                     setMobileNumber(e.target.value);
@@ -512,7 +523,7 @@ export const JourneyPlannerDrawer: React.FC<JourneyPlannerDrawerProps> = ({
                   }`}
                 />
                 {errors.mobileNumber && (
-                  <p className="text-[11px] text-rose-600 mt-1">{errors.mobileNumber}</p>
+                  <p id="planner-phone-error" className="text-[11px] text-rose-600 mt-1">{errors.mobileNumber}</p>
                 )}
               </div>
             </div>
@@ -541,7 +552,7 @@ export const JourneyPlannerDrawer: React.FC<JourneyPlannerDrawerProps> = ({
         <div className="px-5 sm:px-6 py-4 bg-slate-50 border-t border-slate-200 space-y-2.5 shrink-0">
           <button
             type="button"
-            onClick={handleSubmit}
+            onClick={() => formRef.current?.requestSubmit()}
             disabled={isSubmitting}
             className="w-full min-h-[48px] inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-950 font-bold text-sm transition-colors cursor-pointer disabled:opacity-75"
           >

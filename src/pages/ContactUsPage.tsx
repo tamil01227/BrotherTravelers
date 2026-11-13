@@ -4,6 +4,7 @@ import { Language, BookingEnquiry } from '../types/travel';
 import { BUSINESS_INFO, TRANSLATIONS } from '../data/travelData';
 import { VEHICLES_DATA } from '../data/vehicles';
 import { generateWhatsAppUrl, openWhatsApp, PRIMARY_WHATSAPP_NUMBER } from '../utils/whatsapp';
+import { focusFirstInvalidField } from '../utils/formValidation';
 
 interface ContactUsPageProps {
   language: Language;
@@ -28,7 +29,7 @@ export const ContactUsPage: React.FC<ContactUsPageProps> = ({ language }) => {
   const [formSent, setFormSent] = useState(false);
   const [formError, setFormError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!contactForm.customerName.trim() || !contactForm.mobileNumber.trim()) {
       setFormError(
@@ -36,6 +37,16 @@ export const ContactUsPage: React.FC<ContactUsPageProps> = ({ language }) => {
           ? 'தயவுசெய்து உங்கள் பெயர் மற்றும் எண்ணை உள்ளிடவும்'
           : 'Please provide your name and mobile number.'
       );
+      focusFirstInvalidField(e.currentTarget);
+      return;
+    }
+    if (contactForm.mobileNumber.replace(/\D/g, '').length !== 10) {
+      setFormError(
+        language === 'ta'
+          ? 'சரியான 10 இலக்க மொபைல் எண்ணை உள்ளிடவும்'
+          : 'Please enter a valid 10-digit mobile number.'
+      );
+      focusFirstInvalidField(e.currentTarget);
       return;
     }
 
@@ -186,13 +197,23 @@ export const ContactUsPage: React.FC<ContactUsPageProps> = ({ language }) => {
                   <input
                     type="tel"
                     required
+                    aria-invalid={Boolean(formError && contactForm.mobileNumber.replace(/\D/g, '').length !== 10)}
+                    aria-describedby={
+                      formError && contactForm.mobileNumber.replace(/\D/g, '').length !== 10
+                        ? 'contact-phone-error'
+                        : undefined
+                    }
                     value={contactForm.mobileNumber}
                     onChange={(e) => {
                       setContactForm({ ...contactForm, mobileNumber: e.target.value });
                       if (formError) setFormError('');
                     }}
                     placeholder="Your 10-digit Mobile Number"
-                    className="w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500"
+                    className={`w-full min-h-[44px] px-3 py-2 text-base sm:text-sm rounded-lg border bg-white focus:outline-hidden focus:ring-2 focus:ring-sky-500 ${
+                      formError && contactForm.mobileNumber.replace(/\D/g, '').length !== 10
+                        ? 'border-rose-400'
+                        : 'border-slate-300'
+                    }`}
                   />
                 </div>
               </div>
@@ -283,7 +304,11 @@ export const ContactUsPage: React.FC<ContactUsPageProps> = ({ language }) => {
               </div>
 
               {formError && (
-                <p role="alert" className="text-xs font-medium text-rose-600 bg-rose-50 border border-rose-200 rounded-lg px-3 py-2">
+                <p
+                  id={contactForm.mobileNumber.replace(/\D/g, '').length !== 10 ? 'contact-phone-error' : undefined}
+                  role="alert"
+                  className="text-xs font-medium text-rose-600 bg-rose-50 border border-rose-200 rounded-lg px-3 py-2"
+                >
                   {formError}
                 </p>
               )}
